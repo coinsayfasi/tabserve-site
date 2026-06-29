@@ -16,7 +16,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Tabserve","url":"https://apps.tabserve.com.tr/","logo":"https://apps.tabserve.com.tr/assets/onebag.png","description":"Tabserve builds simple, focused mobile apps.","founder":{"@type":"Person","name":"Yunus Güneş"},"email":"hello@tabserve.com.tr"}
+{"@context":"https://schema.org","@type":"Organization","name":"Tabserve","url":"https://apps.tabserve.com.tr/","logo":"https://apps.tabserve.com.tr/assets/onebag.png","description":"Tabserve builds simple, focused mobile apps.","founder":{"@type":"Person","name":"Yunus Güneş"},"email":"hello@tabserve.com.tr","sameAs":["https://coinsayfasi.github.io/onebag/","https://coinsayfasi.github.io/routevia-app/","https://coinsayfasi.github.io/rentflow/"]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ItemList","itemListElement":[
+{"@type":"ListItem","position":1,"item":{"@type":"MobileApplication","name":"OneBag","applicationCategory":"TravelApplication","operatingSystem":"iOS, Android","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Smart carry-on packing lists by destination and a live bag-weight tracker for 80+ airlines."}},
+{"@type":"ListItem","position":2,"item":{"@type":"MobileApplication","name":"Routevia","applicationCategory":"TravelApplication","operatingSystem":"iOS, Android","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Discover places to visit across Türkiye and plan AI-powered trip routes."}},
+{"@type":"ListItem","position":3,"item":{"@type":"MobileApplication","name":"RentFlow","applicationCategory":"FinanceApplication","operatingSystem":"iOS","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Rental property manager for landlords with free yield and cash-flow calculators."}}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Are Tabserve apps free?","acceptedAnswer":{"@type":"Answer","text":"Yes. OneBag, Routevia and RentFlow are all free to start on the App Store and Google Play."}},
+{"@type":"Question","name":"What is OneBag?","acceptedAnswer":{"@type":"Answer","text":"OneBag is a travel packing app that builds smart carry-on packing lists by destination and tracks your bag's weight against 80+ airlines' cabin and checked baggage limits."}},
+{"@type":"Question","name":"What does Routevia do?","acceptedAnswer":{"@type":"Answer","text":"Routevia helps you discover the best places to visit across Türkiye city by city and plan an AI-powered trip route in seconds."}},
+{"@type":"Question","name":"Who is RentFlow for?","acceptedAnswer":{"@type":"Answer","text":"RentFlow is for independent landlords and small real-estate investors who want to track rent, tenants, leases and expenses, plus free calculators for yield and cash flow."}},
+{"@type":"Question","name":"What platforms are the apps on?","acceptedAnswer":{"@type":"Answer","text":"OneBag and Routevia are on iOS and Android. RentFlow is on iOS, with Android coming soon."}}]}
 </script>
 <style>
 :root{
@@ -96,6 +110,17 @@ section.about p{color:var(--muted);max-width:640px;margin:0 auto}
 section.about a{color:var(--accent3)}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
 .reveal.in{opacity:1;transform:none}
+
+/* FAQ */
+.faq{padding:20px 0 40px}
+.faq h3{font-family:'Sora',sans-serif;font-size:27px;text-align:center;margin-bottom:26px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 20px;margin:0 auto 12px;max-width:760px;backdrop-filter:blur(10px);transition:border-color .2s}
+.faq details[open]{border-color:rgba(106,155,255,.4)}
+.faq summary{cursor:pointer;list-style:none;padding:17px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:700;transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .ans{padding:0 0 18px;color:var(--muted);font-size:15px}
 
 footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
 footer a{color:var(--muted);text-decoration:none;margin:0 9px}
@@ -179,6 +204,15 @@ footer a:hover{color:var(--ink)}
   <section class="about reveal" id="about">
     <h3>About Tabserve</h3>
     <p>Tabserve is an independent app studio. We build focused, no-nonsense mobile apps that do one thing well — no bloat, free to start. Questions or feedback? Reach us at <a href="mailto:hello@tabserve.com.tr">hello@tabserve.com.tr</a>.</p>
+  </section>
+
+  <section class="faq reveal" id="faq">
+    <h3>Frequently asked questions</h3>
+    <details><summary>Are Tabserve apps free?</summary><div class="ans">Yes — OneBag, Routevia and RentFlow are all free to start on the App Store and Google Play.</div></details>
+    <details><summary>What is OneBag?</summary><div class="ans">OneBag is a travel packing app that builds smart carry-on packing lists by destination and tracks your bag's weight against 80+ airlines' cabin and checked baggage limits — so you never overpack or pay an overweight fee. <a href="https://coinsayfasi.github.io/onebag/" class="more">See packing guides →</a></div></details>
+    <details><summary>What does Routevia do?</summary><div class="ans">Routevia helps you discover the best places to visit across Türkiye, city by city, and plan an AI-powered trip route in seconds. <a href="https://coinsayfasi.github.io/routevia-app/" class="more">Gezilecek yerler →</a></div></details>
+    <details><summary>Who is RentFlow for?</summary><div class="ans">RentFlow is for independent landlords and small real-estate investors — track rent, tenants, leases and expenses, with free calculators for rental yield, cash flow and legal rent increases across 18 countries. <a href="https://coinsayfasi.github.io/rentflow/" class="more">Landlord calculators →</a></div></details>
+    <details><summary>What platforms are the apps on?</summary><div class="ans">OneBag and Routevia are available on iOS and Android. RentFlow is on iOS, with Android coming soon.</div></details>
   </section>
 </main>
 
