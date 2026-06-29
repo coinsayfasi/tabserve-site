@@ -23,7 +23,10 @@ nav .nwrap{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;align-item
 h1.title{font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:14px}
 .meta{font-size:14px;color:var(--muted);margin-bottom:30px}
 article.post p,article.post li{color:#cfd6ea;font-size:17px;margin-bottom:18px}
-article.post h2{font-size:24px;margin:34px 0 12px}
+article.post h2{font-family:'Sora',sans-serif;font-size:25px;margin:36px 0 12px;letter-spacing:-.01em}
+article.post h3{font-family:'Sora',sans-serif;font-size:20px;margin:26px 0 10px;color:#dfe5f5}
+article.post h4{font-family:'Sora',sans-serif;font-size:17px;margin:20px 0 8px;color:var(--accent3)}
+article.post h5{font-family:'Inter',sans-serif;font-size:15px;font-weight:600;margin:16px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 article.post ul{padding-left:22px;margin-bottom:18px}
 article.post a{color:var(--accent3)}
 .appcta{margin:30px 0;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--card);backdrop-filter:blur(12px)}
