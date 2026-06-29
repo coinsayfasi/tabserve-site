@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabserve — Simple, useful mobile apps</title>
+<meta name="description" content="Tabserve builds simple, focused mobile apps that each solve one real problem well: OneBag (travel packing), Routevia (Türkiye travel guide) and RentFlow (rental manager for landlords).">
+<link rel="canonical" href="https://apps.tabserve.com.tr/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tabserve — Simple, useful mobile apps">
+<meta property="og:description" content="OneBag, Routevia & RentFlow — focused mobile apps by Tabserve.">
+<meta property="og:url" content="https://apps.tabserve.com.tr/">
+<meta property="og:image" content="https://apps.tabserve.com.tr/assets/onebag.png">
+<link rel="icon" type="image/png" href="assets/onebag.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Tabserve","url":"https://apps.tabserve.com.tr/","logo":"https://apps.tabserve.com.tr/assets/onebag.png","description":"Tabserve builds simple, focused mobile apps.","founder":{"@type":"Person","name":"Yunus Güneş"},"email":"hello@tabserve.com.tr"}
+</script>
+<style>
+:root{
+  --bg:#070b18;--card:rgba(22,29,50,.5);--ink:#eef1fa;--muted:#9aa6c6;
+  --accent:#6a9bff;--accent2:#b27bff;--accent3:#37e0c8;--line:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+h1,h2,h3,.brand,.logo,.stat b{font-family:'Sora',sans-serif}
+
+/* scroll progress */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;background:linear-gradient(90deg,var(--accent3),var(--accent),var(--accent2))}
+
+/* aurora bg */
+.aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg)}
+.aurora::before,.aurora::after{content:"";position:absolute;width:60vw;height:60vw;border-radius:50%;filter:blur(95px);opacity:.5;will-change:transform}
+.aurora::before{background:radial-gradient(circle,var(--accent),transparent 60%);top:-15vw;left:-10vw;animation:float1 18s ease-in-out infinite}
+.aurora::after{background:radial-gradient(circle,var(--accent2),transparent 60%);bottom:-20vw;right:-12vw;animation:float2 23s ease-in-out infinite}
+.grid-tex{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(ellipse at 50% 0%,#000,transparent 72%)}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vw) scale(1.18)}}
+@keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-7vw,-5vw) scale(1.12)}}
+
+/* nav */
+nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:rgba(7,11,24,.55);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.logo img{width:28px;height:28px;border-radius:8px}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;margin-left:22px;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+@media(max-width:560px){.nav-links{display:none}}
+
+/* hero */
+header{padding:90px 0 36px;text-align:center}
+.brand{display:inline-block;font-size:13px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:var(--accent3);padding:7px 16px;border:1px solid var(--line);border-radius:100px;background:rgba(255,255,255,.03);opacity:0;animation:rise .7s .05s both}
+h1{font-size:clamp(36px,6.5vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1.04;margin:22px 0 16px;opacity:0;animation:rise .7s .15s both}
+.grad{background:linear-gradient(110deg,var(--accent3),var(--accent) 45%,var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.sub{font-size:clamp(16px,2.4vw,20px);color:var(--muted);max-width:600px;margin:0 auto 30px;opacity:0;animation:rise .7s .25s both}
+.cta{display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;opacity:0;animation:rise .7s .35s both}
+.cta a{text-decoration:none;font-weight:600;font-size:15px;padding:13px 24px;border-radius:13px;transition:transform .15s,box-shadow .2s}
+.cta .p{background:linear-gradient(110deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 10px 30px rgba(106,123,255,.35)}
+.cta .p:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(106,123,255,.5)}
+.cta .s{color:var(--ink);border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.cta .s:hover{transform:translateY(-3px);border-color:var(--accent)}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+/* stats */
+.stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;padding:18px 0 8px;opacity:0;animation:rise .7s .45s both}
+.stat{text-align:center;padding:14px 22px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025);min-width:120px}
+.stat b{display:block;font-size:26px;font-weight:800;background:linear-gradient(120deg,var(--accent3),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:12.5px;color:var(--muted);letter-spacing:.04em}
+
+/* app cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;padding:42px 0 10px;perspective:1200px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;display:flex;flex-direction:column;backdrop-filter:blur(14px);overflow:hidden;opacity:0;transform:translateY(30px);transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s,box-shadow .25s;transform-style:preserve-3d}
+.card.in{opacity:1;transform:none}
+.card::after{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;background:linear-gradient(130deg,transparent,rgba(106,155,255,.55),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s}
+.card:hover{box-shadow:0 28px 70px rgba(0,0,0,.5)}
+.card:hover::after{opacity:1}
+.ic{width:78px;height:78px;border-radius:20px;margin-bottom:18px;box-shadow:0 10px 28px rgba(0,0,0,.42);transition:transform .3s;transform:translateZ(40px)}
+.card:hover .ic{transform:translateZ(55px) scale(1.06) rotate(-3deg)}
+.card h2{font-size:22px;font-weight:700;margin-bottom:8px}
+.card p{color:var(--muted);font-size:15px;flex:1;margin-bottom:18px}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.badge{font-size:13px;font-weight:600;padding:9px 14px;border-radius:11px;background:#fff;color:#0b1020;text-decoration:none;transition:transform .15s}
+.badge:hover{transform:translateY(-2px)}
+.badge.soon{background:rgba(255,255,255,.08);color:var(--muted)}
+.more{font-size:14px;color:var(--accent);text-decoration:none;font-weight:600}
+.more:hover{text-decoration:underline}
+
+/* about */
+section.about{padding:60px 0;margin-top:40px;text-align:center}
+section.about h3{font-size:27px;margin-bottom:12px}
+section.about p{color:var(--muted);max-width:640px;margin:0 auto}
+section.about a{color:var(--accent3)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+
+footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+footer a{color:var(--muted);text-decoration:none;margin:0 9px}
+footer a:hover{color:var(--ink)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card,.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div class="aurora"></div>
+<div class="grid-tex"></div>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#"><img src="assets/onebag.png" alt="">Tabserve</a>
+    <div class="nav-links">
+      <a href="#apps">Apps</a>
+      <a href="#about">About</a>
+      <a href="mailto:hello@tabserve.com.tr">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="brand">Independent app studio</span>
+    <h1>Simple, useful<br><span class="grad">mobile apps</span></h1>
+    <p class="sub">We build small, focused apps that each solve one real problem well — for travel, trips and rentals.</p>
+    <div class="cta">
+      <a class="p" href="#apps">Explore our apps</a>
+      <a class="s" href="mailto:hello@tabserve.com.tr">Get in touch</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b data-c="3">0</b><span>Apps</span></div>
+      <div class="stat"><b data-c="80" data-suf="+">0</b><span>Airlines tracked</span></div>
+      <div class="stat"><b data-c="18">0</b><span>Countries</span></div>
+      <div class="stat"><b data-c="100" data-suf="%">0</b><span>Free to start</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="apps">
+  <div class="grid">
+
+    <article class="card">
+      <img class="ic" src="assets/onebag.png" alt="OneBag icon" width="78" height="78">
+      <h2>🧳 OneBag</h2>
+      <p>Smart carry-on packing lists by destination + a live bag-weight tracker against 80+ airlines' limits. Pack light, forget nothing.</p>
+      <div class="badges">
+        <a class="badge" href="https://apps.apple.com/app/id6761047805"> App Store</a>
+        <a class="badge" href="https://play.google.com/store/apps/details?id=com.onebag.travel">▶ Google Play</a>
+      </div>
+      <a class="more" href="https://coinsayfasi.github.io/onebag/">Packing guides &amp; airline rules →</a>
+    </article>
+
+    <article class="card">
+      <img class="ic" src="assets/routevia.png" alt="Routevia icon" width="78" height="78">
+      <h2>🚗 Routevia</h2>
+      <p>Discover the best places to visit across Türkiye, city by city, and plan an AI-powered trip route in seconds.</p>
+      <div class="badges">
+        <a class="badge" href="https://apps.apple.com/app/id6761003117"> App Store</a>
+        <a class="badge" href="https://play.google.com/store/apps/details?id=com.yunusgunes.routevia">▶ Google Play</a>
+      </div>
+      <a class="more" href="https://coinsayfasi.github.io/routevia-app/">Gezilecek yerler rehberi →</a>
+    </article>
+
+    <article class="card">
+      <img class="ic" src="assets/rentflow.png" alt="RentFlow icon" width="78" height="78">
+      <h2>🏠 RentFlow</h2>
+      <p>A simple rental property manager for landlords: track rent, tenants, leases and expenses, plus free yield &amp; cash-flow calculators.</p>
+      <div class="badges">
+        <a class="badge" href="https://apps.apple.com/app/id6767179451"> App Store</a>
+        <span class="badge soon">▶ Android soon</span>
+      </div>
+      <a class="more" href="https://coinsayfasi.github.io/rentflow/">Landlord guides &amp; calculators →</a>
+    </article>
+
+  </div>
+
+  <section class="about reveal" id="about">
+    <h3>About Tabserve</h3>
+    <p>Tabserve is an independent app studio. We build focused, no-nonsense mobile apps that do one thing well — no bloat, free to start. Questions or feedback? Reach us at <a href="mailto:hello@tabserve.com.tr">hello@tabserve.com.tr</a>.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="https://coinsayfasi.github.io/onebag/">OneBag</a> ·
+    <a href="https://coinsayfasi.github.io/routevia-app/">Routevia</a> ·
+    <a href="https://coinsayfasi.github.io/rentflow/">RentFlow</a><br>
+    <span style="opacity:.7">© 2026 Tabserve · Built by Yunus Güneş</span>
+  </div>
+</footer>
+
+<script>
+// scroll progress
+const bar=document.getElementById('bar');
+addEventListener('scroll',()=>{const h=document.documentElement;bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'},{passive:true});
+
+// reveal on scroll
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.18});
+document.querySelectorAll('.card,.reveal').forEach((el,i)=>{if(el.classList.contains('card'))el.style.transitionDelay=(i*90)+'ms';io.observe(el)});
+
+// count-up stats
+const cio=new IntersectionObserver((es)=>{es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,t=+el.dataset.c,suf=el.dataset.suf||'';let n=0;const step=Math.max(1,Math.ceil(t/40));const tick=()=>{n=Math.min(t,n+step);el.textContent=n+suf;if(n<t)requestAnimationFrame(tick)};tick();cio.unobserve(el)})},{threshold:.6});
+document.querySelectorAll('.stat b').forEach(el=>cio.observe(el));
+
+// 3D tilt on cards
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(!reduce&&matchMedia('(pointer:fine)').matches){
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('mousemove',ev=>{const r=card.getBoundingClientRect();const x=(ev.clientX-r.left)/r.width-.5,y=(ev.clientY-r.top)/r.height-.5;card.style.transform='translateY(-8px) rotateX('+(-y*7)+'deg) rotateY('+(x*7)+'deg)'});
+    card.addEventListener('mouseleave',()=>{card.style.transform=''});
+  });
+}
+</script>
+</body>
+</html>
