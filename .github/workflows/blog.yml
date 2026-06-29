@@ -26,6 +26,7 @@ jobs:
           python-version: "3.12"
       - name: Generate post(s)
         env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_COUNT: ${{ github.event.inputs.count || '1' }}
         run: python _gen/generate.py

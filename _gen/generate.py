@@ -17,7 +17,9 @@ TOPICS = json.loads((GEN / "topics.json").read_text(encoding="utf-8"))
 POSTS_F = GEN / "posts.json"
 STATE_F = GEN / "state.json"
 SITE = "https://apps.tabserve.com.tr"
-MODEL = os.environ.get("BLOG_MODEL", "claude-sonnet-4-6")
+# Sağlayıcı: GEMINI (ücretsiz) öncelikli; yoksa Claude. Model env ile değişebilir.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+CLAUDE_MODEL = os.environ.get("BLOG_MODEL", "claude-sonnet-4-6")
 
 APPS = {
  "onebag":  {"tag":"Travel · OneBag",   "cta":'<div class="appcta"><b>🧳 Pack carry-on with confidence</b><p>OneBag builds a smart carry-on packing list for your exact trip and tracks your bag\'s weight against 80+ airlines\' limits — so you never forget an essential or pay an overweight fee.</p><a href="https://coinsayfasi.github.io/onebag/">See OneBag packing guides →</a></div>',
@@ -50,20 +52,35 @@ STRICT RULES — follow every one:
 Output ONLY valid minified JSON (no code fences, no commentary), exactly these keys:
 {{"title":"...","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","body":"the article HTML"}}"""
 
-def call_claude(prompt, key, max_tokens=2600):
-    body = json.dumps({"model":MODEL,"max_tokens":max_tokens,
-                       "messages":[{"role":"user","content":prompt}]}).encode()
-    req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body,
-        headers={"x-api-key":key,"anthropic-version":"2023-06-01","content-type":"application/json"})
+def _post(url, body, headers):
+    req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method="POST")
     for attempt in range(4):
         try:
-            r = json.loads(urllib.request.urlopen(req, timeout=120).read())
-            return r["content"][0]["text"]
+            return json.loads(urllib.request.urlopen(req, timeout=120).read())
         except urllib.error.HTTPError as e:
             if e.code in (429,529,500,503) and attempt < 3:
                 time.sleep(8*(attempt+1)); continue
             raise
-    raise RuntimeError("Claude API başarısız")
+    raise RuntimeError("API başarısız")
+
+def call_gemini(prompt, key):
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={key}"
+    r = _post(url, {"contents":[{"parts":[{"text":prompt}]}],
+                    "generationConfig":{"maxOutputTokens":3000,"temperature":0.7}}, {"content-type":"application/json"})
+    return r["candidates"][0]["content"]["parts"][0]["text"]
+
+def call_claude(prompt, key):
+    r = _post("https://api.anthropic.com/v1/messages",
+        {"model":CLAUDE_MODEL,"max_tokens":2600,"messages":[{"role":"user","content":prompt}]},
+        {"x-api-key":key,"anthropic-version":"2023-06-01","content-type":"application/json"})
+    return r["content"][0]["text"]
+
+def call_llm(prompt):
+    gk = os.environ.get("GEMINI_API_KEY")
+    if gk: return call_gemini(prompt, gk)
+    ck = os.environ.get("ANTHROPIC_API_KEY")
+    if ck: return call_claude(prompt, ck)
+    sys.exit("⚠️ GEMINI_API_KEY (ücretsiz) veya ANTHROPIC_API_KEY gerekli")
 
 def parse_json(txt):
     txt = txt.strip()
@@ -184,8 +201,8 @@ def main():
     posts = load(POSTS_F, [])
     if "--rebuild" in sys.argv:
         rebuild_index(posts); print(f"✓ listeleme+sitemap yeniden kuruldu ({len(posts)} yazı)"); return
-    key = os.environ.get("ANTHROPIC_API_KEY")
-    if not key: sys.exit("⚠️ ANTHROPIC_API_KEY yok")
+    if not (os.environ.get("GEMINI_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")):
+        sys.exit("⚠️ GEMINI_API_KEY (ücretsiz) veya ANTHROPIC_API_KEY gerekli")
     state = load(STATE_F, {"used":[]}); used = set(state["used"])
     n = int(os.environ.get("BLOG_COUNT","1")); made = 0
     for topic in TOPICS:
@@ -196,7 +213,7 @@ def main():
         prompt = PROMPT.format(kw=kw, angle=topic["angle"], one=APPS[app]["one"], name=APPS[app]["name"])
         d = None
         for tryi in range(2):
-            txt = call_claude(prompt if tryi==0 else prompt+"\n\nYour previous attempt failed validation. Ensure 600+ WORDS and H2/H3/H4 hierarchy and the {{APP_CTA}} token.", key)
+            txt = call_llm(prompt if tryi==0 else prompt+"\n\nYour previous attempt failed validation. Ensure 600+ WORDS and H2/H3/H4 hierarchy and the {{APP_CTA}} token.")
             try: cand = parse_json(txt)
             except Exception as e: print(f"  JSON parse hatası: {e}"); continue
             errs, wc, hh = validate(cand, kw)
