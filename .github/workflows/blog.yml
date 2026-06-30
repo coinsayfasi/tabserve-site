@@ -36,6 +36,11 @@ jobs:
         env:
           GOOGLE_INDEXING_SA: ${{ secrets.GOOGLE_INDEXING_SA }}
         run: python -u _gen/index_ping.py
+      - name: Post new posts to Bluesky
+        env:
+          BLUESKY_IDENTIFIER: ${{ secrets.BLUESKY_IDENTIFIER }}
+          BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+        run: python -u _gen/social_post.py
       - name: Commit & push
         run: |
           [ -n "$(git status --porcelain)" ] || { echo "yeni içerik yok"; exit 0; }
