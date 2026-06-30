@@ -1,40 +1,422 @@
 [
-  {"app":"onebag","keyword":"winter travel packing list","angle":"What to pack for a cold-weather trip, layering and carry-on tips"},
-  {"app":"onebag","keyword":"what to pack for a beach vacation","angle":"Beach trip packing essentials, carry-on friendly"},
-  {"app":"onebag","keyword":"business trip packing list","angle":"Packing light for a short business trip, wrinkle-free clothing"},
-  {"app":"onebag","keyword":"packing cubes vs rolling clothes","angle":"Comparison of packing methods for maximizing carry-on space"},
-  {"app":"onebag","keyword":"international travel packing checklist","angle":"Documents, adapters and essentials for travelling abroad"},
-  {"app":"onebag","keyword":"how much does a carry-on weigh","angle":"Typical carry-on weights and how to stay under airline limits"},
-  {"app":"onebag","keyword":"long haul flight essentials","angle":"What to keep in your personal item for a long flight"},
-  {"app":"onebag","keyword":"minimalist packing tips","angle":"How to pack less and travel one-bag every trip"},
-  {"app":"onebag","keyword":"family travel packing list","angle":"Packing efficiently when travelling with kids"},
-  {"app":"onebag","keyword":"travel toiletries rules","angle":"TSA liquids rules and a carry-on toiletry kit"},
-  {"app":"onebag","keyword":"how to pack a backpack for travel","angle":"Loading a travel backpack for balance and access"},
-  {"app":"onebag","keyword":"weekend trip packing list","angle":"A two-day carry-on packing list"},
-
-  {"app":"routevia","keyword":"best time to visit Türkiye","angle":"Season-by-season guide to visiting Türkiye"},
-  {"app":"routevia","keyword":"Cappadocia travel guide","angle":"What to see and do in Cappadocia, hot-air balloons, cave hotels"},
-  {"app":"routevia","keyword":"things to do in Istanbul","angle":"Top sights and neighbourhoods in Istanbul"},
-  {"app":"routevia","keyword":"Antalya travel guide","angle":"Beaches, old town and day trips around Antalya"},
-  {"app":"routevia","keyword":"Türkiye itinerary 7 days","angle":"A one-week Türkiye itinerary suggestion"},
-  {"app":"routevia","keyword":"Pamukkale travel guide","angle":"Visiting the travertines and Hierapolis"},
-  {"app":"routevia","keyword":"Ephesus visiting guide","angle":"How to visit the ancient city of Ephesus"},
-  {"app":"routevia","keyword":"best beaches in Türkiye","angle":"Top coastal spots along the Aegean and Mediterranean"},
-  {"app":"routevia","keyword":"renting a car in Türkiye","angle":"Tips for a self-drive trip in Türkiye"},
-  {"app":"routevia","keyword":"Türkiye travel tips for first-timers","angle":"Practical advice for a first visit to Türkiye"},
-  {"app":"routevia","keyword":"Turkish food guide for travellers","angle":"Must-try dishes region by region"},
-  {"app":"routevia","keyword":"best places to visit on the Turkish coast","angle":"A coastal road trip highlights guide"},
-
-  {"app":"rentflow","keyword":"how to calculate rental yield","angle":"Gross vs net rental yield with a simple example"},
-  {"app":"rentflow","keyword":"rental property cash flow explained","angle":"What cash flow means and how to improve it"},
-  {"app":"rentflow","keyword":"how to screen a tenant","angle":"A step-by-step tenant screening process"},
-  {"app":"rentflow","keyword":"landlord tax deductions","angle":"Common deductible expenses for landlords"},
-  {"app":"rentflow","keyword":"cap rate vs rental yield","angle":"The difference and when to use each metric"},
-  {"app":"rentflow","keyword":"how to handle a late rent payment","angle":"A calm, fair process for late rent"},
-  {"app":"rentflow","keyword":"security deposit rules for landlords","angle":"Holding, protecting and returning deposits"},
-  {"app":"rentflow","keyword":"how to set the right rent price","angle":"Researching comparable rents and pricing a unit"},
-  {"app":"rentflow","keyword":"buy to let for beginners","angle":"The basics of buying a first rental property"},
-  {"app":"rentflow","keyword":"how to write a lease agreement","angle":"Key clauses every rental lease should include"},
-  {"app":"rentflow","keyword":"landlord insurance explained","angle":"What landlord insurance covers and why it matters"},
-  {"app":"rentflow","keyword":"should you allow pets as a landlord","angle":"Pros, cons and pet policies for rentals"}
+ {
+  "app": "onebag",
+  "keyword": "winter travel packing list",
+  "angle": "What to pack for a cold-weather trip, layering and carry-on tips"
+ },
+ {
+  "app": "onebag",
+  "keyword": "what to pack for a beach vacation",
+  "angle": "Beach trip packing essentials, carry-on friendly"
+ },
+ {
+  "app": "onebag",
+  "keyword": "business trip packing list",
+  "angle": "Packing light for a short business trip, wrinkle-free clothing"
+ },
+ {
+  "app": "onebag",
+  "keyword": "packing cubes vs rolling clothes",
+  "angle": "Comparison of packing methods for maximizing carry-on space"
+ },
+ {
+  "app": "onebag",
+  "keyword": "international travel packing checklist",
+  "angle": "Documents, adapters and essentials for travelling abroad"
+ },
+ {
+  "app": "onebag",
+  "keyword": "how much does a carry-on weigh",
+  "angle": "Typical carry-on weights and how to stay under airline limits"
+ },
+ {
+  "app": "onebag",
+  "keyword": "long haul flight essentials",
+  "angle": "What to keep in your personal item for a long flight"
+ },
+ {
+  "app": "onebag",
+  "keyword": "minimalist packing tips",
+  "angle": "How to pack less and travel one-bag every trip"
+ },
+ {
+  "app": "onebag",
+  "keyword": "family travel packing list",
+  "angle": "Packing efficiently when travelling with kids"
+ },
+ {
+  "app": "onebag",
+  "keyword": "travel toiletries rules",
+  "angle": "TSA liquids rules and a carry-on toiletry kit"
+ },
+ {
+  "app": "onebag",
+  "keyword": "how to pack a backpack for travel",
+  "angle": "Loading a travel backpack for balance and access"
+ },
+ {
+  "app": "onebag",
+  "keyword": "weekend trip packing list",
+  "angle": "A two-day carry-on packing list"
+ },
+ {
+  "app": "routevia",
+  "keyword": "best time to visit Türkiye",
+  "angle": "Season-by-season guide to visiting Türkiye"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Cappadocia travel guide",
+  "angle": "What to see and do in Cappadocia, hot-air balloons, cave hotels"
+ },
+ {
+  "app": "routevia",
+  "keyword": "things to do in Istanbul",
+  "angle": "Top sights and neighbourhoods in Istanbul"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Antalya travel guide",
+  "angle": "Beaches, old town and day trips around Antalya"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Türkiye itinerary 7 days",
+  "angle": "A one-week Türkiye itinerary suggestion"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Pamukkale travel guide",
+  "angle": "Visiting the travertines and Hierapolis"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Ephesus visiting guide",
+  "angle": "How to visit the ancient city of Ephesus"
+ },
+ {
+  "app": "routevia",
+  "keyword": "best beaches in Türkiye",
+  "angle": "Top coastal spots along the Aegean and Mediterranean"
+ },
+ {
+  "app": "routevia",
+  "keyword": "renting a car in Türkiye",
+  "angle": "Tips for a self-drive trip in Türkiye"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Türkiye travel tips for first-timers",
+  "angle": "Practical advice for a first visit to Türkiye"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Turkish food guide for travellers",
+  "angle": "Must-try dishes region by region"
+ },
+ {
+  "app": "routevia",
+  "keyword": "best places to visit on the Turkish coast",
+  "angle": "A coastal road trip highlights guide"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to calculate rental yield",
+  "angle": "Gross vs net rental yield with a simple example"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "rental property cash flow explained",
+  "angle": "What cash flow means and how to improve it"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to screen a tenant",
+  "angle": "A step-by-step tenant screening process"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "landlord tax deductions",
+  "angle": "Common deductible expenses for landlords"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "cap rate vs rental yield",
+  "angle": "The difference and when to use each metric"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to handle a late rent payment",
+  "angle": "A calm, fair process for late rent"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "security deposit rules for landlords",
+  "angle": "Holding, protecting and returning deposits"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to set the right rent price",
+  "angle": "Researching comparable rents and pricing a unit"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "buy to let for beginners",
+  "angle": "The basics of buying a first rental property"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to write a lease agreement",
+  "angle": "Key clauses every rental lease should include"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "landlord insurance explained",
+  "angle": "What landlord insurance covers and why it matters"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "should you allow pets as a landlord",
+  "angle": "Pros, cons and pet policies for rentals"
+ },
+ {
+  "app": "onebag",
+  "keyword": "carry-on size guide",
+  "angle": "Standard carry-on dimensions by airline type"
+ },
+ {
+  "app": "onebag",
+  "keyword": "personal item vs carry-on",
+  "angle": "The difference and how to use both"
+ },
+ {
+  "app": "onebag",
+  "keyword": "how to pack a suit in a carry-on",
+  "angle": "Wrinkle-free suit packing methods"
+ },
+ {
+  "app": "onebag",
+  "keyword": "digital nomad packing list",
+  "angle": "Long-term travel essentials and tech"
+ },
+ {
+  "app": "onebag",
+  "keyword": "hiking trip packing list",
+  "angle": "Day-hike and multi-day hiking gear"
+ },
+ {
+  "app": "onebag",
+  "keyword": "cruise packing list",
+  "angle": "What to pack for a cruise"
+ },
+ {
+  "app": "onebag",
+  "keyword": "how to avoid checked bag fees",
+  "angle": "Strategies to travel carry-on only"
+ },
+ {
+  "app": "onebag",
+  "keyword": "travel capsule wardrobe",
+  "angle": "Mix-and-match outfits for one-bag travel"
+ },
+ {
+  "app": "onebag",
+  "keyword": "what not to pack in carry-on",
+  "angle": "Prohibited and pointless items"
+ },
+ {
+  "app": "onebag",
+  "keyword": "how to fold clothes for travel",
+  "angle": "Folding vs rolling for space"
+ },
+ {
+  "app": "onebag",
+  "keyword": "carry-on toiletry bag essentials",
+  "angle": "TSA-friendly toiletry kit"
+ },
+ {
+  "app": "onebag",
+  "keyword": "road trip packing list",
+  "angle": "Essentials for a self-drive trip"
+ },
+ {
+  "app": "onebag",
+  "keyword": "travelling with kids packing tips",
+  "angle": "Packing light with children"
+ },
+ {
+  "app": "onebag",
+  "keyword": "winter sports packing list",
+  "angle": "Ski and snowboard trip packing"
+ },
+ {
+  "app": "onebag",
+  "keyword": "best travel accessories",
+  "angle": "Useful gadgets for carry-on travel"
+ },
+ {
+  "app": "onebag",
+  "keyword": "how to pack shoes for travel",
+  "angle": "Saving space and protecting shoes"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Bodrum travel guide",
+  "angle": "Beaches, nightlife and day trips in Bodrum"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Fethiye travel guide",
+  "angle": "Oludeniz, paragliding and the coast"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Izmir travel guide",
+  "angle": "Things to do in and around Izmir"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Bursa travel guide",
+  "angle": "Ottoman history and Uludag"
+ },
+ {
+  "app": "routevia",
+  "keyword": "best Turkish breakfast",
+  "angle": "What a traditional kahvalti includes"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Turkish bath hamam guide",
+  "angle": "How a traditional hamam works"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Mount Nemrut guide",
+  "angle": "Visiting the giant statues at sunrise"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Gobeklitepe guide",
+  "angle": "The world's oldest temple"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Princes Islands Istanbul",
+  "angle": "A day trip from Istanbul"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Bosphorus cruise guide",
+  "angle": "Seeing Istanbul from the water"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Turkish coffee guide",
+  "angle": "History and how it is served"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Lake Van travel guide",
+  "angle": "Eastern Turkey's highlights"
+ },
+ {
+  "app": "routevia",
+  "keyword": "best time to visit Cappadocia",
+  "angle": "Season-by-season Cappadocia"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Sumela Monastery guide",
+  "angle": "Cliffside monastery near Trabzon"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Turkey travel budget tips",
+  "angle": "Travelling Turkey affordably"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Turkish street food guide",
+  "angle": "Must-try street eats"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to find good tenants",
+  "angle": "Attracting and selecting reliable tenants"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "rental property maintenance checklist",
+  "angle": "Seasonal upkeep tasks"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to increase rental income",
+  "angle": "Practical ways to boost returns"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "gross vs net rental yield",
+  "angle": "Calculating both correctly"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "first rental property mistakes",
+  "angle": "Common beginner errors to avoid"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to do a property inspection",
+  "angle": "Move-in and routine inspections"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "rent collection methods",
+  "angle": "Getting paid on time reliably"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "rental property ROI explained",
+  "angle": "Measuring return on investment"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to handle tenant complaints",
+  "angle": "A fair process for issues"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "furnished vs unfurnished rental",
+  "angle": "Pros and cons for landlords"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "rental property depreciation basics",
+  "angle": "How depreciation works for landlords"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to write a rental listing",
+  "angle": "Attracting applicants with a great ad"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "landlord end of tenancy checklist",
+  "angle": "Move-out steps and deposit return"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to handle late rent professionally",
+  "angle": "Reminders, fees and communication"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "is buy to let still worth it",
+  "angle": "Weighing the pros and cons today"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "rental property record keeping",
+  "angle": "What records to keep and how"
+ }
 ]

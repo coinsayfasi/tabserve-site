@@ -2,7 +2,7 @@ name: Blog auto-writer
 
 on:
   schedule:
-    - cron: "0 7 * * 1,4"     # Pzt & Per 10:00 TR — haftada 2 özgün SEO yazı
+    - cron: "0 7 * * *"       # her gün 10:00 TR — günde 3 özgün SEO yazı (yeni domain için güvenli tempo)
   workflow_dispatch:
     inputs:
       count:
@@ -28,7 +28,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          BLOG_COUNT: ${{ github.event.inputs.count || '1' }}
+          BLOG_COUNT: ${{ github.event.inputs.count || '3' }}
         run: python -u _gen/generate.py
       - name: Commit & push
         run: |

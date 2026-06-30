@@ -7,8 +7,29 @@ Kullanım:
   ANTHROPIC_API_KEY=... python _gen/generate.py            # 1 yeni yazı üret+yayınla
   python _gen/generate.py --rebuild                         # API'siz: listeleme+sitemap yeniden kur
 Env: ANTHROPIC_API_KEY, BLOG_MODEL (ops, varsayılan claude-sonnet-4-6), BLOG_COUNT (ops)."""
-import os, re, sys, json, html, time, datetime, urllib.request, urllib.error
+import os, re, sys, json, html, time, datetime, urllib.request, urllib.error, urllib.parse
 from pathlib import Path
+
+SOCIAL = [("YouTube","https://youtube.com/@tabserve"),("Instagram","https://instagram.com/tabservee"),
+          ("TikTok","https://tiktok.com/@tabserve"),("Bluesky","https://bsky.app/profile/tabserve.bsky.social")]
+
+def post_extras(url, title):
+    """Alt paylaş çubuğu + yazar kutusu (body sonu) ve sol kayan çubuk (rail) HTML'i."""
+    u = urllib.parse.quote(url, safe=''); t = urllib.parse.quote(title, safe='')
+    S = [("X",f"https://twitter.com/intent/tweet?url={u}&amp;text={t}"),("f",f"https://www.facebook.com/sharer/sharer.php?u={u}"),
+         ("P",f"https://pinterest.com/pin/create/button/?url={u}&amp;description={t}"),("W",f"https://wa.me/?text={t}%20{u}"),
+         ("in",f"https://www.linkedin.com/sharing/share-offsite/?url={u}")]
+    lbl = {"X":"X","f":"Facebook","P":"Pinterest","W":"WhatsApp","in":"LinkedIn"}
+    share = '<div class="share"><span>Share this post:</span>' + ''.join(
+        f'<a href="{h}" target="_blank" rel="noopener" aria-label="Share">{lbl[n]}</a>' for n,h in S) + '</div>'
+    follow = ' '.join(f'<a href="{lu}" target="_blank" rel="noopener">{ln}</a>' for ln,lu in SOCIAL)
+    author = ('<div class="author-box"><img class="ab-logo" src="/assets/logo.svg" alt="Tabserve" width="56" height="56">'
+              '<div class="ab-body"><b>Written by Tabserve</b><p>We\'re an independent app studio building simple, useful '
+              'mobile apps for travel, trips and rentals — OneBag, Routevia and RentFlow. We share practical guides to help you '
+              f'pack smarter, travel better and manage rentals with less hassle.</p><div class="follow"><span>Follow us:</span>{follow}</div></div></div>')
+    rail = '<div class="share-rail" aria-label="Share this post">' + ''.join(
+        f'<a href="{h}" target="_blank" rel="noopener" aria-label="Share">{n}</a>' for n,h in S) + '</div>'
+    return share + author, rail
 
 ROOT = Path(__file__).resolve().parents[1]
 GEN = ROOT / "_gen"
@@ -146,9 +167,10 @@ PAGE = """<!DOCTYPE html>
 <div class="aurora"></div>
 <nav><div class="nwrap">
   <a class="logo" href="/"><img src="/assets/logo.svg" alt="">Tabserve</a>
-  <div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:hello@tabserve.com.tr">Contact</a></div>
+  <div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div>
 </div></nav>
 <main class="wrap page">
+__RAIL__
   <div class="crumb"><a href="/">Home</a> › <a href="/blog/">Blog</a> › __CRUMB__</div>
   <article class="post">
     <h1 class="title">__TITLE__</h1>
@@ -173,7 +195,7 @@ __BODY__
       <a href="/blog/">Blog</a>
       <a href="/#about">About</a>
       <a href="/privacy.html">Privacy</a>
-      <a href="mailto:hello@tabserve.com.tr">Contact</a>
+      <a href="mailto:teknopattv@gmail.com">Contact</a>
     </div>
   </div>
   <div class="foot-bottom"><div class="wrap">
@@ -249,10 +271,12 @@ def write_post(d, app):
         "publisher":{"@type":"Organization","name":"Tabserve","logo":{"@type":"ImageObject","url":f"{SITE}/assets/tabserve-og.png"}},
         "datePublished":today.isoformat(),"dateModified":today.isoformat(),"mainEntityOfPage":url}, ensure_ascii=False)
     read = max(4, round(words(body)/180))
+    extras, rail = post_extras(url, d["title"])
+    body = body + extras  # alt paylaş çubuğu + yazar kutusu (Follow Us)
     page = (PAGE.replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
         .replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"][:40]))
-        .replace("__TAG__", APPS[app]["tag"]).replace("__READ__", str(read))
+        .replace("__TAG__", APPS[app]["tag"]).replace("__READ__", str(read)).replace("__RAIL__", rail)
         .replace("__NICE__", today.strftime("%B %Y")).replace("__BODY__", body))
     (BLOG / slug).mkdir(parents=True, exist_ok=True)
     (BLOG / slug / "index.html").write_text(page, encoding="utf-8")
@@ -274,7 +298,7 @@ def rebuild_index(posts):
 <body>
 <div class="aurora"></div>
 <nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/logo.svg" alt="">Tabserve</a>
-<div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:hello@tabserve.com.tr">Contact</a></div></div></nav>
+<div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div></div></nav>
 <main class="wrap page">
   <div class="crumb"><a href="/">Home</a> › Blog</div>
   <h1 class="title">The Tabserve Blog</h1>
@@ -300,7 +324,7 @@ def rebuild_index(posts):
       <a href="/blog/">Blog</a>
       <a href="/#about">About</a>
       <a href="/privacy.html">Privacy</a>
-      <a href="mailto:hello@tabserve.com.tr">Contact</a>
+      <a href="mailto:teknopattv@gmail.com">Contact</a>
     </div>
   </div>
   <div class="foot-bottom"><div class="wrap">
