@@ -193,30 +193,56 @@ def insert_cta(body, cta):
         i = pos[len(pos)//2]; return body[:i] + cta + body[i:]
     return body + cta
 
-def get_image(query):
-    """Openverse'ten anahtarsız CC-lisanslı görsel (alt+figcaption için)."""
+def get_images(query, n=3):
+    """Openverse'ten anahtarsız CC-lisanslı görseller (alt+figcaption için)."""
+    out = []
     try:
-        u = "https://api.openverse.org/v1/images/?q=" + query.replace(" ", "+") + "&license_type=commercial&size=medium&page_size=6"
+        u = "https://api.openverse.org/v1/images/?q=" + query.replace(" ", "+") + "&license_type=commercial&size=medium&page_size=18"
         r = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent":"tabserve-blog/1.0"}), timeout=20).read())
+        seen = set()
         for it in r.get("results", []):
             img = it.get("url", "")
-            if img.lower().split("?")[0].endswith((".jpg", ".jpeg", ".png", ".webp")):
-                return {"url": img, "creator": it.get("creator") or "Unknown", "license": (it.get("license") or "CC").upper()}
+            if img and img not in seen and img.lower().split("?")[0].endswith((".jpg", ".jpeg", ".png", ".webp")):
+                seen.add(img)
+                out.append({"url": img, "creator": it.get("creator") or "Unknown", "license": (it.get("license") or "CC").upper()})
+            if len(out) >= n: break
     except Exception as e:
         print(f"  (görsel atlandı: {type(e).__name__})")
-    return None
+    return out
+
+def _figure(img, alt, caption_text, hero=False):
+    cap = (html.escape(caption_text) + " — " if caption_text else "") + f"Photo: {html.escape(img['creator'])} (Openverse, {html.escape(img['license'])})"
+    w, h = (1200, 630) if hero else (1000, 560)
+    return (f'<figure class="{"hero" if hero else "inpost"}"><img src="{html.escape(img["url"])}" '
+            f'alt="{html.escape(alt)}" loading="{"eager" if hero else "lazy"}" width="{w}" height="{h}">'
+            f'<figcaption>{cap}</figcaption></figure>')
+
+def _h2_text(body, p):
+    m = re.match(r'<h2[^>]*>(.*?)</h2>', body[p:], re.S)
+    return re.sub(r'<[^>]+>', '', m.group(1)).strip() if m else ''
 
 def write_post(d, app):
     slug = d["slug"]; url = f"{SITE}/blog/{slug}/"
     body = insert_cta(d["body"], APPS[app]["cta"])
     ogimg = f"{SITE}/assets/tabserve-og.png"
-    img = get_image((d.get("keywords","").split(",")[0].strip()) or d["title"])
-    if img:
-        fig = (f'<figure class="hero"><img src="{html.escape(img["url"])}" alt="{html.escape(d["title"])}" '
-               f'loading="eager" width="1200" height="630"><figcaption>{html.escape(d["meta_description"])} '
-               f'— Photo: {html.escape(img["creator"])} (Openverse, {html.escape(img["license"])})</figcaption></figure>')
-        body = fig + body; ogimg = img["url"]
-        print(f"  🖼  görsel: {img['creator']}")
+    imgs = get_images((d.get("keywords","").split(",")[0].strip()) or d["title"], 3)
+    if imgs:
+        body = _figure(imgs[0], d["title"], d["meta_description"], hero=True) + body  # hero (en üst)
+        ogimg = imgs[0]["url"]
+        extras = imgs[1:]
+        cand = [m.start() for m in re.finditer(r"<h2", body)][1:]  # ilk H2'yi (hero'dan hemen sonraki) atla
+        if extras and cand:
+            picks = []
+            for i in range(len(extras)):
+                idx = min(len(cand)-1, int((i+1)*len(cand)/(len(extras)+1)))
+                picks.append((cand[idx], extras[i]))
+            placed = set()
+            for p, img in sorted(picks, key=lambda z:-z[0]):  # sondan başa: offset bozulmasın
+                if p in placed: continue
+                placed.add(p)
+                alt = _h2_text(body, p) or d["title"]
+                body = body[:p] + _figure(img, alt, alt) + body[p:]
+        print(f"  🖼  {len(imgs)} görsel: {', '.join(i['creator'] for i in imgs)}")
     today = datetime.date.today()
     schema = json.dumps({"@context":"https://schema.org","@type":"Article","headline":d["title"],
         "description":d["meta_description"],"image":ogimg,"author":{"@type":"Organization","name":"Tabserve"},
