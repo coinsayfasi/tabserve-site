@@ -349,9 +349,12 @@ def main():
         sys.exit("⚠️ GEMINI_API_KEY (ücretsiz) veya ANTHROPIC_API_KEY gerekli")
     state = load(STATE_F, {"used":[]}); used = set(state["used"])
     n = int(os.environ.get("BLOG_COUNT","1")); made = 0; new_urls = []
-    for topic in TOPICS:
-        if made >= n: break
-        if topic["keyword"] in used: continue
+    if os.environ.get("BLOG_PER_APP"):  # her app'ten 1 kullanılmamış konu (1 onebag + 1 routevia + 1 rentflow)
+        targets = [nx for ap in ["onebag","routevia","rentflow"]
+                   if (nx := next((t for t in TOPICS if t["app"]==ap and t["keyword"] not in used), None))]
+    else:
+        targets = [t for t in TOPICS if t["keyword"] not in used][:n]
+    for topic in targets:
         kw, app = topic["keyword"], topic["app"]
         print(f"\n📝 [{app}] {kw}")
         prompt = PROMPT.format(kw=kw, angle=topic["angle"], one=APPS[app]["one"], name=APPS[app]["name"])
