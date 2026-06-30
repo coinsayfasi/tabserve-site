@@ -187,6 +187,8 @@ PAGE = """<!DOCTYPE html>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/blog.css">
 <script type="application/ld+json">__SCHEMA__</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EDZWXP6EEG"></script>
+<script src="/assets/analytics.js"></script>
 </head>
 <body>
 <div class="aurora"></div>
@@ -332,7 +334,9 @@ def rebuild_index(posts):
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css"></head>
+<link rel="stylesheet" href="/assets/blog.css"><script async src="https://www.googletagmanager.com/gtag/js?id=G-EDZWXP6EEG"></script>
+<script src="/assets/analytics.js"></script>
+</head>
 <body>
 <div class="aurora"></div>
 <nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/logo.svg" alt="">Tabserve</a>
