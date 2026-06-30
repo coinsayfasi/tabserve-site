@@ -51,7 +51,7 @@ footer a{color:var(--muted);text-decoration:none;margin:0 9px}
 footer a:hover{color:var(--ink)}
 
 .site-footer{margin-top:64px;border-top:1px solid var(--line);background:rgba(255,255,255,.015)}
-.foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:32px;padding:46px 22px 32px;max-width:1080px;margin:0 auto}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px;padding:46px 22px 32px;max-width:1080px;margin:0 auto}
 .foot-brand .logo{display:inline-flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:var(--ink);text-decoration:none}
 .foot-brand .logo img{width:30px;height:30px;border-radius:8px}
 .foot-brand p{color:var(--muted);font-size:14px;margin-top:12px;max-width:280px;line-height:1.6}

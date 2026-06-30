@@ -27,6 +27,16 @@ ICON = {
 }
 ICON["Pinterest"] = ICON["P"]
 
+COOKIE_BANNER = '''<div id="cookie-banner" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0d1426;border-top:1px solid rgba(255,255,255,.1);padding:14px 18px;font-size:13.5px;color:#cdd5ea;line-height:1.5">
+  <div style="max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+    <span>We use cookies for analytics and advertising (incl. Google AdSense). See our <a href="/cookies.html" style="color:#6a9bff">Cookie Policy</a>.</span>
+    <span><button onclick="cookieOK(0)" style="background:none;border:1px solid rgba(255,255,255,.25);color:#cdd5ea;padding:7px 14px;border-radius:9px;cursor:pointer;margin-right:8px">Reject</button><button onclick="cookieOK(1)" style="background:linear-gradient(110deg,#6a9bff,#b27bff);border:0;color:#fff;padding:7px 16px;border-radius:9px;cursor:pointer;font-weight:600">Accept</button></span>
+  </div>
+</div>
+<script>(function(){try{if(!localStorage.getItem("cookie_consent"))document.getElementById("cookie-banner").style.display="block";}catch(e){}})();
+function cookieOK(v){try{localStorage.setItem("cookie_consent",v?"accepted":"rejected");}catch(e){}document.getElementById("cookie-banner").style.display="none";}</script>'''
+
+
 def post_extras(url, title):
     """Alt paylaş çubuğu + yazar kutusu + sol kayan çubuk (SVG ikonlu)."""
     u = urllib.parse.quote(url, safe=''); t = urllib.parse.quote(title, safe='')
@@ -206,10 +216,15 @@ __BODY__
     </div>
     <div class="foot-col">
       <h4>Company</h4>
+      <a href="/about.html">About</a>
       <a href="/blog/">Blog</a>
-      <a href="/#about">About</a>
-      <a href="/privacy.html">Privacy</a>
       <a href="mailto:teknopattv@gmail.com">Contact</a>
+    </div>
+    <div class="foot-col">
+      <h4>Legal</h4>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/cookies.html">Cookie Policy</a>
+      <a href="/terms.html">Terms of Use</a>
     </div>
   </div>
   <div class="foot-bottom"><div class="wrap">
@@ -217,6 +232,14 @@ __BODY__
     <span>Made with ♥ in Türkiye</span>
   </div></div>
 </footer>
+<div id="cookie-banner" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0d1426;border-top:1px solid rgba(255,255,255,.1);padding:14px 18px;font-size:13.5px;color:#cdd5ea;line-height:1.5">
+  <div style="max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+    <span>We use cookies for analytics and advertising (incl. Google AdSense). See our <a href="/cookies.html" style="color:#6a9bff">Cookie Policy</a>.</span>
+    <span><button onclick="cookieOK(0)" style="background:none;border:1px solid rgba(255,255,255,.25);color:#cdd5ea;padding:7px 14px;border-radius:9px;cursor:pointer;margin-right:8px">Reject</button><button onclick="cookieOK(1)" style="background:linear-gradient(110deg,#6a9bff,#b27bff);border:0;color:#fff;padding:7px 16px;border-radius:9px;cursor:pointer;font-weight:600">Accept</button></span>
+  </div>
+</div>
+<script>(function(){try{if(!localStorage.getItem('cookie_consent'))document.getElementById('cookie-banner').style.display='block';}catch(e){}})();
+function cookieOK(v){try{localStorage.setItem('cookie_consent',v?'accepted':'rejected');}catch(e){}document.getElementById('cookie-banner').style.display='none';}</script>
 </body>
 </html>
 """
@@ -335,10 +358,15 @@ def rebuild_index(posts):
     </div>
     <div class="foot-col">
       <h4>Company</h4>
+      <a href="/about.html">About</a>
       <a href="/blog/">Blog</a>
-      <a href="/#about">About</a>
-      <a href="/privacy.html">Privacy</a>
       <a href="mailto:teknopattv@gmail.com">Contact</a>
+    </div>
+    <div class="foot-col">
+      <h4>Legal</h4>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/cookies.html">Cookie Policy</a>
+      <a href="/terms.html">Terms of Use</a>
     </div>
   </div>
   <div class="foot-bottom"><div class="wrap">
@@ -346,8 +374,10 @@ def rebuild_index(posts):
     <span>Made with ♥ in Türkiye</span>
   </div></div>
 </footer>
+__BANNER__
 </body></html>
 """
+    idx = idx.replace("__BANNER__", COOKIE_BANNER)
     (BLOG / "index.html").write_text(idx, encoding="utf-8")
     # sitemap
     static = [("/","1.0","weekly"),("/blog/","0.8","weekly"),("/privacy.html","0.3","yearly")]
