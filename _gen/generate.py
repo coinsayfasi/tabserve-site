@@ -43,17 +43,16 @@ PROMPT = """You are an expert SEO copywriter creating an ORIGINAL blog article f
 
 TARGET KEYWORD: "{kw}"
 ANGLE: {angle}
-The article should be genuinely helpful on its own and subtly fit a brand that makes {one} (called {name}); you will place a token where a small app promo box goes.
+The article should be genuinely helpful on its own and subtly fit a brand that makes {one} (called {name}). A small app promo box is added automatically afterwards — just write the article body.
 
 STRICT RULES — follow every one:
 1. The target keyword "{kw}" must appear in the TITLE and be the clear topic. The title doubles as the page H1 — do NOT output an <h1>.
 2. Length: 600-800 words of real body text (count WORDS, not characters). Do not pad with fluff.
 3. Heading hierarchy: use 4-6 <h2> headings (natural keyword variations), <h3> subheadings under H2s, and at least one deeper <h4> (use <h5> only where it genuinely helps). Logical nesting H2 > H3 > H4.
-4. Place the exact token {{APP_CTA}} on its own line about 60% of the way through.
-5. End with a short concluding paragraph.
-6. ORIGINAL and specific — real, useful guidance. Do NOT fabricate statistics, studies, prices or quotes. No repetition, no "spun"/generic filler.
-7. Allowed body tags ONLY: h2, h3, h4, h5, p, ul, li, strong, a. No markdown, no <h1>, no <html>/<head>/<style>.
-8. Include 1-2 outbound links to GENUINELY AUTHORITATIVE, relevant external sources to back up the content (e.g. an official tourism board, a government/regulator page, or a relevant Wikipedia article). Only use well-known, stable URLs you are confident exist — prefer https://en.wikipedia.org/wiki/<Topic> or an official site's homepage; NEVER invent specific deep URLs. Place them naturally inside sentences, not in headings.
+4. End with a short concluding paragraph.
+5. ORIGINAL and specific — real, useful guidance. Do NOT fabricate statistics, studies, prices or quotes. No repetition, no "spun"/generic filler.
+6. Allowed body tags ONLY: h2, h3, h4, h5, p, ul, li, strong, a. No markdown, no <h1>, no <html>/<head>/<style>.
+7. Include 1-2 outbound links to GENUINELY AUTHORITATIVE, relevant external sources to back up the content (e.g. an official tourism board, a government/regulator page, or a relevant Wikipedia article). Only use well-known, stable URLs you are confident exist — prefer https://en.wikipedia.org/wiki/<Topic> or an official site's homepage; NEVER invent specific deep URLs. Place them naturally inside sentences, not in headings.
 
 Output ONLY valid minified JSON (no code fences, no commentary), exactly these keys:
 {{"title":"...","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","body":"the article HTML"}}"""
@@ -62,7 +61,7 @@ def _post(url, body, headers):
     req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method="POST")
     for attempt in range(4):
         try:
-            return json.loads(urllib.request.urlopen(req, timeout=45).read())
+            return json.loads(urllib.request.urlopen(req, timeout=90).read())
         except urllib.error.HTTPError as e:
             if e.code in (429,529,500,503) and attempt < 3:
                 time.sleep(8*(attempt+1)); continue
@@ -77,7 +76,7 @@ def call_gemini(prompt, key):
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={key}"
         try:
             r = _post(url, {"contents":[{"parts":[{"text":prompt}]}],
-                            "generationConfig":{"maxOutputTokens":4096,"temperature":0.75}},
+                            "generationConfig":{"maxOutputTokens":8192,"temperature":0.75,"thinkingConfig":{"thinkingBudget":0}}},
                       {"content-type":"application/json"})
             cands_out = r.get("candidates")
             if not cands_out or not cands_out[0].get("content",{}).get("parts"):
@@ -119,7 +118,6 @@ def validate(d, kw):
     if h2 < 3: errs.append(f"H2 {h2}<3")
     if h3 < 2: errs.append(f"H3 {h3}<2")
     if h4 < 1: errs.append(f"H4 {h4}<1")
-    if "{{APP_CTA}}" not in b: errs.append("APP_CTA token yok")
     if kw.split()[0].lower() not in d.get("title","").lower(): errs.append("anahtar kelime title'da yok")
     return errs, wc, (h2,h3,h4)
 
@@ -136,6 +134,7 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:title" content="__TITLE__">
 <meta property="og:description" content="__DESC__">
 <meta property="og:url" content="__URL__">
+<meta property="og:image" content="__OGIMG__">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -165,17 +164,46 @@ __BODY__
 </html>
 """
 
+def insert_cta(body, cta):
+    if "{{APP_CTA}}" in body:
+        return body.replace("{{APP_CTA}}", cta, 1)
+    pos = [m.start() for m in re.finditer(r"<h2", body)]
+    if len(pos) >= 2:
+        i = pos[len(pos)//2]; return body[:i] + cta + body[i:]
+    return body + cta
+
+def get_image(query):
+    """Openverse'ten anahtarsız CC-lisanslı görsel (alt+figcaption için)."""
+    try:
+        u = "https://api.openverse.org/v1/images/?q=" + query.replace(" ", "+") + "&license_type=commercial&size=medium&page_size=6"
+        r = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent":"tabserve-blog/1.0"}), timeout=20).read())
+        for it in r.get("results", []):
+            img = it.get("url", "")
+            if img.lower().split("?")[0].endswith((".jpg", ".jpeg", ".png", ".webp")):
+                return {"url": img, "creator": it.get("creator") or "Unknown", "license": (it.get("license") or "CC").upper()}
+    except Exception as e:
+        print(f"  (görsel atlandı: {type(e).__name__})")
+    return None
+
 def write_post(d, app):
     slug = d["slug"]; url = f"{SITE}/blog/{slug}/"
-    body = d["body"].replace("{{APP_CTA}}", APPS[app]["cta"])
+    body = insert_cta(d["body"], APPS[app]["cta"])
+    ogimg = f"{SITE}/assets/tabserve-og.png"
+    img = get_image((d.get("keywords","").split(",")[0].strip()) or d["title"])
+    if img:
+        fig = (f'<figure class="hero"><img src="{html.escape(img["url"])}" alt="{html.escape(d["title"])}" '
+               f'loading="eager" width="1200" height="630"><figcaption>{html.escape(d["meta_description"])} '
+               f'— Photo: {html.escape(img["creator"])} (Openverse, {html.escape(img["license"])})</figcaption></figure>')
+        body = fig + body; ogimg = img["url"]
+        print(f"  🖼  görsel: {img['creator']}")
     today = datetime.date.today()
     schema = json.dumps({"@context":"https://schema.org","@type":"Article","headline":d["title"],
-        "description":d["meta_description"],"author":{"@type":"Organization","name":"Tabserve"},
+        "description":d["meta_description"],"image":ogimg,"author":{"@type":"Organization","name":"Tabserve"},
         "publisher":{"@type":"Organization","name":"Tabserve","logo":{"@type":"ImageObject","url":f"{SITE}/assets/tabserve-og.png"}},
         "datePublished":today.isoformat(),"dateModified":today.isoformat(),"mainEntityOfPage":url}, ensure_ascii=False)
     read = max(4, round(words(body)/180))
     page = (PAGE.replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
-        .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url)
+        .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
         .replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"][:40]))
         .replace("__TAG__", APPS[app]["tag"]).replace("__READ__", str(read))
         .replace("__NICE__", today.strftime("%B %Y")).replace("__BODY__", body))

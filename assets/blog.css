@@ -22,6 +22,9 @@ nav .nwrap{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;align-item
 .crumb a{color:var(--accent3);text-decoration:none}
 h1.title{font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:14px}
 .meta{font-size:14px;color:var(--muted);margin-bottom:30px}
+figure.hero{margin:6px 0 28px}
+figure.hero img{width:100%;height:auto;border-radius:16px;border:1px solid var(--line);display:block;background:var(--card)}
+figure.hero figcaption{margin-top:9px;font-size:13px;color:var(--muted);line-height:1.5;text-align:center}
 article.post p,article.post li{color:#cfd6ea;font-size:17px;margin-bottom:18px}
 article.post h2{font-family:'Sora',sans-serif;font-size:25px;margin:36px 0 12px;letter-spacing:-.01em}
 article.post h3{font-family:'Sora',sans-serif;font-size:20px;margin:26px 0 10px;color:#dfe5f5}
