@@ -24,12 +24,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install deps (Google Indexing)
+        run: pip install -r _gen/requirements.txt
       - name: Generate post(s)
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_COUNT: ${{ github.event.inputs.count || '3' }}
         run: python -u _gen/generate.py
+      - name: Ping Google Indexing + IndexNow
+        env:
+          GOOGLE_INDEXING_SA: ${{ secrets.GOOGLE_INDEXING_SA }}
+        run: python -u _gen/index_ping.py
       - name: Commit & push
         run: |
           [ -n "$(git status --porcelain)" ] || { echo "yeni içerik yok"; exit 0; }

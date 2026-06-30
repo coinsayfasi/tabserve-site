@@ -348,7 +348,7 @@ def main():
     if not (os.environ.get("GEMINI_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")):
         sys.exit("⚠️ GEMINI_API_KEY (ücretsiz) veya ANTHROPIC_API_KEY gerekli")
     state = load(STATE_F, {"used":[]}); used = set(state["used"])
-    n = int(os.environ.get("BLOG_COUNT","1")); made = 0
+    n = int(os.environ.get("BLOG_COUNT","1")); made = 0; new_urls = []
     for topic in TOPICS:
         if made >= n: break
         if topic["keyword"] in used: continue
@@ -370,6 +370,7 @@ def main():
         posts.insert(0, {"slug":d["slug"],"title":d["title"],"desc":d["meta_description"],
                          "tag":APPS[app]["tag"],"date":datetime.date.today().isoformat()})
         used.add(kw); made += 1
+        new_urls.append(f"{SITE}/blog/{d['slug']}/")
         print(f"  ✓ yayınlandı: /blog/{d['slug']}/")
     # dedup posts by slug (en yeni kalsın)
     seen=set(); uniq=[]
@@ -379,6 +380,7 @@ def main():
     POSTS_F.write_text(json.dumps(uniq, ensure_ascii=False, indent=1), encoding="utf-8")
     STATE_F.write_text(json.dumps({"used":list(used)}, ensure_ascii=False, indent=1), encoding="utf-8")
     rebuild_index(uniq)
+    (GEN / "new_urls.txt").write_text("\n".join(new_urls), encoding="utf-8")  # index_ping.py için
     print(f"\n✓ {made} yeni yazı · toplam {len(uniq)} · {len(used)}/{len(TOPICS)} konu kullanıldı")
 
 if __name__ == "__main__":
