@@ -66,7 +66,11 @@ def main():
         desc = meta(h, r'og:description["\']\s+content=["\'](.*?)["\']', r'name=["\']description["\']\s+content=["\'](.*?)["\']')
         ogimg = meta(h, r'og:image["\']\s+content=["\'](.*?)["\']')
         tags = TAG_HASH.get(pm.get(slug, {}).get("tag", ""), "#travel #blog")
-        text = f"📝 {title}\n\n{desc[:150]} 👇\n\n{tags}"[:295]
+        app = ("OneBag" if "coinsayfasi.github.io/onebag/" in h else
+               "Routevia" if "/routevia-app/" in h else
+               "RentFlow" if "/rentflow/" in h else "")
+        cta = f"📲 Get {app} free 👇" if app else "👇"
+        text = f"📝 {title}\n\n{desc[:105]}\n{cta}\n\n{tags}"[:295]
         thumb = None
         if ogimg:
             try:
