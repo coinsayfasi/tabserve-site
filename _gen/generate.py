@@ -53,6 +53,7 @@ STRICT RULES — follow every one:
 5. End with a short concluding paragraph.
 6. ORIGINAL and specific — real, useful guidance. Do NOT fabricate statistics, studies, prices or quotes. No repetition, no "spun"/generic filler.
 7. Allowed body tags ONLY: h2, h3, h4, h5, p, ul, li, strong, a. No markdown, no <h1>, no <html>/<head>/<style>.
+8. Include 1-2 outbound links to GENUINELY AUTHORITATIVE, relevant external sources to back up the content (e.g. an official tourism board, a government/regulator page, or a relevant Wikipedia article). Only use well-known, stable URLs you are confident exist — prefer https://en.wikipedia.org/wiki/<Topic> or an official site's homepage; NEVER invent specific deep URLs. Place them naturally inside sentences, not in headings.
 
 Output ONLY valid minified JSON (no code fences, no commentary), exactly these keys:
 {{"title":"...","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","body":"the article HTML"}}"""
