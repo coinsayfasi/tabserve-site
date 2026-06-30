@@ -79,3 +79,7 @@ footer a:hover{color:var(--ink)}
 .share-rail a{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--muted);text-decoration:none;font-weight:700;font-size:14px;backdrop-filter:blur(10px);transition:all .2s}
 .share-rail a:hover{color:#fff;border-color:var(--accent);background:rgba(106,155,255,.18);transform:scale(1.1)}
 @media(max-width:1080px){.share-rail{display:none}}
+/* SVG ikon butonlar (paylaş + takip) */
+.share a.ico,.follow a.ico{width:40px;height:40px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
+.share a.ico:hover,.follow a.ico:hover{color:#fff}
+.share a svg,.follow a svg,.share-rail a svg{display:block}
