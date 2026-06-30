@@ -127,6 +127,18 @@ footer a{color:var(--muted);text-decoration:none;margin:0 9px}
 footer a:hover{color:var(--ink)}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card,.reveal{opacity:1;transform:none}}
+
+.site-footer{margin-top:64px;border-top:1px solid var(--line);background:rgba(255,255,255,.015)}
+.foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:32px;padding:46px 22px 32px;max-width:1080px;margin:0 auto}
+.foot-brand .logo{display:inline-flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:var(--ink);text-decoration:none}
+.foot-brand .logo img{width:30px;height:30px;border-radius:8px}
+.foot-brand p{color:var(--muted);font-size:14px;margin-top:12px;max-width:280px;line-height:1.6}
+.foot-col h4{font-family:'Sora',sans-serif;font-size:12.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);margin-bottom:14px}
+.foot-col a{display:block;color:var(--muted);text-decoration:none;font-size:14px;margin-bottom:11px;transition:color .2s}
+.foot-col a:hover{color:var(--ink)}
+.foot-bottom{border-top:1px solid var(--line)}
+.foot-bottom .wrap{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;font-size:13px;color:var(--muted);max-width:1080px;margin:0 auto}
+@media(max-width:640px){.foot-grid{grid-template-columns:1fr 1fr;gap:26px}.foot-brand{grid-column:1/-1}.foot-bottom .wrap{flex-direction:column;gap:8px;text-align:center}}
 </style>
 </head>
 <body>
@@ -217,15 +229,30 @@ footer a:hover{color:var(--ink)}
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <a href="/blog/">Blog</a> ·
-    <a href="/privacy.html">Privacy</a> ·
-    <a href="https://coinsayfasi.github.io/onebag/">OneBag</a> ·
-    <a href="https://coinsayfasi.github.io/routevia-app/">Routevia</a> ·
-    <a href="https://coinsayfasi.github.io/rentflow/">RentFlow</a><br>
-    <span style="opacity:.7">© 2026 Tabserve · Built by Yunus Güneş</span>
+<footer class="site-footer">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="logo" href="/"><img src="/assets/logo.svg" alt="" width="30" height="30">Tabserve</a>
+      <p>Simple, useful mobile apps for travel, trips and rentals — free to start on iOS &amp; Android.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Apps</h4>
+      <a href="https://coinsayfasi.github.io/onebag/">OneBag</a>
+      <a href="https://coinsayfasi.github.io/routevia-app/">Routevia</a>
+      <a href="https://coinsayfasi.github.io/rentflow/">RentFlow</a>
+    </div>
+    <div class="foot-col">
+      <h4>Company</h4>
+      <a href="/blog/">Blog</a>
+      <a href="/#about">About</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="mailto:hello@tabserve.com.tr">Contact</a>
+    </div>
   </div>
+  <div class="foot-bottom"><div class="wrap">
+    <span>© 2026 Tabserve · Built by Yunus Güneş</span>
+    <span>Made with ♥ in Türkiye</span>
+  </div></div>
 </footer>
 
 <script>
