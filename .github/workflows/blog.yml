@@ -29,7 +29,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_COUNT: ${{ github.event.inputs.count || '1' }}
-        run: python _gen/generate.py
+        run: python -u _gen/generate.py
       - name: Commit & push
         run: |
           [ -n "$(git status --porcelain)" ] || { echo "yeni içerik yok"; exit 0; }

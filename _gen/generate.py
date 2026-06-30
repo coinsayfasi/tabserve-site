@@ -62,7 +62,7 @@ def _post(url, body, headers):
     req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method="POST")
     for attempt in range(4):
         try:
-            return json.loads(urllib.request.urlopen(req, timeout=120).read())
+            return json.loads(urllib.request.urlopen(req, timeout=45).read())
         except urllib.error.HTTPError as e:
             if e.code in (429,529,500,503) and attempt < 3:
                 time.sleep(8*(attempt+1)); continue
