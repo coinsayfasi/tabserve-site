@@ -89,7 +89,7 @@ h1{font-size:clamp(36px,6.5vw,64px);font-weight:800;letter-spacing:-.03em;line-h
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;padding:42px 0 10px;perspective:1200px}
 .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;display:flex;flex-direction:column;backdrop-filter:blur(14px);overflow:hidden;opacity:0;transform:translateY(30px);transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s,box-shadow .25s;transform-style:preserve-3d}
 .card.in{opacity:1;transform:none}
-.card::after{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;background:linear-gradient(130deg,transparent,rgba(106,155,255,.55),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s}
+.card::after{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;background:linear-gradient(130deg,transparent,rgba(106,155,255,.55),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;pointer-events:none}
 .card:hover{box-shadow:0 28px 70px rgba(0,0,0,.5)}
 .card:hover::after{opacity:1}
 .ic{width:78px;height:78px;border-radius:20px;margin-bottom:18px;box-shadow:0 10px 28px rgba(0,0,0,.42);transition:transform .3s;transform:translateZ(40px)}
