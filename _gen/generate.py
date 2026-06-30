@@ -11,7 +11,7 @@ import os, re, sys, json, html, time, datetime, urllib.request, urllib.error, ur
 from pathlib import Path
 
 SOCIAL = [("YouTube","https://youtube.com/@tabserve"),("Instagram","https://instagram.com/tabservee"),
-          ("TikTok","https://tiktok.com/@tabserve"),("Bluesky","https://bsky.app/profile/tabserve.bsky.social")]
+          ("TikTok","https://tiktok.com/@tabserve"),("Bluesky","https://bsky.app/profile/tabserve.bsky.social"),("Pinterest","https://pinterest.com/nedir_nasil")]
 
 def post_extras(url, title):
     """Alt paylaş çubuğu + yazar kutusu (body sonu) ve sol kayan çubuk (rail) HTML'i."""
