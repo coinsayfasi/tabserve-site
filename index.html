@@ -48,15 +48,15 @@ h1,h2,h3,.brand,.logo,.stat b{font-family:'Sora',sans-serif}
 
 /* aurora bg */
 .aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg)}
-.aurora::before,.aurora::after{content:"";position:absolute;width:60vw;height:60vw;border-radius:50%;filter:blur(95px);opacity:.5;will-change:transform}
-.aurora::before{background:radial-gradient(circle,var(--accent),transparent 60%);top:-15vw;left:-10vw;animation:float1 18s ease-in-out infinite}
-.aurora::after{background:radial-gradient(circle,var(--accent2),transparent 60%);bottom:-20vw;right:-12vw;animation:float2 23s ease-in-out infinite}
+.aurora::before,.aurora::after{content:"";position:absolute;width:60vw;height:60vw;border-radius:50%;filter:blur(60px);opacity:.5;will-change:transform}
+.aurora::before{background:radial-gradient(circle,var(--accent),transparent 60%);top:-15vw;left:-10vw;animation:float1 28s ease-in-out infinite}
+.aurora::after{background:radial-gradient(circle,var(--accent2),transparent 60%);bottom:-20vw;right:-12vw;animation:float2 32s ease-in-out infinite}
 .grid-tex{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(ellipse at 50% 0%,#000,transparent 72%)}
-@keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vw) scale(1.18)}}
-@keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-7vw,-5vw) scale(1.12)}}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(6vw,4vw)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-5vw,-4vw)}}
 
 /* nav */
-nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:rgba(7,11,24,.55);border-bottom:1px solid var(--line)}
+nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(8px);background:rgba(7,11,24,.55);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
 .logo img{width:28px;height:28px;border-radius:8px}
@@ -87,7 +87,7 @@ h1{font-size:clamp(36px,6.5vw,64px);font-weight:800;letter-spacing:-.03em;line-h
 
 /* app cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;padding:42px 0 10px;perspective:1200px}
-.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;display:flex;flex-direction:column;backdrop-filter:blur(14px);overflow:hidden;opacity:0;transform:translateY(30px);transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s,box-shadow .25s;transform-style:preserve-3d}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;display:flex;flex-direction:column;backdrop-filter:blur(8px);overflow:hidden;opacity:0;transform:translateY(30px);transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s,box-shadow .25s;transform-style:preserve-3d}
 .card.in{opacity:1;transform:none}
 .card::after{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;background:linear-gradient(130deg,transparent,rgba(106,155,255,.55),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;pointer-events:none}
 .card:hover{box-shadow:0 28px 70px rgba(0,0,0,.5)}
