@@ -193,22 +193,30 @@ def insert_cta(body, cta):
         i = pos[len(pos)//2]; return body[:i] + cta + body[i:]
     return body + cta
 
-def get_images(query, n=3):
-    """Openverse'ten anahtarsız CC-lisanslı görseller (alt+figcaption için)."""
+def _openverse(q, n):
     out = []
     try:
-        u = "https://api.openverse.org/v1/images/?q=" + query.replace(" ", "+") + "&license_type=commercial&size=medium&page_size=18"
+        u = "https://api.openverse.org/v1/images/?q=" + q.replace(" ", "+") + "&license_type=commercial&size=medium&page_size=18"
         r = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent":"tabserve-blog/1.0"}), timeout=20).read())
         seen = set()
         for it in r.get("results", []):
-            img = it.get("url", "")
-            if img and img not in seen and img.lower().split("?")[0].endswith((".jpg", ".jpeg", ".png", ".webp")):
+            img = it.get("url") or it.get("thumbnail") or ""
+            if img and img not in seen:
                 seen.add(img)
                 out.append({"url": img, "creator": it.get("creator") or "Unknown", "license": (it.get("license") or "CC").upper()})
             if len(out) >= n: break
     except Exception as e:
-        print(f"  (görsel atlandı: {type(e).__name__})")
+        print(f"  (görsel hata: {type(e).__name__})")
     return out
+
+def get_images(query, n=3, fallback="travel"):
+    """Anahtarsız Openverse görselleri — uzun sorgu sonuç vermezse kısaltıp/fallback dener."""
+    ws = query.split()
+    for q in [" ".join(ws[:3]), " ".join(ws[:2]), fallback]:
+        if not q.strip(): continue
+        out = _openverse(q, n)
+        if out: return out
+    return []
 
 def _figure(img, alt, caption_text, hero=False):
     cap = (html.escape(caption_text) + " — " if caption_text else "") + f"Photo: {html.escape(img['creator'])} (Openverse, {html.escape(img['license'])})"
@@ -225,7 +233,8 @@ def write_post(d, app):
     slug = d["slug"]; url = f"{SITE}/blog/{slug}/"
     body = insert_cta(d["body"], APPS[app]["cta"])
     ogimg = f"{SITE}/assets/tabserve-og.png"
-    imgs = get_images((d.get("keywords","").split(",")[0].strip()) or d["title"], 3)
+    fb = {"onebag":"travel suitcase","routevia":"Turkey landscape","rentflow":"apartment building"}.get(app, "travel")
+    imgs = get_images((d.get("keywords","").split(",")[0].strip()) or d["title"], 3, fb)
     if imgs:
         body = _figure(imgs[0], d["title"], d["meta_description"], hero=True) + body  # hero (en üst)
         ogimg = imgs[0]["url"]
