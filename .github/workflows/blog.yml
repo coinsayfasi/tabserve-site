@@ -30,8 +30,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          BLOG_COUNT: ${{ github.event.inputs.count || '3' }}
-          BLOG_PER_APP: "1"
+          BLOG_COUNT: ${{ github.event.inputs.count || '1' }}
         run: python -u _gen/generate.py
       - name: Ping Google Indexing + IndexNow
         env:
