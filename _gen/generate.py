@@ -17,9 +17,14 @@ TOPICS = json.loads((GEN / "topics.json").read_text(encoding="utf-8"))
 POSTS_F = GEN / "posts.json"
 STATE_F = GEN / "state.json"
 SITE = "https://apps.tabserve.com.tr"
-# Sağlayıcı: GEMINI (ücretsiz) öncelikli; yoksa Claude. Model env ile değişebilir.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+# Sağlayıcı: GEMINI (ücretsiz) öncelikli; yoksa Claude.
+# Fallback zinciri — bir model deprecate olursa sıradakini dener (routevia prod gemini-flash-latest kullanıyor).
+GEMINI_CANDIDATES = [m for m in [
+    os.environ.get("GEMINI_MODEL"), "gemini-flash-latest", "gemini-3.5-flash",
+    "gemini-flash-lite-latest", "gemini-3.1-flash-lite", "gemini-2.5-flash", "gemini-pro-latest",
+] if m]
 CLAUDE_MODEL = os.environ.get("BLOG_MODEL", "claude-sonnet-4-6")
+_gemini_ok = None  # çalıştığı doğrulanan model (cache)
 
 APPS = {
  "onebag":  {"tag":"Travel · OneBag",   "cta":'<div class="appcta"><b>🧳 Pack carry-on with confidence</b><p>OneBag builds a smart carry-on packing list for your exact trip and tracks your bag\'s weight against 80+ airlines\' limits — so you never forget an essential or pay an overweight fee.</p><a href="https://coinsayfasi.github.io/onebag/">See OneBag packing guides →</a></div>',
@@ -64,10 +69,26 @@ def _post(url, body, headers):
     raise RuntimeError("API başarısız")
 
 def call_gemini(prompt, key):
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={key}"
-    r = _post(url, {"contents":[{"parts":[{"text":prompt}]}],
-                    "generationConfig":{"maxOutputTokens":3000,"temperature":0.7}}, {"content-type":"application/json"})
-    return r["candidates"][0]["content"]["parts"][0]["text"]
+    global _gemini_ok
+    cands = ([_gemini_ok] if _gemini_ok else []) + [m for m in GEMINI_CANDIDATES if m != _gemini_ok]
+    last = None
+    for m in cands:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={key}"
+        try:
+            r = _post(url, {"contents":[{"parts":[{"text":prompt}]}],
+                            "generationConfig":{"maxOutputTokens":4096,"temperature":0.75}},
+                      {"content-type":"application/json"})
+            cands_out = r.get("candidates")
+            if not cands_out or not cands_out[0].get("content",{}).get("parts"):
+                last = RuntimeError(f"{m}: boş yanıt ({r.get('promptFeedback','')})"); continue
+            _gemini_ok = m
+            print(f"  (model: {m})")
+            return cands_out[0]["content"]["parts"][0]["text"]
+        except urllib.error.HTTPError as e:
+            if e.code == 404:  # model deprecate/erişilemez → sıradakini dene
+                last = e; continue
+            raise
+    raise last or RuntimeError("hiçbir Gemini modeli çalışmadı")
 
 def call_claude(prompt, key):
     r = _post("https://api.anthropic.com/v1/messages",
@@ -114,7 +135,7 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:title" content="__TITLE__">
 <meta property="og:description" content="__DESC__">
 <meta property="og:url" content="__URL__">
-<link rel="icon" type="image/png" href="/assets/onebag.png">
+<link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -124,7 +145,7 @@ PAGE = """<!DOCTYPE html>
 <body>
 <div class="aurora"></div>
 <nav><div class="nwrap">
-  <a class="logo" href="/"><img src="/assets/onebag.png" alt="">Tabserve</a>
+  <a class="logo" href="/"><img src="/assets/logo.svg" alt="">Tabserve</a>
   <div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:hello@tabserve.com.tr">Contact</a></div>
 </div></nav>
 <main class="wrap page">
@@ -149,7 +170,7 @@ def write_post(d, app):
     today = datetime.date.today()
     schema = json.dumps({"@context":"https://schema.org","@type":"Article","headline":d["title"],
         "description":d["meta_description"],"author":{"@type":"Organization","name":"Tabserve"},
-        "publisher":{"@type":"Organization","name":"Tabserve","logo":{"@type":"ImageObject","url":f"{SITE}/assets/onebag.png"}},
+        "publisher":{"@type":"Organization","name":"Tabserve","logo":{"@type":"ImageObject","url":f"{SITE}/assets/tabserve-og.png"}},
         "datePublished":today.isoformat(),"dateModified":today.isoformat(),"mainEntityOfPage":url}, ensure_ascii=False)
     read = max(4, round(words(body)/180))
     page = (PAGE.replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
@@ -170,13 +191,13 @@ def rebuild_index(posts):
 <title>Blog — Travel, trips &amp; landlord tips | Tabserve</title>
 <meta name="description" content="Practical guides on carry-on packing, Türkiye travel and managing rental property — from the makers of OneBag, Routevia and RentFlow.">
 <link rel="canonical" href="{SITE}/blog/">
-<link rel="icon" type="image/png" href="/assets/onebag.png">
+<link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/blog.css"></head>
 <body>
 <div class="aurora"></div>
-<nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/onebag.png" alt="">Tabserve</a>
+<nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/logo.svg" alt="">Tabserve</a>
 <div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:hello@tabserve.com.tr">Contact</a></div></div></nav>
 <main class="wrap page">
   <div class="crumb"><a href="/">Home</a> › Blog</div>
