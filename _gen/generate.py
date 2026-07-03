@@ -187,13 +187,15 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:description" content="__DESC__">
 <meta property="og:url" content="__URL__">
 <meta property="og:image" content="__OGIMG__">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="__OGIMG__">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css?v=4">
+<link rel="stylesheet" href="/assets/blog.css?v=5">
 <script type="application/ld+json">__SCHEMA__</script>
-<script src="/assets/analytics.js" defer></script>
+<script src="/assets/analytics.js" defer></script><script src="/assets/enhance.js" defer></script>
 </head>
 <body>
 <div class="aurora"></div>
@@ -438,7 +440,11 @@ def write_post(d, app, posts=()):
         "datePublished":today.isoformat(),"dateModified":today.isoformat(),"mainEntityOfPage":url}]
     faq = faq_schema(body)
     if faq: schemas.append(faq)
-    schema = json.dumps(schemas if len(schemas) > 1 else schemas[0], ensure_ascii=False)
+    schemas.append({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":f"{SITE}/"},
+        {"@type":"ListItem","position":2,"name":"Blog","item":f"{SITE}/blog/"},
+        {"@type":"ListItem","position":3,"name":d["title"]}]})
+    schema = json.dumps(schemas, ensure_ascii=False)
     read = max(4, round(words(body)/180))
     extras, rail = post_extras(url, d["title"])
     body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + extras
@@ -494,7 +500,7 @@ def rebuild_index(posts):
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css?v=4"><script src="/assets/analytics.js" defer></script>
+<link rel="stylesheet" href="/assets/blog.css?v=5"><script src="/assets/analytics.js" defer></script><script src="/assets/enhance.js" defer></script>
 </head>
 <body>
 <div class="aurora"></div>
