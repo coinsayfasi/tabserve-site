@@ -94,8 +94,14 @@ STRICT RULES — follow every one:
 1. The target keyword "{kw}" must appear in the TITLE and be the clear topic. The title doubles as the page H1 — do NOT output an <h1>.
 2. Length: 600-800 words of real body text (count WORDS, not characters). Do not pad with fluff.
 3. Heading hierarchy: use 4-6 <h2> headings (natural keyword variations), <h3> subheadings under H2s, and at least one deeper <h4> (use <h5> only where it genuinely helps). Logical nesting H2 > H3 > H4.
-4. End with a short concluding paragraph.
+4. End with an <h2>Frequently Asked Questions</h2> section: 3 questions — each question as <h3>, its answer as a <p>. Then a short concluding paragraph.
+4b. Right AFTER the intro paragraph add a "Key Takeaways" box with EXACTLY this structure:
+<div class="quickfacts"><h2>Key Takeaways</h2><ul>
+<li>...</li><li>...</li><li>...</li>
+</ul></div>
+(3-5 bullets, each a concrete, actionable point from the article.)
 5. ORIGINAL and specific — real, useful guidance. Do NOT fabricate statistics, studies, prices or quotes. No repetition, no "spun"/generic filler.
+5b. BANNED phrases: "unforgettable experience", "breathtaking", "hidden gem", "must-see", "look no further", "in today's world". Replace hype with concrete utility: which entrance, morning vs afternoon, how long it takes, walking distances, whether it suits kids, parking/transit notes.
 6. Allowed body tags ONLY: h2, h3, h4, h5, p, ul, li, strong, a. No markdown, no <h1>, no <html>/<head>/<style>.
 7. Include 1-2 outbound links to GENUINELY AUTHORITATIVE, relevant external sources to back up the content (e.g. an official tourism board, a government/regulator page, or a relevant Wikipedia article). Only use well-known, stable URLs you are confident exist — prefer https://en.wikipedia.org/wiki/<Topic> or an official site's homepage; NEVER invent specific deep URLs. Place them naturally inside sentences, not in headings.
 
@@ -291,7 +297,33 @@ def _h2_text(body, p):
     m = re.match(r'<h2[^>]*>(.*?)</h2>', body[p:], re.S)
     return re.sub(r'<[^>]+>', '', m.group(1)).strip() if m else ''
 
-def write_post(d, app):
+def faq_schema(body):
+    """FAQPage JSON-LD from the article's own FAQ section (rich results)."""
+    m = re.search(r'<h2[^>]*>[^<]*Frequently Asked Questions[^<]*</h2>([\s\S]*)', body, re.I)
+    if not m: return None
+    strip = lambda s: re.sub(r'<[^>]+>', '', s).strip()
+    qas = re.findall(r'<h3[^>]*>([\s\S]*?)</h3>\s*<p[^>]*>([\s\S]*?)</p>', m.group(1))
+    items = [{"@type":"Question","name":strip(q),
+              "acceptedAnswer":{"@type":"Answer","text":strip(a)}}
+             for q, a in qas if strip(q) and strip(a)]
+    if not items: return None
+    return {"@context":"https://schema.org","@type":"FAQPage","mainEntity":items}
+
+def related_block(posts, current_slug, tag=None, n=4):
+    """'Related Guides' — iç linkleme; aynı etiketli yazılar önceliklidir."""
+    others = [p for p in posts if p["slug"] != current_slug]
+    if tag:
+        same = [p for p in others if p.get("tag") == tag]
+        rest = [p for p in others if p.get("tag") != tag]
+        others = same + rest
+    others = others[:n]
+    if not others: return ""
+    lis = "".join(f'<li><a href="/blog/{p["slug"]}/">{html.escape(p["title"])}</a></li>'
+                  for p in others)
+    return ('<section class="related"><h2>Related Guides</h2><ul>'
+            + lis + '</ul></section>')
+
+def write_post(d, app, posts=()):
     slug = d["slug"]; url = f"{SITE}/blog/{slug}/"
     body = insert_cta(d["body"], APPS[app]["cta"])
     ogimg = f"{SITE}/assets/tabserve-og.png"
@@ -306,13 +338,16 @@ def write_post(d, app):
             print(f"  🖼  manuel görsel: {rel}")
             break
     today = datetime.date.today()
-    schema = json.dumps({"@context":"https://schema.org","@type":"Article","headline":d["title"],
+    schemas = [{"@context":"https://schema.org","@type":"Article","headline":d["title"],
         "description":d["meta_description"],"image":ogimg,"author":{"@type":"Organization","name":"Tabserve"},
         "publisher":{"@type":"Organization","name":"Tabserve","logo":{"@type":"ImageObject","url":f"{SITE}/assets/tabserve-og.png"}},
-        "datePublished":today.isoformat(),"dateModified":today.isoformat(),"mainEntityOfPage":url}, ensure_ascii=False)
+        "datePublished":today.isoformat(),"dateModified":today.isoformat(),"mainEntityOfPage":url}]
+    faq = faq_schema(body)
+    if faq: schemas.append(faq)
+    schema = json.dumps(schemas if len(schemas) > 1 else schemas[0], ensure_ascii=False)
     read = max(4, round(words(body)/180))
     extras, rail = post_extras(url, d["title"])
-    body = body + extras  # alt paylaş çubuğu + yazar kutusu (Follow Us)
+    body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + extras
     page = (PAGE.replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
         .replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"][:40]))
@@ -326,9 +361,9 @@ SEARCH = """
   <input id="q" type="search" placeholder="Search articles…" aria-label="Search articles" autocomplete="off"
     style="width:100%;box-sizing:border-box;padding:13px 20px 13px 46px;border-radius:999px;border:1px solid rgba(120,120,140,.28);background:rgba(255,255,255,.75);font:inherit;font-size:15px;outline:none">
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:17px;top:50%;transform:translateY(-50%);opacity:.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-  <p id="qn" hidden style="text-align:center;color:var(--muted);margin:14px 0 0">No results — try a different word.</p>
+  <p id="qn" style="display:none;text-align:center;color:var(--muted);margin:14px 0 0">No results — try a different word.</p>
 </div>
-<script>document.addEventListener('DOMContentLoaded',function(){var q=document.getElementById('q');if(!q)return;var cards=[].slice.call(document.querySelectorAll('.pcard')),qn=document.getElementById('qn');q.addEventListener('input',function(){var v=q.value.trim().toLowerCase(),n=0;cards.forEach(function(c){var h=!v||c.textContent.toLowerCase().indexOf(v)>-1;c.style.display=h?'':'none';if(h)n++});qn.hidden=n>0||!v});});</script>
+<script>document.addEventListener('DOMContentLoaded',function(){var q=document.getElementById('q');if(!q)return;var cards=[].slice.call(document.querySelectorAll('.pcard')),qn=document.getElementById('qn');q.addEventListener('input',function(){var v=q.value.trim().toLowerCase(),n=0;cards.forEach(function(c){var h=!v||c.textContent.toLowerCase().indexOf(v)>-1;c.style.display=h?'':'none';if(h)n++});qn.style.display=(n>0||!v)?'none':'block'});});</script>
 """
 
 def rebuild_index(posts):
@@ -429,7 +464,7 @@ def main():
         if not d:
             print("  ⚠️ bu konu atlandı (kalite tutmadı)"); used.add(kw); continue
         d["slug"] = slugify(d.get("slug") or d["title"])
-        write_post(d, app)
+        write_post(d, app, posts)
         posts.insert(0, {"slug":d["slug"],"title":d["title"],"desc":d["meta_description"],
                          "tag":APPS[app]["tag"],"date":datetime.date.today().isoformat()})
         used.add(kw); made += 1
