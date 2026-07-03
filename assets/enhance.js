@@ -44,25 +44,29 @@ document.addEventListener("DOMContentLoaded",function(){
     var meta=art.querySelector(".meta"); if(meta) meta.parentNode.insertBefore(pb, meta.nextSibling);
   }
 
-  /* 5) Canlı döviz şeridi (yalnız TR site; 6 saat önbellek, keysiz frankfurter.dev) */
+  /* 5) Canlı döviz şeridi — önce SAME-ORIGIN proxy (/api/fx, engellenemez), yedek: frankfurter */
   if(art && TR){
-    function showFx(d){
+    var showFx=function(d){
       var usd=(1/d.rates.USD).toFixed(1), eur=(1/d.rates.EUR).toFixed(1);
       var el=document.createElement("div"); el.className="fxstrip";
       el.innerHTML="💱 Güncel kur: <span>1 $ ≈ <b>"+usd+" ₺</b></span><span>1 € ≈ <b>"+eur+" ₺</b></span>";
-      var qf=art.querySelector(".quickfacts"); (qf||art.firstElementChild).insertAdjacentElement("afterend", el);
+      var qf=art.querySelector(".quickfacts");
+      (qf||art.firstElementChild).insertAdjacentElement("afterend", el);
+    };
+    var saveShow=function(d){ try{localStorage.setItem("fx",JSON.stringify({t:Date.now(),d:d}))}catch(e){} showFx(d); };
+    var c=null; try{ c=JSON.parse(localStorage.getItem("fx")||"null"); }catch(e){}
+    if(c && c.d && c.d.rates && Date.now()-c.t<216e5){ showFx(c.d); }
+    else{
+      fetch("/api/fx").then(function(r){return r.json()}).then(function(r){
+        if(!r||!r.rates||!r.rates.TRY) throw 0;
+        saveShow({rates:{USD:1/r.rates.TRY, EUR:r.rates.EUR/r.rates.TRY}});
+      }).catch(function(){
+        fetch("https://api.frankfurter.dev/v1/latest?base=TRY&symbols=USD,EUR")
+          .then(function(r){return r.json()})
+          .then(function(d){ if(d&&d.rates&&d.rates.USD) saveShow(d); })
+          .catch(function(){});
+      });
     }
-    try{
-      var c=JSON.parse(localStorage.getItem("fx")||"null");
-      if(c && Date.now()-c.t<216e5){ showFx(c.d); }
-      else fetch("https://api.frankfurter.dev/v1/latest?base=TRY&symbols=USD,EUR").then(function(r){return r.json()})
-        .then(function(d){ if(!d||!d.rates||!d.rates.USD) throw 0;
-          localStorage.setItem("fx",JSON.stringify({t:Date.now(),d:d})); showFx(d); })
-        .catch(function(){ fetch("https://open.er-api.com/v6/latest/USD").then(function(r){return r.json()})
-          .then(function(r){ if(!r||!r.rates||!r.rates.TRY) return;
-            var d={rates:{USD:1/r.rates.TRY, EUR:r.rates.EUR/r.rates.TRY}};
-            localStorage.setItem("fx",JSON.stringify({t:Date.now(),d:d})); showFx(d); }).catch(function(){}); });
-    }catch(e){}
   }
 
   /* 3) Mobil yapışkan indir çubuğu — %35 kaydırınca, kapatılabilir (7 gün hatırlar) */
