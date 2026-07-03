@@ -1,5 +1,5 @@
 :root{
-  --bg:#fbfaf7;--card:#ffffff;--ink:#1f2733;--muted:#69727f;
+  --bg:#fbfaf7;--card:#ffffff;--ink:#1f2733;--muted:#5b6470;
   --accent:#2f6bff;--accent2:#8b5cf6;--accent3:#2563eb;--line:#ece8e1;
   --shadow:0 6px 24px rgba(31,39,51,.07);--shadow-h:0 16px 44px rgba(47,107,255,.16);
 }
@@ -157,7 +157,7 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 .appbadges .ghost{color:var(--accent);padding:10px 4px}
 
 /* Okuma ilerleme çubuğu */
-#rprog{position:fixed;top:0;left:0;height:3px;width:0;z-index:70;background:linear-gradient(90deg,var(--accent3),var(--accent),var(--accent2))}
+#rprog{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;will-change:transform;z-index:70;background:linear-gradient(90deg,var(--accent3),var(--accent),var(--accent2))}
 
 /* İçindekiler kutusu */
 .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 20px;margin:26px 0;box-shadow:var(--shadow)}
@@ -199,3 +199,6 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 .chiplbl{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:12px}
 .chips a b{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;margin-left:8px;border-radius:999px;background:rgba(47,107,255,.1);color:var(--accent);font-size:11.5px;font-weight:800}
 .chips a:hover b{background:var(--accent);color:#fff}
+
+/* footer sözde-başlık (a11y: h4 sıçraması yerine) */
+.foot-col .fh{font-family:'Sora',sans-serif;font-size:12.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);margin-bottom:14px;font-weight:700}

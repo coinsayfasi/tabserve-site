@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded",function(){
     var bar=document.createElement("div"); bar.id="rprog"; document.body.appendChild(bar);
     addEventListener("scroll",function(){
       var h=document.documentElement;
-      bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%";
+      bar.style.transform="scaleX("+(h.scrollTop/(h.scrollHeight-h.clientHeight))+")";
     },{passive:true});
   }
 

@@ -72,11 +72,11 @@ CLAUDE_MODEL = os.environ.get("BLOG_MODEL", "claude-sonnet-4-6")
 _gemini_ok = None  # çalıştığı doğrulanan model (cache)
 
 APPS = {
- "onebag":  {"tag":"Travel · OneBag",   "cta":'<div class="appcta"><b>🧳 Pack carry-on with confidence</b><p>OneBag builds a smart carry-on packing list for your exact trip and tracks your bag\'s weight against 80+ airlines\' limits — so you never forget an essential or pay an overweight fee.</p><div class="appbadges"><a href="https://apps.apple.com/app/id6761047805" rel="noopener">&#63743; App Store</a><a href="https://play.google.com/store/apps/details?id=com.onebag.travel" rel="noopener">&#9654; Google Play</a><a class="ghost" href="https://coinsayfasi.github.io/onebag/">Learn more →</a></div></div>',
+ "onebag":  {"tag":"Travel · OneBag",   "cta":'<div class="appcta"><b>🧳 Pack carry-on with confidence</b><p>OneBag builds a smart carry-on packing list for your exact trip and tracks your bag\'s weight against 80+ airlines\' limits — so you never forget an essential or pay an overweight fee.</p><div class="appbadges"><a href="https://apps.apple.com/app/id6761047805" rel="noopener" aria-label="OneBag — App Store">&#63743; App Store</a><a href="https://play.google.com/store/apps/details?id=com.onebag.travel" rel="noopener" aria-label="OneBag — Google Play">&#9654; Google Play</a><a class="ghost" href="https://coinsayfasi.github.io/onebag/">Learn more →</a></div></div>',
               "ios":"6761047805","name":"OneBag","one":"a travel packing app with smart carry-on lists and an airline weight tracker"},
- "routevia":{"tag":"Travel · Routevia", "cta":'<div class="appcta"><b>🚗 Discover places &amp; map your route in minutes</b><p>Routevia shows you the best places to visit across Türkiye city by city, then plans an AI-powered route in seconds.</p><div class="appbadges"><a href="https://apps.apple.com/app/id6761003117" rel="noopener">&#63743; App Store</a><a href="https://play.google.com/store/apps/details?id=com.yunusgunes.routevia" rel="noopener">&#9654; Google Play</a><a class="ghost" href="https://coinsayfasi.github.io/routevia-app/">Learn more →</a></div></div>',
+ "routevia":{"tag":"Travel · Routevia", "cta":'<div class="appcta"><b>🚗 Discover places &amp; map your route in minutes</b><p>Routevia shows you the best places to visit across Türkiye city by city, then plans an AI-powered route in seconds.</p><div class="appbadges"><a href="https://apps.apple.com/app/id6761003117" rel="noopener" aria-label="Routevia — App Store">&#63743; App Store</a><a href="https://play.google.com/store/apps/details?id=com.yunusgunes.routevia" rel="noopener" aria-label="Routevia — Google Play">&#9654; Google Play</a><a class="ghost" href="https://coinsayfasi.github.io/routevia-app/">Learn more →</a></div></div>',
               "ios":"6761003117","name":"Routevia","one":"a Türkiye travel app that finds places to visit and plans AI trip routes"},
- "rentflow":{"tag":"Property · RentFlow","cta":'<div class="appcta"><b>🏠 Keep it all in one place</b><p>RentFlow lets you track rent, tenants, leases and expenses without spreadsheets — plus free calculators for rental yield, cash flow and legal rent increases across 18 countries.</p><div class="appbadges"><a href="https://apps.apple.com/app/id6767179451" rel="noopener">&#63743; App Store</a><span class="soon">&#9654; Android soon</span><a class="ghost" href="https://coinsayfasi.github.io/rentflow/">Learn more →</a></div></div>',
+ "rentflow":{"tag":"Property · RentFlow","cta":'<div class="appcta"><b>🏠 Keep it all in one place</b><p>RentFlow lets you track rent, tenants, leases and expenses without spreadsheets — plus free calculators for rental yield, cash flow and legal rent increases across 18 countries.</p><div class="appbadges"><a href="https://apps.apple.com/app/id6767179451" rel="noopener" aria-label="RentFlow — App Store">&#63743; App Store</a><span class="soon">&#9654; Android soon</span><a class="ghost" href="https://coinsayfasi.github.io/rentflow/">Learn more →</a></div></div>',
               "ios":"6767179451","name":"RentFlow","one":"a rental manager for landlords with free yield and cash-flow calculators"},
 }
 
@@ -194,9 +194,10 @@ PAGE = """<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css?v=6">
+<style>:root{--bg:#fbfaf7;--card:#fff;--ink:#1f2733;--muted:#69727f;--accent:#2f6bff;--accent2:#8b5cf6;--accent3:#2563eb;--line:#ece8e1;--shadow:0 6px 24px rgba(31,39,51,.07)}*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}.wrap{max-width:1080px;margin:0 auto;padding:0 22px}nav{position:sticky;top:0;z-index:40;background:rgba(251,250,247,.82);border-bottom:1px solid var(--line)}nav .nwrap{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:64px}.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}.logo img{width:30px;height:30px;border-radius:9px}.nav-links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:600;margin-left:24px}h1,h2{font-family:'Sora',sans-serif}.page{padding:46px 0 30px}.aurora{position:fixed;inset:0;z-index:-2;background:var(--bg)}</style>
+<link rel="preload" href="/assets/blog.css?v=8" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/blog.css?v=8"></noscript>
 <script type="application/ld+json">__SCHEMA__</script>
-<script src="/assets/analytics.js" defer></script><script src="/assets/enhance.js" defer></script>
+<script src="/assets/analytics.js?v=2" defer></script><script src="/assets/enhance.js?v=2" defer></script>
 </head>
 <body>
 <div class="aurora"></div>
@@ -220,19 +221,19 @@ __BODY__
       <p>Simple, useful mobile apps for travel, trips and rentals — free to start on iOS &amp; Android.</p>
     </div>
     <div class="foot-col">
-      <h4>Apps</h4>
+      <p class="fh">Apps</p>
       <a href="https://coinsayfasi.github.io/onebag/">OneBag</a>
       <a href="https://coinsayfasi.github.io/routevia-app/">Routevia</a>
       <a href="https://coinsayfasi.github.io/rentflow/">RentFlow</a>
     </div>
     <div class="foot-col">
-      <h4>Company</h4>
+      <p class="fh">Company</p>
       <a href="/about.html">About</a>
       <a href="/blog/">Blog</a>
       <a href="mailto:teknopattv@gmail.com">Contact</a>
     </div>
     <div class="foot-col">
-      <h4>Legal</h4>
+      <p class="fh">Legal</p>
       <a href="/privacy.html">Privacy Policy</a>
       <a href="/cookies.html">Cookie Policy</a>
       <a href="/terms.html">Terms of Use</a>
@@ -502,7 +503,8 @@ def rebuild_index(posts):
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css?v=6"><script src="/assets/analytics.js" defer></script><script src="/assets/enhance.js" defer></script>
+<style>:root{{--bg:#fbfaf7;--card:#fff;--ink:#1f2733;--muted:#69727f;--accent:#2f6bff;--accent2:#8b5cf6;--accent3:#2563eb;--line:#ece8e1;--shadow:0 6px 24px rgba(31,39,51,.07)}}*{{box-sizing:border-box;margin:0;padding:0}}body{{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}}.wrap{{max-width:1080px;margin:0 auto;padding:0 22px}}nav{{position:sticky;top:0;z-index:40;background:rgba(251,250,247,.82);border-bottom:1px solid var(--line)}}nav .nwrap{{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:64px}}.logo{{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}}.logo img{{width:30px;height:30px;border-radius:9px}}.nav-links a{{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:600;margin-left:24px}}h1,h2{{font-family:'Sora',sans-serif}}.page{{padding:46px 0 30px}}.aurora{{position:fixed;inset:0;z-index:-2;background:var(--bg)}}</style>
+<link rel="preload" href="/assets/blog.css?v=8" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/blog.css?v=8"></noscript><script src="/assets/analytics.js?v=2" defer></script><script src="/assets/enhance.js?v=2" defer></script>
 </head>
 <body>
 <div class="aurora"></div>
@@ -515,20 +517,20 @@ def rebuild_index(posts):
       <p>Simple, useful mobile apps for travel, trips and rentals — free to start on iOS &amp; Android.</p>
     </div>
     <div class="foot-col">
-      <h4>Apps</h4>
+      <p class="fh">Apps</p>
       <a href="https://coinsayfasi.github.io/onebag/">OneBag</a>
       <a href="https://coinsayfasi.github.io/routevia-app/">Routevia</a>
       <a href="https://coinsayfasi.github.io/rentflow/">RentFlow</a>
     </div>
     <div class="foot-col">
-      <h4>Company</h4>
+      <p class="fh">Company</p>
       <a href="/about.html">About</a>
       <a href="/blog/">Blog</a>
       <a href="https://gezi.tabserve.com.tr/">Türkiye Gezi Rehberi (TR)</a>
       <a href="mailto:teknopattv@gmail.com">Contact</a>
     </div>
     <div class="foot-col">
-      <h4>Legal</h4>
+      <p class="fh">Legal</p>
       <a href="/privacy.html">Privacy Policy</a>
       <a href="/cookies.html">Cookie Policy</a>
       <a href="/terms.html">Terms of Use</a>
