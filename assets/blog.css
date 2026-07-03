@@ -193,3 +193,9 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 .chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:0 0 24px}
 .chips a{font-size:13.5px;font-weight:600;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:all .2s}
 .chips a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* Çip v2 — etiketli, emojili, rozetli */
+.chipwrap{text-align:center;margin:0 0 26px}
+.chiplbl{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:12px}
+.chips a b{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;margin-left:8px;border-radius:999px;background:rgba(47,107,255,.1);color:var(--accent);font-size:11.5px;font-weight:800}
+.chips a:hover b{background:var(--accent);color:#fff}
