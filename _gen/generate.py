@@ -106,7 +106,7 @@ STRICT RULES — follow every one:
 7. Include 1-2 outbound links to GENUINELY AUTHORITATIVE, relevant external sources to back up the content (e.g. an official tourism board, a government/regulator page, or a relevant Wikipedia article). Only use well-known, stable URLs you are confident exist — prefer https://en.wikipedia.org/wiki/<Topic> or an official site's homepage; NEVER invent specific deep URLs. Place them naturally inside sentences, not in headings.
 
 Output ONLY valid minified JSON (no code fences, no commentary), exactly these keys:
-{{"title":"...","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","img_query":"2-4 English words for a stock photo that VISUALLY matches the article (e.g. packing cubes suitcase / Istanbul Hagia Sophia)","body":"the article HTML"}}"""
+{{"title":"...","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","img_queries":["3 separate stock photo searches, 2-4 English words each, matching DIFFERENT sections of the article: 1) cover scene 2) detail/action 3) context (e.g. [\"packing cubes suitcase\",\"folding clothes travel\",\"airport departure board\"])"],"body":"the article HTML"}}"""
 
 def _post(url, body, headers):
     req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method="POST")
@@ -295,6 +295,48 @@ def fetch_hero(query, slug):
     except Exception as e:
         print(f"  (görsel atlandı: {type(e).__name__})")
         return False
+
+def fetch_inpost(query, slug, idx):
+    """In-content image: single 1000w, lazy — assets/blog/<slug>-in<idx>.webp"""
+    key = os.environ.get("PEXELS_API_KEY", "").strip()
+    if not key: return None
+    out = ROOT / "assets" / "blog"
+    f = out / f"{slug}-in{idx}.webp"
+    if f.exists(): return f"/assets/blog/{f.name}"
+    try:
+        u = "https://api.pexels.com/v1/search?" + urllib.parse.urlencode(
+            {"query": query, "orientation": "landscape", "size": "large", "per_page": 3})
+        r = json.loads(urllib.request.urlopen(urllib.request.Request(
+            u, headers={"Authorization": key, "User-Agent": "tabserve-blog/1.0"}), timeout=25).read())
+        photos = r.get("photos") or []
+        if not photos: return None
+        src = photos[0]["src"].get("large") or photos[0]["src"].get("large2x")
+        raw = urllib.request.urlopen(urllib.request.Request(
+            src, headers={"User-Agent": "tabserve-blog/1.0"}), timeout=40).read()
+        import io
+        from PIL import Image
+        im = Image.open(io.BytesIO(raw)).convert("RGB")
+        if im.width > 1000:
+            im = im.resize((1000, round(im.height * 1000 / im.width)), Image.LANCZOS)
+        out.mkdir(parents=True, exist_ok=True)
+        im.save(f, "WEBP", quality=80)
+        print(f"  🖼  Pexels in-content {idx}: {slug} <- {query}")
+        return f"/assets/blog/{f.name}"
+    except Exception as e:
+        print(f"  (in-content skipped: {type(e).__name__})"); return None
+
+def insert_inpost_images(body, slug, queries, alt_base):
+    """Insert in-content figures before the 2nd and 4th H2 (when present)."""
+    pos = [m.start() for m in re.finditer(r"<h2", body)]
+    spots = [i for i in (1, 3) if i < len(pos)][:len(queries)]
+    for k in reversed(range(len(spots))):
+        rel = fetch_inpost(queries[k], slug, k + 1)
+        if not rel: continue
+        fig = (f'<figure class="inpost"><img src="{rel}" alt="{html.escape(alt_base)}" '
+               f'loading="lazy" decoding="async" width="1000" height="560"></figure>')
+        i = pos[spots[k]]
+        body = body[:i] + fig + body[i:]
+    return body
 
 def _openverse(q, n):
     out = []
@@ -571,7 +613,10 @@ def main():
         if not d:
             print("  ⚠️ bu konu atlandı (kalite tutmadı)"); used.add(kw); continue
         d["slug"] = slugify(d.get("slug") or d["title"])
-        fetch_hero(d.get("img_query") or kw, d["slug"])
+        iqs = d.get("img_queries") or ([d["img_query"]] if d.get("img_query") else [])
+        fetch_hero((iqs[0] if iqs else kw), d["slug"])
+        if len(iqs) > 1:
+            d["body"] = insert_inpost_images(d["body"], d["slug"], iqs[1:3], d["title"])
         write_post(d, app, posts)
         posts.insert(0, {"slug":d["slug"],"title":d["title"],"desc":d["meta_description"],
                          "tag":APPS[app]["tag"],"date":datetime.date.today().isoformat()})
