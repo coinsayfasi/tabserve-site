@@ -191,7 +191,7 @@ PAGE = """<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css?v=2">
+<link rel="stylesheet" href="/assets/blog.css?v=3">
 <script type="application/ld+json">__SCHEMA__</script>
 <script src="/assets/analytics.js" defer></script>
 </head>
@@ -494,7 +494,7 @@ def rebuild_index(posts):
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css?v=2"><script src="/assets/analytics.js" defer></script>
+<link rel="stylesheet" href="/assets/blog.css?v=3"><script src="/assets/analytics.js" defer></script>
 </head>
 <body>
 <div class="aurora"></div>

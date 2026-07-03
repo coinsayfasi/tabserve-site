@@ -40,7 +40,7 @@ figure.inpost{margin:32px 0}
 figure.hero img,figure.inpost img{width:100%;height:auto;aspect-ratio:1000/560;object-fit:cover;border-radius:18px;box-shadow:var(--shadow);display:block;background:#eee}
 figure.hero img{aspect-ratio:1200/630}
 figure.hero figcaption,figure.inpost figcaption{margin-top:10px;font-size:13px;color:var(--muted);line-height:1.5;text-align:center}
-article.post{max-width:780px}
+article.post{max-width:780px;margin:0 auto}
 article.post p,article.post li{color:#3a4250;font-size:17.5px;margin-bottom:18px}
 article.post h2{font-size:26px;font-weight:700;margin:38px 0 12px;letter-spacing:-.01em;color:var(--ink)}
 article.post h3{font-size:21px;font-weight:700;margin:28px 0 10px;color:#2a3340}
@@ -145,3 +145,5 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
   figure.hero,figure.inpost{margin-left:-10px;margin-right:-10px}
   figure.hero img,figure.inpost img{border-radius:12px}
 }
+/* uzun URL/kelime taşma emniyeti */
+.post p,.post li,.post h2,.post h3{overflow-wrap:break-word}
