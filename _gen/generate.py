@@ -72,12 +72,12 @@ CLAUDE_MODEL = os.environ.get("BLOG_MODEL", "claude-sonnet-4-6")
 _gemini_ok = None  # çalıştığı doğrulanan model (cache)
 
 APPS = {
- "onebag":  {"tag":"Travel · OneBag",   "cta":'<div class="appcta"><b>🧳 Pack carry-on with confidence</b><p>OneBag builds a smart carry-on packing list for your exact trip and tracks your bag\'s weight against 80+ airlines\' limits — so you never forget an essential or pay an overweight fee.</p><a href="https://coinsayfasi.github.io/onebag/">See OneBag packing guides →</a></div>',
-              "name":"OneBag","one":"a travel packing app with smart carry-on lists and an airline weight tracker"},
- "routevia":{"tag":"Travel · Routevia", "cta":'<div class="appcta"><b>🚗 Discover places &amp; map your route in minutes</b><p>Routevia shows you the best places to visit across Türkiye city by city, then plans an AI-powered route in seconds.</p><a href="https://coinsayfasi.github.io/routevia-app/">Explore places to visit in Türkiye →</a></div>',
-              "name":"Routevia","one":"a Türkiye travel app that finds places to visit and plans AI trip routes"},
- "rentflow":{"tag":"Property · RentFlow","cta":'<div class="appcta"><b>🏠 Keep it all in one place</b><p>RentFlow lets you track rent, tenants, leases and expenses without spreadsheets — plus free calculators for rental yield, cash flow and legal rent increases across 18 countries.</p><a href="https://coinsayfasi.github.io/rentflow/">See RentFlow landlord calculators →</a></div>',
-              "name":"RentFlow","one":"a rental manager for landlords with free yield and cash-flow calculators"},
+ "onebag":  {"tag":"Travel · OneBag",   "cta":'<div class="appcta"><b>🧳 Pack carry-on with confidence</b><p>OneBag builds a smart carry-on packing list for your exact trip and tracks your bag\'s weight against 80+ airlines\' limits — so you never forget an essential or pay an overweight fee.</p><div class="appbadges"><a href="https://apps.apple.com/app/id6761047805" rel="noopener">&#63743; App Store</a><a href="https://play.google.com/store/apps/details?id=com.onebag.travel" rel="noopener">&#9654; Google Play</a><a class="ghost" href="https://coinsayfasi.github.io/onebag/">Learn more →</a></div></div>',
+              "ios":"6761047805","name":"OneBag","one":"a travel packing app with smart carry-on lists and an airline weight tracker"},
+ "routevia":{"tag":"Travel · Routevia", "cta":'<div class="appcta"><b>🚗 Discover places &amp; map your route in minutes</b><p>Routevia shows you the best places to visit across Türkiye city by city, then plans an AI-powered route in seconds.</p><div class="appbadges"><a href="https://apps.apple.com/app/id6761003117" rel="noopener">&#63743; App Store</a><a href="https://play.google.com/store/apps/details?id=com.yunusgunes.routevia" rel="noopener">&#9654; Google Play</a><a class="ghost" href="https://coinsayfasi.github.io/routevia-app/">Learn more →</a></div></div>',
+              "ios":"6761003117","name":"Routevia","one":"a Türkiye travel app that finds places to visit and plans AI trip routes"},
+ "rentflow":{"tag":"Property · RentFlow","cta":'<div class="appcta"><b>🏠 Keep it all in one place</b><p>RentFlow lets you track rent, tenants, leases and expenses without spreadsheets — plus free calculators for rental yield, cash flow and legal rent increases across 18 countries.</p><div class="appbadges"><a href="https://apps.apple.com/app/id6767179451" rel="noopener">&#63743; App Store</a><span class="soon">&#9654; Android soon</span><a class="ghost" href="https://coinsayfasi.github.io/rentflow/">Learn more →</a></div></div>',
+              "ios":"6767179451","name":"RentFlow","one":"a rental manager for landlords with free yield and cash-flow calculators"},
 }
 
 def load(p, d): return json.loads(p.read_text(encoding="utf-8")) if p.exists() else d
@@ -180,7 +180,7 @@ PAGE = """<!DOCTYPE html>
 <title>__TITLE__ | Tabserve</title>
 <meta name="description" content="__DESC__">
 <meta name="keywords" content="__KW__">
-<link rel="canonical" href="__URL__">
+<link rel="canonical" href="__URL__">__APPMETA__
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="article">
 <meta property="og:title" content="__TITLE__">
@@ -191,7 +191,7 @@ PAGE = """<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css?v=3">
+<link rel="stylesheet" href="/assets/blog.css?v=4">
 <script type="application/ld+json">__SCHEMA__</script>
 <script src="/assets/analytics.js" defer></script>
 </head>
@@ -444,7 +444,7 @@ def write_post(d, app, posts=()):
     body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + extras
     page = (PAGE.replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
-        .replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"][:40]))
+        .replace("__APPMETA__", ("\n<meta name=\"apple-itunes-app\" content=\"app-id=" + APPS[app]["ios"] + "\">") if APPS[app].get("ios") else "").replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"][:40]))
         .replace("__TAG__", APPS[app]["tag"]).replace("__READ__", str(read)).replace("__RAIL__", rail)
         .replace("__NICE__", today.strftime("%B %Y")).replace("__BODY__", body))
     (BLOG / slug).mkdir(parents=True, exist_ok=True)
@@ -494,7 +494,7 @@ def rebuild_index(posts):
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css?v=3"><script src="/assets/analytics.js" defer></script>
+<link rel="stylesheet" href="/assets/blog.css?v=4"><script src="/assets/analytics.js" defer></script>
 </head>
 <body>
 <div class="aurora"></div>

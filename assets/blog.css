@@ -147,3 +147,11 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 }
 /* uzun URL/kelime taşma emniyeti */
 .post p,.post li,.post h2,.post h3{overflow-wrap:break-word}
+
+/* App CTA store butonları */
+.appbadges{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.appbadges a,.appbadges .soon{font-size:13.5px;font-weight:700;padding:10px 16px;border-radius:11px;text-decoration:none;transition:transform .15s,box-shadow .2s}
+.appbadges a:not(.ghost){background:#111827;color:#fff}
+.appbadges a:not(.ghost):hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(31,39,51,.25)}
+.appbadges .soon{background:rgba(31,39,51,.07);color:var(--muted)}
+.appbadges .ghost{color:var(--accent);padding:10px 4px}
