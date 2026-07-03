@@ -136,3 +136,12 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 .pagenav .dis{opacity:.35;pointer-events:none}
 .allbtn{display:inline-block;padding:13px 26px;border-radius:999px;background:linear-gradient(110deg,var(--accent),var(--accent2));color:#fff;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 10px 26px rgba(47,107,255,.25);transition:transform .15s,box-shadow .2s}
 .allbtn:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(47,107,255,.35)}
+
+/* Mobil okuma konforu — metin sol kenara yapışmasın */
+@media(max-width:600px){
+  .wrap{padding:0 28px}
+  .post ul,.post ol{padding-left:20px}
+  .post{font-size:16.5px}
+  figure.hero,figure.inpost{margin-left:-10px;margin-right:-10px}
+  figure.hero img,figure.inpost img{border-radius:12px}
+}
