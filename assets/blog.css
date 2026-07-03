@@ -228,3 +228,15 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
   .post{max-width:100%}
   a{color:#000;text-decoration:none}
 }
+
+/* 30 saniyede özet kutusu */
+.tldr{background:linear-gradient(135deg,rgba(47,107,255,.07),rgba(139,92,246,.07));border:1px solid rgba(47,107,255,.22);border-radius:16px;padding:20px 24px;margin:6px 0 24px}
+.tldr b{display:block;font-family:'Sora',sans-serif;font-size:16.5px;margin-bottom:8px}
+.tldr p{margin:0;color:var(--ink);font-size:15.5px;line-height:1.75}
+
+/* karşılaştırma tabloları */
+.post table{width:100%;border-collapse:separate;border-spacing:0;margin:20px 0;font-size:14.5px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.post th{background:rgba(47,107,255,.08);color:var(--ink);font-weight:700;text-align:left;padding:12px 14px}
+.post td{padding:11px 14px;border-top:1px solid var(--line);color:var(--muted)}
+.post tr:hover td{background:rgba(47,107,255,.03)}
+@media(max-width:600px){.post table{display:block;overflow-x:auto;white-space:nowrap}}
