@@ -202,3 +202,29 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 
 /* footer sözde-başlık (a11y: h4 sıçraması yerine) */
 .foot-col .fh{font-family:'Sora',sans-serif;font-size:12.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);margin-bottom:14px;font-weight:700}
+
+/* Harita embed */
+.mapembed{margin:26px 0}
+.mapembed figcaption{margin-top:8px;font-size:13px;color:var(--muted);text-align:center}
+
+/* Topluluk katkısı kutusu */
+.contrib{background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.25);border-radius:14px;padding:18px 22px;margin:26px 0}
+.contrib b{display:block;margin-bottom:6px}
+.contrib p{color:var(--muted);font-size:14.5px;line-height:1.7;margin:0}
+.contrib a{color:var(--accent2);font-weight:600}
+
+/* PDF butonu */
+.pdfbtn{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;box-shadow:var(--shadow);margin:10px 0 4px;transition:all .2s}
+.pdfbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Döviz şeridi */
+.fxstrip{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:13.5px;font-weight:600;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin:18px 0;box-shadow:var(--shadow)}
+.fxstrip b{color:var(--ink)}
+
+/* Yazdırma/PDF görünümü */
+@media print{
+  nav,footer,.share,.share-rail,.author-box,.appcta,.onebagcta,.contrib,.related,.toc,#stickyapp,#cookie-banner,#rprog,.pdfbtn,.psearch,.pagenav,.chips,.chipwrap,.fxstrip,.mapembed iframe{display:none!important}
+  body{background:#fff}
+  .post{max-width:100%}
+  a{color:#000;text-decoration:none}
+}

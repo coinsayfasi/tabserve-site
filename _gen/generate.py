@@ -92,9 +92,10 @@ The article should be genuinely helpful on its own and subtly fit a brand that m
 
 STRICT RULES — follow every one:
 1. The target keyword "{kw}" must appear in the TITLE and be the clear topic. The title doubles as the page H1 — do NOT output an <h1>.
-2. Length: 600-800 words of real body text (count WORDS, not characters). Do not pad with fluff.
+2. Length: 900-1300 words of real body text (count WORDS, not characters). Do not pad with fluff.
 3. Heading hierarchy: use 4-6 <h2> headings (natural keyword variations), <h3> subheadings under H2s, and at least one deeper <h4> (use <h5> only where it genuinely helps). Logical nesting H2 > H3 > H4.
-4. End with an <h2>Frequently Asked Questions</h2> section: 3 questions — each question as <h3>, its answer as a <p>. Then a short concluding paragraph.
+3b. Include a <h2>Common Mistakes to Avoid</h2> section (4-6 real mistakes travelers/landlords make on this topic, with the fix; <ul>).
+4. End with an <h2>Frequently Asked Questions</h2> section: 4 questions — each question as <h3>, its answer as a <p>. Then a short concluding paragraph.
 4b. Right AFTER the intro paragraph add a "Key Takeaways" box with EXACTLY this structure:
 <div class="quickfacts"><h2>Key Takeaways</h2><ul>
 <li>...</li><li>...</li><li>...</li>
@@ -165,7 +166,7 @@ def validate(d, kw):
     wc = words(b.replace("{{APP_CTA}}",""))
     h2,h3,h4 = len(re.findall(r"<h2",b)),len(re.findall(r"<h3",b)),len(re.findall(r"<h4",b))
     errs=[]
-    if wc < 600: errs.append(f"kelime {wc}<600")
+    if wc < 750: errs.append(f"kelime {wc}<750")
     if h2 < 3: errs.append(f"H2 {h2}<3")
     if h3 < 2: errs.append(f"H3 {h3}<2")
     if h4 < 1: errs.append(f"H4 {h4}<1")
@@ -195,9 +196,9 @@ PAGE = """<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
 <style>:root{--bg:#fbfaf7;--card:#fff;--ink:#1f2733;--muted:#69727f;--accent:#2f6bff;--accent2:#8b5cf6;--accent3:#2563eb;--line:#ece8e1;--shadow:0 6px 24px rgba(31,39,51,.07)}*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}.wrap{max-width:1080px;margin:0 auto;padding:0 22px}nav{position:sticky;top:0;z-index:40;background:rgba(251,250,247,.82);border-bottom:1px solid var(--line)}nav .nwrap{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:64px}.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}.logo img{width:30px;height:30px;border-radius:9px}.nav-links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:600;margin-left:24px}h1,h2{font-family:'Sora',sans-serif}.page{padding:46px 0 30px}.aurora{position:fixed;inset:0;z-index:-2;background:var(--bg)}</style>
-<link rel="preload" href="/assets/blog.css?v=8" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/blog.css?v=8"></noscript>
+<link rel="preload" href="/assets/blog.css?v=9" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/blog.css?v=9"></noscript>
 <script type="application/ld+json">__SCHEMA__</script>
-<script src="/assets/analytics.js?v=2" defer></script><script src="/assets/enhance.js?v=2" defer></script>
+<script src="/assets/analytics.js?v=2" defer></script><script src="/assets/enhance.js?v=3" defer></script>
 </head>
 <body>
 <div class="aurora"></div>
@@ -504,7 +505,7 @@ def rebuild_index(posts):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
 <style>:root{{--bg:#fbfaf7;--card:#fff;--ink:#1f2733;--muted:#69727f;--accent:#2f6bff;--accent2:#8b5cf6;--accent3:#2563eb;--line:#ece8e1;--shadow:0 6px 24px rgba(31,39,51,.07)}}*{{box-sizing:border-box;margin:0;padding:0}}body{{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}}.wrap{{max-width:1080px;margin:0 auto;padding:0 22px}}nav{{position:sticky;top:0;z-index:40;background:rgba(251,250,247,.82);border-bottom:1px solid var(--line)}}nav .nwrap{{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:64px}}.logo{{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}}.logo img{{width:30px;height:30px;border-radius:9px}}.nav-links a{{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:600;margin-left:24px}}h1,h2{{font-family:'Sora',sans-serif}}.page{{padding:46px 0 30px}}.aurora{{position:fixed;inset:0;z-index:-2;background:var(--bg)}}</style>
-<link rel="preload" href="/assets/blog.css?v=8" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/blog.css?v=8"></noscript><script src="/assets/analytics.js?v=2" defer></script><script src="/assets/enhance.js?v=2" defer></script>
+<link rel="preload" href="/assets/blog.css?v=9" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/blog.css?v=9"></noscript><script src="/assets/analytics.js?v=2" defer></script><script src="/assets/enhance.js?v=3" defer></script>
 </head>
 <body>
 <div class="aurora"></div>

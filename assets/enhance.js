@@ -35,6 +35,31 @@ document.addEventListener("DOMContentLoaded",function(){
     }
   }
 
+
+  /* 4) PDF indir butonu (yazıcı diyaloğu = herkes PDF kaydedebilir) */
+  if(art){
+    var pb=document.createElement("button"); pb.className="pdfbtn";
+    pb.innerHTML="📄 "+(TR?"PDF olarak kaydet":"Save as PDF");
+    pb.onclick=function(){window.print()};
+    var meta=art.querySelector(".meta"); if(meta) meta.parentNode.insertBefore(pb, meta.nextSibling);
+  }
+
+  /* 5) Canlı döviz şeridi (yalnız TR site; 6 saat önbellek, keysiz frankfurter.dev) */
+  if(art && TR){
+    function showFx(d){
+      var usd=(1/d.rates.USD).toFixed(1), eur=(1/d.rates.EUR).toFixed(1);
+      var el=document.createElement("div"); el.className="fxstrip";
+      el.innerHTML="💱 Güncel kur: <span>1 $ ≈ <b>"+usd+" ₺</b></span><span>1 € ≈ <b>"+eur+" ₺</b></span>";
+      var qf=art.querySelector(".quickfacts"); (qf||art.firstElementChild).insertAdjacentElement("afterend", el);
+    }
+    try{
+      var c=JSON.parse(localStorage.getItem("fx")||"null");
+      if(c && Date.now()-c.t<216e5){ showFx(c.d); }
+      else fetch("https://api.frankfurter.dev/v1/latest?base=TRY&symbols=USD,EUR").then(function(r){return r.json()})
+        .then(function(d){ localStorage.setItem("fx",JSON.stringify({t:Date.now(),d:d})); showFx(d); }).catch(function(){});
+    }catch(e){}
+  }
+
   /* 3) Mobil yapışkan indir çubuğu — %35 kaydırınca, kapatılabilir (7 gün hatırlar) */
   var meta=document.querySelector('meta[name="apple-itunes-app"]');
   if(meta && matchMedia("(max-width:820px)").matches){
