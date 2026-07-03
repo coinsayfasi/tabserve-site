@@ -193,8 +193,7 @@ PAGE = """<!DOCTYPE html>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/blog.css">
 <script type="application/ld+json">__SCHEMA__</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EDZWXP6EEG"></script>
-<script src="/assets/analytics.js"></script>
+<script src="/assets/analytics.js" defer></script>
 </head>
 <body>
 <div class="aurora"></div>
@@ -289,8 +288,9 @@ def get_images(query, n=3, fallback="travel"):
 def _figure(img, alt, caption_text, hero=False):
     cap = (html.escape(caption_text) + " — " if caption_text else "") + f"Photo: {html.escape(img['creator'])} (Openverse, {html.escape(img['license'])})"
     w, h = (1200, 630) if hero else (1000, 560)
+    perf = ' fetchpriority="high"' if hero else ' decoding="async"'  # LCP boost / async decode
     return (f'<figure class="{"hero" if hero else "inpost"}"><img src="{html.escape(img["url"])}" '
-            f'alt="{html.escape(alt)}" loading="{"eager" if hero else "lazy"}" width="{w}" height="{h}">'
+            f'alt="{html.escape(alt)}" loading="{"eager" if hero else "lazy"}"{perf} width="{w}" height="{h}">'
             f'<figcaption>{cap}</figcaption></figure>')
 
 def _h2_text(body, p):
@@ -309,8 +309,15 @@ def faq_schema(body):
     if not items: return None
     return {"@context":"https://schema.org","@type":"FAQPage","mainEntity":items}
 
+# Kardeş TR site çapraz linkleri (aynı yayıncı — EN↔TR doğal iç ağ)
+SISTER_URL = "https://gezi.tabserve.com.tr"
+CROSS = {  # apps slug -> gezi slug (birebir konu eşleşmesi)
+  "cappadocia-travel-guide": "kapadokya-gezi-rehberi-en-iyi-gezilecek-yerler-ve-ipuclari",
+  "antalya-travel-guide-beaches-old-town-day-trips": "antalya-gezilecek-yerler-gezi-rehberi",
+}
+
 def related_block(posts, current_slug, tag=None, n=4):
-    """'Related Guides' — iç linkleme; aynı etiketli yazılar önceliklidir."""
+    """'Related Guides' — iç linkleme; aynı etiketli yazılar öncelikli + kardeş site."""
     others = [p for p in posts if p["slug"] != current_slug]
     if tag:
         same = [p for p in others if p.get("tag") == tag]
@@ -320,6 +327,13 @@ def related_block(posts, current_slug, tag=None, n=4):
     if not others: return ""
     lis = "".join(f'<li><a href="/blog/{p["slug"]}/">{html.escape(p["title"])}</a></li>'
                   for p in others)
+    x = CROSS.get(current_slug)
+    if x:
+        lis += (f'<li><a href="{SISTER_URL}/blog/{x}/" hreflang="tr">'
+                f'Bu rehberi Türkçe okuyun (Türkiye Gezi Rehberi)</a></li>')
+    else:
+        lis += (f'<li><a href="{SISTER_URL}/" hreflang="tr">'
+                f'Türkçe gezi rehberleri — Türkiye Gezi Rehberi</a></li>')
     return ('<section class="related"><h2>Related Guides</h2><ul>'
             + lis + '</ul></section>')
 
@@ -356,6 +370,9 @@ def write_post(d, app, posts=()):
     (BLOG / slug).mkdir(parents=True, exist_ok=True)
     (BLOG / slug / "index.html").write_text(page, encoding="utf-8")
 
+PER_PAGE = 9  # listeleme sayfası başına yazı
+
+# Site GENELİ arama: /assets/search.json'dan tüm yazılarda arar (sayfalamadan bağımsız)
 SEARCH = """
 <div class="psearch" style="max-width:540px;margin:0 auto 26px;position:relative">
   <input id="q" type="search" placeholder="Search articles…" aria-label="Search articles" autocomplete="off"
@@ -363,39 +380,47 @@ SEARCH = """
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:17px;top:50%;transform:translateY(-50%);opacity:.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
   <p id="qn" style="display:none;text-align:center;color:var(--muted);margin:14px 0 0">No results — try a different word.</p>
 </div>
-<script>document.addEventListener('DOMContentLoaded',function(){var q=document.getElementById('q');if(!q)return;var cards=[].slice.call(document.querySelectorAll('.pcard')),qn=document.getElementById('qn');q.addEventListener('input',function(){var v=q.value.trim().toLowerCase(),n=0;cards.forEach(function(c){var h=!v||c.textContent.toLowerCase().indexOf(v)>-1;c.style.display=h?'':'none';if(h)n++});qn.style.display=(n>0||!v)?'none':'block'});});</script>
+<div id="qres" class="posts" style="display:none"></div>
+<script>document.addEventListener('DOMContentLoaded',function(){var q=document.getElementById('q');if(!q)return;
+var grid=document.querySelector('.posts:not(#qres)'),nav=document.querySelector('.pagenav'),res=document.getElementById('qres'),qn=document.getElementById('qn'),idx=null;
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+q.addEventListener('input',function(){var v=q.value.trim().toLowerCase();
+ if(!v){res.style.display='none';res.innerHTML='';if(grid)grid.style.display='';if(nav)nav.style.display='';qn.style.display='none';return}
+ function run(){var hits=idx.filter(function(p){return (p.t+' '+p.d).toLowerCase().indexOf(v)>-1}).slice(0,30);
+  if(grid)grid.style.display='none';if(nav)nav.style.display='none';
+  if(!hits.length){res.style.display='none';res.innerHTML='';qn.style.display='block';return}
+  qn.style.display='none';
+  res.innerHTML=hits.map(function(p){return '<a class="pcard in" href="'+p.u+'"><h2>'+esc(p.t)+'</h2><p>'+esc(p.d)+'</p></a>'}).join('');
+  res.style.display='';}
+ if(idx){run()}else{fetch('/assets/search.json').then(function(r){return r.json()}).then(function(j){idx=j;run()}).catch(function(){})}
+});});</script>
 """
 
 def rebuild_index(posts):
-    cards = "\n".join(
-      f'    <a class="pcard" href="/blog/{p["slug"]}/"><span class="tag">{html.escape(p["tag"])}</span>'
-      f'<h2>{html.escape(p["title"])}</h2><p>{html.escape(p["desc"])}</p></a>' for p in posts)
-    idx = f"""<!DOCTYPE html>
+    def card(p):
+        return (f'    <a class="pcard" href="/blog/{p["slug"]}/"><span class="tag">{html.escape(p["tag"])}</span>'
+                f'<h2>{html.escape(p["title"])}</h2><p>{html.escape(p["desc"])}</p></a>')
+    # site geneli arama index'i
+    (ROOT / "assets" / "search.json").write_text(json.dumps(
+        [{"t": p["title"], "d": p["desc"], "u": f"/blog/{p['slug']}/"} for p in posts],
+        ensure_ascii=False), encoding="utf-8")
+
+    head = f"""<!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blog — Travel, trips &amp; landlord tips | Tabserve</title>
+<title>__T__ | Tabserve</title>
 <meta name="description" content="Practical guides on carry-on packing, Türkiye travel and managing rental property — from the makers of OneBag, Routevia and RentFlow.">
-<link rel="canonical" href="{SITE}/blog/">
+<link rel="canonical" href="__CANON__">__PREVNEXT__
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/blog.css"><script async src="https://www.googletagmanager.com/gtag/js?id=G-EDZWXP6EEG"></script>
-<script src="/assets/analytics.js"></script>
+<link rel="stylesheet" href="/assets/blog.css"><script src="/assets/analytics.js" defer></script>
 </head>
 <body>
 <div class="aurora"></div>
 <nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/logo.svg" alt="">Tabserve</a>
-<div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div></div></nav>
-<main class="wrap page">
-  <div class="crumb"><a href="/">Home</a> › Blog</div>
-  <h1 class="title">The Tabserve Blog</h1>
-  <p class="meta">Practical guides on packing smart, exploring Türkiye, and managing rentals — from the makers of OneBag, Routevia &amp; RentFlow.</p>
-{SEARCH}
-  <div class="posts">
-{cards}
-  </div>
-</main>
-<footer class="site-footer">
+<div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div></div></nav>"""
+    foot = """<footer class="site-footer">
   <div class="wrap foot-grid">
     <div class="foot-brand">
       <a class="logo" href="/"><img src="/assets/logo.svg" alt="" width="30" height="30">Tabserve</a>
@@ -411,6 +436,7 @@ def rebuild_index(posts):
       <h4>Company</h4>
       <a href="/about.html">About</a>
       <a href="/blog/">Blog</a>
+      <a href="https://gezi.tabserve.com.tr/">Türkiye Gezi Rehberi (TR)</a>
       <a href="mailto:teknopattv@gmail.com">Contact</a>
     </div>
     <div class="foot-col">
@@ -425,16 +451,57 @@ def rebuild_index(posts):
     <span>Made with ♥ in Türkiye</span>
   </div></div>
 </footer>
-<script>const io=new IntersectionObserver(e=>e.forEach(x=>{{if(x.isIntersecting){{x.target.classList.add('in');io.unobserve(x.target)}}}}),{{threshold:.12}});document.querySelectorAll('.pcard,.reveal').forEach((el,i)=>{{el.style.transitionDelay=(i%4*70)+'ms';io.observe(el)}});</script>
-<noscript><style>.pcard,.reveal{{opacity:1;transform:none}}</style></noscript>
-__BANNER__
-</body></html>
+<script>const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.12});document.querySelectorAll('.pcard,.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*70)+'ms';io.observe(el)});</script>
+<noscript><style>.pcard,.reveal{opacity:1;transform:none}</style></noscript>
+""" + COOKIE_BANNER + "\n</body></html>\n"
+
+    # ── Sayfalamalı listeleme: /blog/ (p.1), /blog/page/2/ ... ────────────────
+    chunks = [posts[i:i+PER_PAGE] for i in range(0, len(posts), PER_PAGE)] or [[]]
+    total = len(chunks)
+    page_url  = lambda n: f"{SITE}/blog/" if n == 1 else f"{SITE}/blog/page/{n}/"
+    page_href = lambda n: "/blog/" if n == 1 else f"/blog/page/{n}/"
+
+    for n, chunk in enumerate(chunks, 1):
+        cards = "\n".join(card(p) for p in chunk)
+        prevnext = ""
+        if n > 1:     prevnext += f'\n<link rel="prev" href="{page_url(n-1)}">'
+        if n < total: prevnext += f'\n<link rel="next" href="{page_url(n+1)}">'
+        pagenav = ""
+        if total > 1:
+            items = [f'<a href="{page_href(n-1)}" aria-label="Previous">‹</a>' if n > 1 else '<span class="dis">‹</span>']
+            items += [('<span class="cur">%d</span>' % i) if i == n else f'<a href="{page_href(i)}">{i}</a>' for i in range(1, total+1)]
+            items.append(f'<a href="{page_href(n+1)}" aria-label="Next">›</a>' if n < total else '<span class="dis">›</span>')
+            pagenav = '<nav class="pagenav" aria-label="Pages">' + "".join(items) + '</nav>'
+        title = "Blog — Travel, trips &amp; landlord tips" if n == 1 else f"Blog — Page {n}"
+        body = f"""
+<main class="wrap page">
+  <div class="crumb"><a href="/">Home</a> › Blog{'' if n == 1 else f' › Page {n}'}</div>
+  <h1 class="title">The Tabserve Blog</h1>
+  <p class="meta">Practical guides on packing smart, exploring Türkiye, and managing rentals — from the makers of OneBag, Routevia &amp; RentFlow.{f' ({len(posts)} guides)' if n == 1 else ''}</p>
+{SEARCH}
+  <div class="posts">
+{cards}
+  </div>
+  {pagenav}
+</main>
 """
-    idx = idx.replace("__BANNER__", COOKIE_BANNER)
-    (BLOG / "index.html").write_text(idx, encoding="utf-8")
+        page = head.replace("__T__", title).replace("__CANON__", page_url(n)).replace("__PREVNEXT__", prevnext) + body + foot
+        outdir = BLOG if n == 1 else BLOG / "page" / str(n)
+        outdir.mkdir(parents=True, exist_ok=True)
+        (outdir / "index.html").write_text(page, encoding="utf-8")
+
+    # yazı azalırsa bayat sayfa dizinlerini temizle
+    pd = BLOG / "page"
+    if pd.exists():
+        for d in pd.iterdir():
+            if d.is_dir() and d.name.isdigit() and int(d.name) > total:
+                for f in d.iterdir(): f.unlink()
+                d.rmdir()
+
     # sitemap
     static = [("/","1.0","weekly"),("/blog/","0.8","weekly"),("/privacy.html","0.3","yearly")]
     urls = "".join(f'  <url><loc>{SITE}{u}</loc><changefreq>{c}</changefreq><priority>{p}</priority></url>\n' for u,p,c in static)
+    urls += "".join(f'  <url><loc>{SITE}/blog/page/{n}/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>\n' for n in range(2, total+1))
     urls += "".join(f'  <url><loc>{SITE}/blog/{po["slug"]}/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n' for po in posts)
     (ROOT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n', encoding="utf-8")
 

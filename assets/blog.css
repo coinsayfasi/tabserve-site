@@ -127,3 +127,12 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 .share{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:26px 0 6px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
 .share .ico{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);color:var(--muted);transition:all .2s}
 .share .ico:hover{color:#fff;background:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+
+/* Sayfalama + tüm rehberler butonu */
+.pagenav{display:flex;justify-content:center;align-items:center;gap:8px;margin:32px 0 8px;flex-wrap:wrap}
+.pagenav a,.pagenav span{min-width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;padding:0 13px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-weight:600;font-size:14.5px;box-shadow:var(--shadow);transition:border-color .2s,color .2s,transform .15s}
+.pagenav a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.pagenav .cur{background:var(--accent);border-color:var(--accent);color:#fff}
+.pagenav .dis{opacity:.35;pointer-events:none}
+.allbtn{display:inline-block;padding:13px 26px;border-radius:999px;background:linear-gradient(110deg,var(--accent),var(--accent2));color:#fff;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 10px 26px rgba(47,107,255,.25);transition:transform .15s,box-shadow .2s}
+.allbtn:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(47,107,255,.35)}
