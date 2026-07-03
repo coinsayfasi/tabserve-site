@@ -425,6 +425,8 @@ def rebuild_index(posts):
     <span>Made with ♥ in Türkiye</span>
   </div></div>
 </footer>
+<script>const io=new IntersectionObserver(e=>e.forEach(x=>{{if(x.isIntersecting){{x.target.classList.add('in');io.unobserve(x.target)}}}}),{{threshold:.12}});document.querySelectorAll('.pcard,.reveal').forEach((el,i)=>{{el.style.transitionDelay=(i%4*70)+'ms';io.observe(el)}});</script>
+<noscript><style>.pcard,.reveal{{opacity:1;transform:none}}</style></noscript>
 __BANNER__
 </body></html>
 """

@@ -80,6 +80,8 @@
     <span>Made with ♥ in Türkiye</span>
   </div></div>
 </footer>
+<script>const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.12});document.querySelectorAll('.pcard,.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*70)+'ms';io.observe(el)});</script>
+<noscript><style>.pcard,.reveal{opacity:1;transform:none}</style></noscript>
 <div id="cookie-banner" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0d1426;border-top:1px solid rgba(255,255,255,.1);padding:14px 18px;font-size:13.5px;color:#cdd5ea;line-height:1.5">
   <div style="max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
     <span>We use cookies for analytics and advertising (incl. Google AdSense). See our <a href="/cookies.html" style="color:#6a9bff">Cookie Policy</a>.</span>

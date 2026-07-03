@@ -112,3 +112,18 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 .quickfacts h2{font-size:19px;margin:0 0 10px}
 .quickfacts ul{margin:0;padding-left:18px;list-style:none}
 .quickfacts li{margin:5px 0}
+
+/* Related / İlgili Rehberler — kart görünümü */
+.related{margin:36px 0 10px;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.related h2{font-size:20px;margin:0 0 10px}
+.related ul{list-style:none;margin:0;padding:0}
+.related li{border-top:1px solid var(--line)}
+.related li:first-child{border-top:0}
+.related a{display:flex;align-items:center;gap:10px;padding:12px 2px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15.5px;line-height:1.45;transition:color .2s,transform .2s}
+.related a::before{content:"→";color:var(--accent);font-weight:700;flex-shrink:0}
+.related a:hover{color:var(--accent);transform:translateX(3px)}
+
+/* paylaş çubuğu ince ayar */
+.share{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:26px 0 6px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+.share .ico{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);color:var(--muted);transition:all .2s}
+.share .ico:hover{color:#fff;background:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
