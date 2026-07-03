@@ -69,6 +69,31 @@ document.addEventListener("DOMContentLoaded",function(){
     }
   }
 
+
+  /* 6) Weather strip — when the article embeds coordinates (open-meteo, keyless, 6h cache) */
+  if(art){
+    var g=document.getElementById("geo");
+    if(g && g.dataset.lat){
+      var la=g.dataset.lat, lo=g.dataset.lon, wkey="wx_"+la+"_"+lo;
+      var showWx=function(d){
+        var t=d.daily, ic=function(c){return c<=1?"☀️":c<=3?"⛅":c<=48?"🌫️":c<=67?"🌧️":c<=77?"❄️":c<=82?"🌦️":"⛈️"};
+        var el=document.createElement("div"); el.className="fxstrip wxstrip";
+        el.innerHTML=(TR?"🌤️ 3 günlük hava: ":"🌤️ 3-day weather: ")+[0,1,2].map(function(i){
+          var day=i===0?(TR?"Bugün":"Today"):new Date(t.time[i]).toLocaleDateString(TR?"tr-TR":"en-US",{weekday:"short"});
+          return "<span>"+day+" "+ic(t.weather_code[i])+" <b>"+Math.round(t.temperature_2m_max[i])+"°</b>/"+Math.round(t.temperature_2m_min[i])+"°</span>";
+        }).join("");
+        var m=art.querySelector(".mapembed")||art.querySelector(".quickfacts");
+        if(m) m.insertAdjacentElement("afterend", el);
+      };
+      var w=null; try{ w=JSON.parse(localStorage.getItem(wkey)||"null"); }catch(e){}
+      if(w && Date.now()-w.t<216e5){ showWx(w.d); }
+      else fetch("https://api.open-meteo.com/v1/forecast?latitude="+la+"&longitude="+lo+"&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=3")
+        .then(function(r){return r.json()})
+        .then(function(d){ if(!d||!d.daily) return; try{localStorage.setItem(wkey,JSON.stringify({t:Date.now(),d:d}))}catch(e){} showWx(d); })
+        .catch(function(){});
+    }
+  }
+
   /* 3) Mobil yapışkan indir çubuğu — %35 kaydırınca, kapatılabilir (7 gün hatırlar) */
   var meta=document.querySelector('meta[name="apple-itunes-app"]');
   if(meta && matchMedia("(max-width:820px)").matches){
