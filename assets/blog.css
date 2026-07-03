@@ -188,3 +188,8 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 .appshow ul{margin:0 0 4px;padding:0;list-style:none;display:flex;gap:14px;flex-wrap:wrap}
 .appshow li{font-size:13.5px;color:var(--ink);font-weight:600}
 .appshow li::before{content:"✓ ";color:var(--accent3);font-weight:800}
+
+/* Bölge/kategori çipleri */
+.chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:0 0 24px}
+.chips a{font-size:13.5px;font-weight:600;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:all .2s}
+.chips a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}

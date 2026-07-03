@@ -189,6 +189,7 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:image" content="__OGIMG__">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="__OGIMG__">
+<link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -497,6 +498,7 @@ def rebuild_index(posts):
 <title>__T__ | Tabserve</title>
 <meta name="description" content="Practical guides on carry-on packing, Türkiye travel and managing rental property — from the makers of OneBag, Routevia and RentFlow.">
 <link rel="canonical" href="__CANON__">__PREVNEXT__
+<link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
@@ -583,6 +585,34 @@ def rebuild_index(posts):
             if d.is_dir() and d.name.isdigit() and int(d.name) > total:
                 for f in d.iterdir(): f.unlink()
                 d.rmdir()
+
+    # ── RSS feed ─────────────────────────────────────────────────────────────
+    items = "".join(
+        f"<item><title>{html.escape(pp['title'])}</title><link>{SITE}/blog/{pp['slug']}/</link>"
+        f"<guid>{SITE}/blog/{pp['slug']}/</guid><description>{html.escape(pp['desc'])}</description>"
+        f"<pubDate>{datetime.datetime.strptime(pp.get('date','2026-06-25'), '%Y-%m-%d').strftime('%a, %d %b %Y')} 09:00:00 GMT</pubDate></item>"
+        for pp in posts[:20])
+    (ROOT / "feed.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>'
+        f'<title>Tabserve Blog</title><link>{SITE}/</link>'
+        '<description>Travel, packing and landlord guides by Tabserve</description>'
+        f'<language>en</language>{items}</channel></rss>', encoding="utf-8")
+
+    # ── Landing "From the blog" vitrini (index.html marker'ları arasına) ─────
+    lp = ROOT / "index.html"
+    if lp.exists():
+        lc = lp.read_text(encoding="utf-8")
+        A, B = "<!--BLOG_TEASER_START-->", "<!--BLOG_TEASER_END-->"
+        if A in lc and B in lc:
+            t3 = posts[:3]
+            teaser = A + '\n<section class="wrap" id="blogteaser" style="padding:26px 22px 8px"><h3 style="font-family:\'Sora\',sans-serif;font-size:26px;text-align:center;margin-bottom:20px">Fresh from the blog</h3><div class="grid" style="padding:0 0 8px">' + "".join(
+                f'<article class="card in" style="opacity:1;transform:none"><h2 style="font-size:18px">{html.escape(pp["title"])}</h2>'
+                f'<p>{html.escape(pp["desc"][:130])}…</p>'
+                f'<a class="more" href="/blog/{pp["slug"]}/">Read the guide →</a></article>' for pp in t3
+            ) + '</div><p style="text-align:center;margin:6px 0 26px"><a class="more" href="/blog/" style="font-size:15px">All guides →</a></p></section>\n' + B
+            import re as _re
+            lc = _re.sub(_re.escape(A) + r"[\s\S]*?" + _re.escape(B), teaser, lc, count=1)
+            lp.write_text(lc, encoding="utf-8")
 
     # sitemap
     static = [("/","1.0","weekly"),("/blog/","0.8","weekly"),("/privacy.html","0.3","yearly")]
