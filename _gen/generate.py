@@ -34,7 +34,7 @@ COOKIE_BANNER = '''<div id="cookie-banner" style="display:none;position:fixed;le
   </div>
 </div>
 <script>(function(){try{if(!localStorage.getItem("cookie_consent"))document.getElementById("cookie-banner").style.display="block";}catch(e){}})();
-function cookieOK(v){try{localStorage.setItem("cookie_consent",v?"accepted":"rejected");}catch(e){}document.getElementById("cookie-banner").style.display="none";}</script>'''
+function cookieOK(v){try{localStorage.setItem("cookie_consent",v?"accepted":"rejected");}catch(e){}if(window.__grantConsent)__grantConsent(!!v);document.getElementById("cookie-banner").style.display="none";}</script>'''
 
 
 def post_extras(url, title):
@@ -201,7 +201,7 @@ PAGE = """<!DOCTYPE html>
 <style>:root{--bg:#fbfaf7;--card:#fff;--ink:#1f2733;--muted:#69727f;--accent:#2f6bff;--accent2:#8b5cf6;--accent3:#2563eb;--line:#ece8e1;--shadow:0 6px 24px rgba(31,39,51,.07)}*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}.wrap{max-width:1080px;margin:0 auto;padding:0 22px}nav{position:sticky;top:0;z-index:40;background:rgba(251,250,247,.82);border-bottom:1px solid var(--line)}nav .nwrap{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:64px}.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}.logo img{width:30px;height:30px;border-radius:9px}.nav-links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:600;margin-left:24px}h1,h2{font-family:'Sora',sans-serif}.page{padding:46px 0 30px}.aurora{position:fixed;inset:0;z-index:-2;background:var(--bg)}</style>
 <link rel="preload" href="/assets/blog.css?v=10" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/blog.css?v=10"></noscript>
 <script type="application/ld+json">__SCHEMA__</script>
-<script src="/assets/analytics.js?v=2" defer></script><script src="/assets/enhance.js?v=7" defer></script>
+<script src="/assets/analytics.js?v=3" defer></script><script src="/assets/enhance.js?v=7" defer></script>
 </head>
 <body>
 <div class="aurora"></div>
@@ -255,7 +255,7 @@ __BODY__
   </div>
 </div>
 <script>(function(){try{if(!localStorage.getItem('cookie_consent'))document.getElementById('cookie-banner').style.display='block';}catch(e){}})();
-function cookieOK(v){try{localStorage.setItem('cookie_consent',v?'accepted':'rejected');}catch(e){}document.getElementById('cookie-banner').style.display='none';}</script>
+function cookieOK(v){try{localStorage.setItem('cookie_consent',v?'accepted':'rejected');}catch(e){}if(window.__grantConsent)__grantConsent(!!v);document.getElementById('cookie-banner').style.display='none';}</script>
 </body>
 </html>
 """
@@ -496,7 +496,9 @@ q.addEventListener('input',function(){var v=q.value.trim().toLowerCase();
   res.innerHTML=hits.map(function(p){return '<a class="pcard in" href="'+p.u+'"><h2>'+esc(p.t)+'</h2><p>'+esc(p.d)+'</p></a>'}).join('');
   res.style.display='';}
  if(idx){run()}else{fetch('/assets/search.json').then(function(r){return r.json()}).then(function(j){idx=j;run()}).catch(function(){})}
-});});</script>
+});
+var qp=new URLSearchParams(location.search).get("q");
+if(qp){q.value=qp;q.dispatchEvent(new Event("input"));}});</script>
 """
 
 def rebuild_index(posts):
@@ -514,12 +516,17 @@ def rebuild_index(posts):
 <title>__T__ | Tabserve</title>
 <meta name="description" content="Practical guides on carry-on packing, Türkiye travel and managing rental property — from the makers of OneBag, Routevia and RentFlow.">
 <link rel="canonical" href="__CANON__">__PREVNEXT__
+<meta property="og:type" content="website"><meta property="og:title" content="__T__ | Tabserve">
+<meta property="og:description" content="Practical guides on carry-on packing, Türkiye travel and managing rental property.">
+<meta property="og:url" content="__CANON__"><meta property="og:image" content="{SITE}/assets/tabserve-og.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/assets/tabserve-og.png">
+<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebSite","name":"Tabserve Blog","url":"{SITE}/","inLanguage":"en","potentialAction":{{"@type":"SearchAction","target":"{SITE}/blog/?q={{search_term_string}}","query-input":"required name=search_term_string"}}}}</script>__XSCHEMA__
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
 <style>:root{{--bg:#fbfaf7;--card:#fff;--ink:#1f2733;--muted:#69727f;--accent:#2f6bff;--accent2:#8b5cf6;--accent3:#2563eb;--line:#ece8e1;--shadow:0 6px 24px rgba(31,39,51,.07)}}*{{box-sizing:border-box;margin:0;padding:0}}body{{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}}.wrap{{max-width:1080px;margin:0 auto;padding:0 22px}}nav{{position:sticky;top:0;z-index:40;background:rgba(251,250,247,.82);border-bottom:1px solid var(--line)}}nav .nwrap{{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:64px}}.logo{{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}}.logo img{{width:30px;height:30px;border-radius:9px}}.nav-links a{{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:600;margin-left:24px}}h1,h2{{font-family:'Sora',sans-serif}}.page{{padding:46px 0 30px}}.aurora{{position:fixed;inset:0;z-index:-2;background:var(--bg)}}</style>
-<link rel="preload" href="/assets/blog.css?v=10" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/blog.css?v=10"></noscript><script src="/assets/analytics.js?v=2" defer></script><script src="/assets/enhance.js?v=7" defer></script>
+<link rel="preload" href="/assets/blog.css?v=10" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/blog.css?v=10"></noscript><script src="/assets/analytics.js?v=3" defer></script><script src="/assets/enhance.js?v=7" defer></script>
 </head>
 <body>
 <div class="aurora"></div>
@@ -590,7 +597,9 @@ def rebuild_index(posts):
   {pagenav}
 </main>
 """
-        page = head.replace("__T__", title).replace("__CANON__", page_url(n)).replace("__PREVNEXT__", prevnext) + body + foot
+        xsch = ('<script type="application/ld+json">' + json.dumps({"@context":"https://schema.org","@type":"CollectionPage","name":"Tabserve Blog","url":page_url(n),"inLanguage":"en"}, ensure_ascii=False) + '</script>'
+                '<script type="application/ld+json">' + json.dumps({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":SITE+"/"},{"@type":"ListItem","position":2,"name":"Blog" if n==1 else f"Blog — Page {n}","item":page_url(n)}]}, ensure_ascii=False) + '</script>')
+        page = head.replace("__T__", title).replace("__CANON__", page_url(n)).replace("__PREVNEXT__", prevnext).replace("__XSCHEMA__", xsch) + body + foot
         outdir = BLOG if n == 1 else BLOG / "page" / str(n)
         outdir.mkdir(parents=True, exist_ok=True)
         (outdir / "index.html").write_text(page, encoding="utf-8")
