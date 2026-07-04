@@ -12,6 +12,8 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Tabserve Blog","url":"https://apps.tabserve.com.tr/","inLanguage":"en","potentialAction":{"@type":"SearchAction","target":"https://apps.tabserve.com.tr/blog/?q={search_term_string}","query-input":"required name=search_term_string"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Tabserve Blog", "url": "https://apps.tabserve.com.tr/blog/page/3/", "inLanguage": "en"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apps.tabserve.com.tr/"}, {"@type": "ListItem", "position": 2, "name": "Blog — Page 3", "item": "https://apps.tabserve.com.tr/blog/page/3/"}]}</script>
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
@@ -43,7 +45,7 @@ q.addEventListener('input',function(){var v=q.value.trim().toLowerCase();
   if(grid)grid.style.display='none';if(nav)nav.style.display='none';
   if(!hits.length){res.style.display='none';res.innerHTML='';qn.style.display='block';return}
   qn.style.display='none';
-  res.innerHTML=hits.map(function(p){return '<a class="pcard in" href="'+p.u+'"><h2>'+esc(p.t)+'</h2><p>'+esc(p.d)+'</p></a>'}).join('');
+  res.innerHTML=hits.map(function(p){return '<a class="pcard in" href="'+p.u+'"><h3>'+esc(p.t)+'</h3><p>'+esc(p.d)+'</p></a>'}).join('');
   res.style.display='';}
  if(idx){run()}else{fetch('/assets/search.json').then(function(r){return r.json()}).then(function(j){idx=j;run()}).catch(function(){})}
 });
@@ -51,13 +53,13 @@ var qp=new URLSearchParams(location.search).get("q");
 if(qp){q.value=qp;q.dispatchEvent(new Event("input"));}});</script>
 
   <div class="posts">
-    <a class="pcard" href="/blog/packing-cubes-vs-rolling-clothes/"><span class="tag">Travel · OneBag</span><h2>Packing Cubes vs Rolling Clothes: The Ultimate Carry-On Space Showdown</h2><p>Packing cubes vs rolling clothes: which method actually saves the most carry-on space? Discover the pros, cons, and how to combine them.</p></a>
-    <a class="pcard" href="/blog/business-trip-packing-list-light-wrinkle-free/"><span class="tag">Travel · OneBag</span><h2>The Ultimate Business Trip Packing List: How to Pack Light and Stay Wrinkle-Free</h2><p>Master the art of carry-on travel with our ultimate business trip packing list. Learn how to pack light, avoid wrinkles, and travel stress-free.</p></a>
-    <a class="pcard" href="/blog/what-to-pack-for-a-beach-vacation/"><span class="tag">Travel · OneBag</span><h2>What to Pack for a Beach Vacation: The Ultimate Carry-On Guide</h2><p>Mastering what to pack for a beach vacation in a carry-on is easy. Discover the essential packing list, smart capsule wardrobe tips, and liquid rules.</p></a>
-    <a class="pcard" href="/blog/winter-travel-packing-list-guide/"><span class="tag">Travel · OneBag</span><h2>The Ultimate Winter Travel Packing List: Layering Secrets &amp; Carry-On Only Tips</h2><p>Master your winter travel packing list. Learn how to layer efficiently, pack bulky gear into a carry-on, and avoid airline weight limits.</p></a>
-    <a class="pcard" href="/blog/first-time-landlord-tips/"><span class="tag">Property · RentFlow</span><h2>First-time landlord checklist: 7 things to track from day one</h2><p>The 7 things every new landlord should track from day one — rent, deposits, leases, expenses, yield and rent-increase rules.</p></a>
-    <a class="pcard" href="/blog/turkiye-road-trip-guide/"><span class="tag">Travel · Routevia</span><h2>How to plan a Türkiye road trip: a step-by-step itinerary guide</h2><p>How to plan a Türkiye road trip the easy way — choosing your route, the best regions, how long to stay, and mapping your itinerary fast.</p></a>
-    <a class="pcard" href="/blog/carry-on-packing-mistakes/"><span class="tag">Travel · OneBag</span><h2>Carry-on packing list: 10 essentials people always forget</h2><p>A complete carry-on packing list of the essentials travellers forget most, plus how to stay under your airline&#x27;s carry-on weight limit.</p></a>
+    <a class="pcard" href="/blog/packing-cubes-vs-rolling-clothes/"><span class="tag">Travel · OneBag</span><h3>Packing Cubes vs Rolling Clothes: The Ultimate Carry-On Space Showdown</h3><p>Packing cubes vs rolling clothes: which method actually saves the most carry-on space? Discover the pros, cons, and how to combine them.</p></a>
+    <a class="pcard" href="/blog/business-trip-packing-list-light-wrinkle-free/"><span class="tag">Travel · OneBag</span><h3>The Ultimate Business Trip Packing List: How to Pack Light and Stay Wrinkle-Free</h3><p>Master the art of carry-on travel with our ultimate business trip packing list. Learn how to pack light, avoid wrinkles, and travel stress-free.</p></a>
+    <a class="pcard" href="/blog/what-to-pack-for-a-beach-vacation/"><span class="tag">Travel · OneBag</span><h3>What to Pack for a Beach Vacation: The Ultimate Carry-On Guide</h3><p>Mastering what to pack for a beach vacation in a carry-on is easy. Discover the essential packing list, smart capsule wardrobe tips, and liquid rules.</p></a>
+    <a class="pcard" href="/blog/winter-travel-packing-list-guide/"><span class="tag">Travel · OneBag</span><h3>The Ultimate Winter Travel Packing List: Layering Secrets &amp; Carry-On Only Tips</h3><p>Master your winter travel packing list. Learn how to layer efficiently, pack bulky gear into a carry-on, and avoid airline weight limits.</p></a>
+    <a class="pcard" href="/blog/first-time-landlord-tips/"><span class="tag">Property · RentFlow</span><h3>First-time landlord checklist: 7 things to track from day one</h3><p>The 7 things every new landlord should track from day one — rent, deposits, leases, expenses, yield and rent-increase rules.</p></a>
+    <a class="pcard" href="/blog/turkiye-road-trip-guide/"><span class="tag">Travel · Routevia</span><h3>How to plan a Türkiye road trip: a step-by-step itinerary guide</h3><p>How to plan a Türkiye road trip the easy way — choosing your route, the best regions, how long to stay, and mapping your itinerary fast.</p></a>
+    <a class="pcard" href="/blog/carry-on-packing-mistakes/"><span class="tag">Travel · OneBag</span><h3>Carry-on packing list: 10 essentials people always forget</h3><p>A complete carry-on packing list of the essentials travellers forget most, plus how to stay under your airline&#x27;s carry-on weight limit.</p></a>
   </div>
   <nav class="pagenav" aria-label="Pages"><a href="/blog/page/2/" aria-label="Previous">‹</a><a href="/blog/">1</a><a href="/blog/page/2/">2</a><span class="cur">3</span><span class="dis">›</span></nav>
 </main>

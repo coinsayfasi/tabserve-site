@@ -195,6 +195,8 @@ PAGE = """<!DOCTYPE html>
 <meta name="twitter:image" content="__OGIMG__">
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -470,7 +472,7 @@ def write_post(d, app, posts=()):
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
         .replace("__APPMETA__", ("\n<meta name=\"apple-itunes-app\" content=\"app-id=" + APPS[app]["ios"] + "\">") if APPS[app].get("ios") else "").replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"][:40]))
         .replace("__TAG__", APPS[app]["tag"]).replace("__READ__", str(read)).replace("__RAIL__", rail)
-        .replace("__NICE__", today.strftime("%B %Y")).replace("__BODY__", body))
+        .replace("__NICE__", "Published: " + today.strftime("%b %d, %Y") + " · Updated: " + today.strftime("%b %d, %Y")).replace("__BODY__", body))
     (BLOG / slug).mkdir(parents=True, exist_ok=True)
     (BLOG / slug / "index.html").write_text(page, encoding="utf-8")
 
@@ -494,7 +496,7 @@ q.addEventListener('input',function(){var v=q.value.trim().toLowerCase();
   if(grid)grid.style.display='none';if(nav)nav.style.display='none';
   if(!hits.length){res.style.display='none';res.innerHTML='';qn.style.display='block';return}
   qn.style.display='none';
-  res.innerHTML=hits.map(function(p){return '<a class="pcard in" href="'+p.u+'"><h2>'+esc(p.t)+'</h2><p>'+esc(p.d)+'</p></a>'}).join('');
+  res.innerHTML=hits.map(function(p){return '<a class="pcard in" href="'+p.u+'"><h3>'+esc(p.t)+'</h3><p>'+esc(p.d)+'</p></a>'}).join('');
   res.style.display='';}
  if(idx){run()}else{fetch('/assets/search.json').then(function(r){return r.json()}).then(function(j){idx=j;run()}).catch(function(){})}
 });
@@ -505,7 +507,7 @@ if(qp){q.value=qp;q.dispatchEvent(new Event("input"));}});</script>
 def rebuild_index(posts):
     def card(p):
         return (f'    <a class="pcard" href="/blog/{p["slug"]}/"><span class="tag">{html.escape(p["tag"])}</span>'
-                f'<h2>{html.escape(p["title"])}</h2><p>{html.escape(p["desc"])}</p></a>')
+                f'<h3>{html.escape(p["title"])}</h3><p>{html.escape(p["desc"])}</p></a>')
     # site geneli arama index'i
     (ROOT / "assets" / "search.json").write_text(json.dumps(
         [{"t": p["title"], "d": p["desc"], "u": f"/blog/{p['slug']}/"} for p in posts],
@@ -524,6 +526,8 @@ def rebuild_index(posts):
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebSite","name":"Tabserve Blog","url":"{SITE}/","inLanguage":"en","potentialAction":{{"@type":"SearchAction","target":"{SITE}/blog/?q={{search_term_string}}","query-input":"required name=search_term_string"}}}}</script>__XSCHEMA__
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>

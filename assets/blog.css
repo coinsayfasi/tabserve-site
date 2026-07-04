@@ -240,3 +240,5 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 .post td{padding:11px 14px;border-top:1px solid var(--line);color:var(--muted)}
 .post tr:hover td{background:rgba(47,107,255,.03)}
 @media(max-width:600px){.post table{display:block;overflow-x:auto;white-space:nowrap}}
+
+.pcard h3{font-family:"Sora",sans-serif;font-size:18.5px;font-weight:700;margin:8px 0 6px;color:var(--ink)}
