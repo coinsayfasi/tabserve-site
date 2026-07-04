@@ -44,12 +44,20 @@ jobs:
         run: python -u _gen/social_post.py
       - name: Commit & push
         run: |
-          [ -n "$(git status --porcelain)" ] || { echo "yeni içerik yok"; exit 0; }
+          [ -n "$(git status --porcelain)" ] || { echo "değişiklik yok"; exit 0; }
+          # marker koruması: üretilen dosyada conflict işareti varsa DURDUR
+          if grep -rIl -e '^<<<<<<< ' -e '^>>>>>>> ' --include='*.html' --include='*.xml' --include='*.json' --include='*.css' --include='*.js' . 2>/dev/null | grep -qv '/.git/'; then echo "::error::conflict marker üretilen dosyada — push iptal"; exit 1; fi
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "content: yeni blog yazısı (AI, tam-SEO) [skip ci]"
           for i in 1 2 3 4 5; do
-            git pull --rebase -X ours origin main && git push && exit 0 || { git rebase --abort 2>/dev/null; sleep $((RANDOM%5+3)); }
+            if git pull --rebase -X ours origin main; then
+              # rebase sonrası ikinci tarama (güvenlik ağı)
+              if grep -rIl -e '^<<<<<<< ' -e '^>>>>>>> ' --include='*.html' --include='*.xml' --include='*.json' --include='*.css' --include='*.js' . 2>/dev/null | grep -qv '/.git/'; then echo "::error::rebase sonrası marker — push iptal"; exit 1; fi
+              git push && exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((RANDOM%5+3))
           done
           echo "::warning::blog push başarısız"
