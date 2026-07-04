@@ -194,6 +194,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="__OGIMG__">
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -206,7 +207,7 @@ PAGE = """<!DOCTYPE html>
 <body>
 <div class="aurora"></div>
 <nav><div class="nwrap">
-  <a class="logo" href="/"><img src="/assets/logo.svg" alt="">Tabserve</a>
+  <a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve">Tabserve</a>
   <div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div>
 </div></nav>
 <main class="wrap page">
@@ -221,7 +222,7 @@ __BODY__
 <footer class="site-footer">
   <div class="wrap foot-grid">
     <div class="foot-brand">
-      <a class="logo" href="/"><img src="/assets/logo.svg" alt="" width="30" height="30">Tabserve</a>
+      <a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve" width="30" height="30">Tabserve</a>
       <p>Simple, useful mobile apps for travel, trips and rentals — free to start on iOS &amp; Android.</p>
     </div>
     <div class="foot-col">
@@ -411,7 +412,7 @@ def related_block(posts, current_slug, tag=None, n=4):
         others = same + rest
     others = others[:n]
     if not others: return ""
-    lis = "".join(f'<li><a href="/blog/{p["slug"]}/">{html.escape(p["title"])}</a></li>'
+    lis = "".join(f'<li><a href="/blog/{p["slug"]}/">{html.escape(p["title"].split(":")[0].strip())}</a></li>'
                   for p in others)
     x = CROSS.get(current_slug)
     if x:
@@ -522,6 +523,7 @@ def rebuild_index(posts):
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/assets/tabserve-og.png">
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebSite","name":"Tabserve Blog","url":"{SITE}/","inLanguage":"en","potentialAction":{{"@type":"SearchAction","target":"{SITE}/blog/?q={{search_term_string}}","query-input":"required name=search_term_string"}}}}</script>__XSCHEMA__
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
@@ -530,12 +532,12 @@ def rebuild_index(posts):
 </head>
 <body>
 <div class="aurora"></div>
-<nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/logo.svg" alt="">Tabserve</a>
+<nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve">Tabserve</a>
 <div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div></div></nav>"""
     foot = """<footer class="site-footer">
   <div class="wrap foot-grid">
     <div class="foot-brand">
-      <a class="logo" href="/"><img src="/assets/logo.svg" alt="" width="30" height="30">Tabserve</a>
+      <a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve" width="30" height="30">Tabserve</a>
       <p>Simple, useful mobile apps for travel, trips and rentals — free to start on iOS &amp; Android.</p>
     </div>
     <div class="foot-col">
