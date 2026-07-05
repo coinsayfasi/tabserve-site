@@ -61,3 +61,17 @@ jobs:
             sleep $((RANDOM%5+3))
           done
           echo "::warning::blog push başarısız"
+      - name: Wait for deploy (og kartı canlı olsun)
+        run: sleep 90
+      - name: Post to Telegram (app-tespitli link)
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -u _gen/telegram_post.py
+      - name: Post to Mastodon (app-tespitli link)
+        continue-on-error: true
+        env:
+          MASTODON_INSTANCE: ${{ secrets.MASTODON_INSTANCE }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+        run: python -u _gen/mastodon_post.py
