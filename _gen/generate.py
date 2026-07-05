@@ -248,7 +248,7 @@ __BODY__
   </div>
   <div class="foot-bottom"><div class="wrap">
     <span>© 2026 Tabserve · Built by Yunus Güneş</span>
-    <span>Made with ♥ in Türkiye</span>
+    <span>Made with ♥ in Türkiye · <a rel="me" href="https://mastodon.social/@tabserve">Mastodon</a></span>
   </div></div>
 </footer>
 <div id="cookie-banner" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0d1426;border-top:1px solid rgba(255,255,255,.1);padding:14px 18px;font-size:13.5px;color:#cdd5ea;line-height:1.5">
@@ -566,7 +566,7 @@ def rebuild_index(posts):
   </div>
   <div class="foot-bottom"><div class="wrap">
     <span>© 2026 Tabserve · Built by Yunus Güneş</span>
-    <span>Made with ♥ in Türkiye</span>
+    <span>Made with ♥ in Türkiye · <a rel="me" href="https://mastodon.social/@tabserve">Mastodon</a></span>
   </div></div>
 </footer>
 <script>const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.12});document.querySelectorAll('.pcard,.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*70)+'ms';io.observe(el)});</script>
