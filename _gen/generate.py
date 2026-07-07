@@ -80,6 +80,20 @@ APPS = {
               "ios":"6767179451","name":"RentFlow","one":"a rental manager for landlords with free yield and cash-flow calculators"},
 }
 
+# Her yazının sonunda 3 app'i de tanıtan temiz şerit (.related stiliyle, iç+dış link).
+ALL_APPS_STRIP = (
+    '<section class="related allapps" style="margin-top:22px">'
+    '<h2>📲 Apps by Tabserve</h2><ul>'
+    '<li><a href="https://coinsayfasi.github.io/onebag/"><b>🧳 OneBag</b> — '
+    'AI Snap &amp; Check bag scanner + smart carry-on lists &amp; airline weight tracker →</a></li>'
+    '<li><a href="https://coinsayfasi.github.io/routevia-app/"><b>🗺️ Routevia</b> — '
+    'discover places across Türkiye &amp; plan AI trip routes in seconds →</a></li>'
+    '<li><a href="https://coinsayfasi.github.io/rentflow/"><b>🏠 RentFlow</b> — '
+    'rental manager for landlords with free yield &amp; cash-flow calculators →</a></li>'
+    '</ul></section>'
+)
+
+
 def load(p, d): return json.loads(p.read_text(encoding="utf-8")) if p.exists() else d
 def slugify(s): return re.sub(r"[^a-z0-9]+","-",s.lower()).strip("-")[:70]
 def words(htmlstr): return len(re.sub(r"\s+"," ",re.sub(r"<[^>]+>"," ",htmlstr)).split())
@@ -467,7 +481,7 @@ def write_post(d, app, posts=()):
     schema = json.dumps(schemas, ensure_ascii=False)
     read = max(4, round(words(body)/180))
     extras, rail = post_extras(url, d["title"])
-    body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + extras
+    body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + ALL_APPS_STRIP + extras
     page = (PAGE.replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
         .replace("__APPMETA__", ("\n<meta name=\"apple-itunes-app\" content=\"app-id=" + APPS[app]["ios"] + "\">") if APPS[app].get("ios") else "").replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"][:40]))
@@ -591,6 +605,20 @@ def rebuild_index(posts):
             items.append(f'<a href="{page_href(n+1)}" aria-label="Next">›</a>' if n < total else '<span class="dis">›</span>')
             pagenav = '<nav class="pagenav" aria-label="Pages">' + "".join(items) + '</nav>'
         title = "Blog — Travel, trips &amp; landlord tips" if n == 1 else f"Blog — Page {n}"
+        # 🔥 Popular Guides (yalnız s.1): app çeşitliliğiyle curated iç-link bloğu
+        poptips = ""
+        if n == 1 and posts:
+            seen, picks = set(), []
+            for p in posts:  # önce her app'ten ilki (OneBag/Routevia/RentFlow çeşitliliği)
+                t = p.get("tag", "")
+                if t and t not in seen:
+                    seen.add(t); picks.append(p)
+            picks += [p for p in posts if p not in picks]
+            picks = picks[:6]
+            chips = "".join(f'<a href="/blog/{p["slug"]}/">{p["title"][:40]}</a>' for p in picks)
+            poptips = ('<div class="chipwrap" style="margin-top:30px"><span class="chiplbl">'
+                       '🔥 Popular Guides</span><nav class="chips" aria-label="Popular guides">'
+                       + chips + '</nav></div>')
         body = f"""
 <main class="wrap page">
   <div class="crumb"><a href="/">Home</a> › Blog{'' if n == 1 else f' › Page {n}'}</div>
@@ -600,6 +628,7 @@ def rebuild_index(posts):
   <div class="posts">
 {cards}
   </div>
+{poptips}
   {pagenav}
 </main>
 """
