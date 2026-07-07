@@ -185,7 +185,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="description" content="__DESC__">
 <meta name="keywords" content="__KW__">
 <link rel="canonical" href="__URL__">__APPMETA__
-<meta name="robots" content="index,follow">
+<meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="article">
 <meta property="og:title" content="__TITLE__">
 <meta property="og:description" content="__DESC__">
