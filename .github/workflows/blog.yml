@@ -75,3 +75,9 @@ jobs:
           MASTODON_INSTANCE: ${{ secrets.MASTODON_INSTANCE }}
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
         run: python -u _gen/mastodon_post.py
+      - name: OneBag push (FCM 'onebag' topic, Salı/Cuma)
+        continue-on-error: true
+        env:
+          FIREBASE_SA_ONEBAG: ${{ secrets.FIREBASE_SA_ONEBAG }}
+          FORCE_ONEBAG_PUSH: ${{ github.event.inputs.force_push || 'false' }}
+        run: python -u _gen/push_notify_onebag.py
