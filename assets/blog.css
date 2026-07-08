@@ -22,7 +22,7 @@ nav .nwrap{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;align-item
 .logo img{width:30px;height:30px;border-radius:9px}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:600;margin-left:24px;transition:color .2s}
 .nav-links a:hover{color:var(--accent)}
-@media(max-width:560px){.nav-links a{margin-left:15px;font-size:13.5px}}
+@media(max-width:560px){.nav-links a{margin-left:15px;font-size:13.5px}.post{font-size:16px}.appcta{padding:20px 18px}.appbadges{gap:8px}.appbadges a:not(.ghost),.appbadges .soon{flex:1 1 0;min-width:0;justify-content:center;text-align:center;padding:12px 8px;font-size:13px}.appbadges .ghost{flex:1 1 100%;text-align:center;padding:6px 4px}}
 
 /* hero (anasayfa) */
 header .brand{color:var(--accent3)!important}
