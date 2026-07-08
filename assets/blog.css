@@ -150,7 +150,8 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 
 /* App CTA store butonları */
 .appbadges{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
-.appbadges a,.appbadges .soon{font-size:13.5px;font-weight:700;padding:10px 16px;border-radius:11px;text-decoration:none;transition:transform .15s,box-shadow .2s}
+.appbadges a,.appbadges .soon{font-size:13px;font-weight:700;padding:9px 14px;border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .2s}
+.appbadges a:not(.ghost){flex:1 1 auto;display:inline-flex;align-items:center;justify-content:center;gap:5px}
 .appbadges a:not(.ghost){background:#111827;color:#fff}
 .appbadges a:not(.ghost):hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(31,39,51,.25)}
 .appbadges .soon{background:rgba(31,39,51,.07);color:var(--muted)}
@@ -160,15 +161,18 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 #rprog{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;will-change:transform;z-index:70;background:linear-gradient(90deg,var(--accent3),var(--accent),var(--accent2))}
 
 /* İçindekiler kutusu */
-.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 20px;margin:26px 0;box-shadow:var(--shadow)}
-.toc summary{cursor:pointer;font-weight:700;font-size:15.5px;padding:12px 0;list-style:none;color:var(--ink)}
+.toc{background:linear-gradient(180deg,#fff,#fafbfc);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:14px;padding:2px 22px;margin:26px 0;box-shadow:var(--shadow)}
+.toc summary{cursor:pointer;font-weight:700;font-size:14.5px;padding:15px 0;list-style:none;color:var(--ink);display:flex;align-items:center;gap:8px;letter-spacing:.02em}
 .toc summary::-webkit-details-marker{display:none}
-.toc summary::after{content:"▾";float:right;color:var(--accent);transition:transform .25s}
+.toc summary::before{content:"📑";font-size:15px}
+.toc summary::after{content:"▾";margin-left:auto;color:var(--accent);transition:transform .25s;font-size:13px}
+.toc[open] summary{border-bottom:1px solid var(--line)}
 .toc[open] summary::after{transform:rotate(180deg)}
-.toc ol{margin:0 0 14px;padding-left:20px}
-.toc li{margin:7px 0;font-size:14.5px}
-.toc a{color:var(--muted);text-decoration:none;transition:color .2s}
-.toc a:hover{color:var(--accent)}
+.toc ol{margin:12px 0 16px;padding:0;list-style:none;counter-reset:toc}
+.toc li{counter-increment:toc;margin:2px 0;font-size:14.5px}
+.toc a{display:flex;gap:10px;align-items:baseline;color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:8px;transition:background .18s,color .18s}
+.toc a::before{content:counter(toc);font-weight:800;color:var(--accent);font-size:12px;min-width:18px;font-variant-numeric:tabular-nums}
+.toc a:hover{background:rgba(47,107,255,.07);color:var(--ink)}
 
 /* Mobil yapışkan indir çubuğu */
 #stickyapp{position:fixed;left:10px;right:10px;bottom:10px;z-index:65;display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 34px rgba(31,39,51,.18);padding:10px 12px;animation:sain .35s ease}
