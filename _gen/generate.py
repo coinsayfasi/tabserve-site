@@ -531,6 +531,7 @@ def rebuild_index(posts):
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="blogarama-site-verification" content="blogarama-a9ce490b-b35d-4df8-be42-dde71c7e9a94">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7579691213276550" crossorigin="anonymous"></script>
 <title>__T__ | Tabserve</title>
 <meta name="description" content="__DESC__">
 <link rel="canonical" href="__CANON__">__PREVNEXT__
