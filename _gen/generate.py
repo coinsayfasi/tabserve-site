@@ -530,6 +530,7 @@ def rebuild_index(posts):
     head = f"""<!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="blogarama-site-verification" content="blogarama-a9ce490b-b35d-4df8-be42-dde71c7e9a94">
 <title>__T__ | Tabserve</title>
 <meta name="description" content="Practical guides on carry-on packing, Türkiye travel and managing rental property — from the makers of OneBag, Routevia and RentFlow.">
 <link rel="canonical" href="__CANON__">__PREVNEXT__
