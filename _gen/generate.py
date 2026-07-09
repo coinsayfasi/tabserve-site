@@ -532,10 +532,10 @@ def rebuild_index(posts):
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="blogarama-site-verification" content="blogarama-a9ce490b-b35d-4df8-be42-dde71c7e9a94">
 <title>__T__ | Tabserve</title>
-<meta name="description" content="Practical guides on carry-on packing, Türkiye travel and managing rental property — from the makers of OneBag, Routevia and RentFlow.">
+<meta name="description" content="__DESC__">
 <link rel="canonical" href="__CANON__">__PREVNEXT__
 <meta property="og:type" content="website"><meta property="og:title" content="__T__ | Tabserve">
-<meta property="og:description" content="Practical guides on carry-on packing, Türkiye travel and managing rental property.">
+<meta property="og:description" content="__DESC__">
 <meta property="og:url" content="__CANON__"><meta property="og:image" content="{SITE}/assets/tabserve-og.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/assets/tabserve-og.png">
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebSite","name":"Tabserve Blog","url":"{SITE}/","inLanguage":"en","potentialAction":{{"@type":"SearchAction","target":"{SITE}/blog/?q={{search_term_string}}","query-input":"required name=search_term_string"}}}}</script>__XSCHEMA__
@@ -635,7 +635,8 @@ def rebuild_index(posts):
 """
         xsch = ('<script type="application/ld+json">' + json.dumps({"@context":"https://schema.org","@type":"CollectionPage","name":"Tabserve Blog","url":page_url(n),"inLanguage":"en"}, ensure_ascii=False) + '</script>'
                 '<script type="application/ld+json">' + json.dumps({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":SITE+"/"},{"@type":"ListItem","position":2,"name":"Blog" if n==1 else f"Blog — Page {n}","item":page_url(n)}]}, ensure_ascii=False) + '</script>')
-        page = head.replace("__T__", title).replace("__CANON__", page_url(n)).replace("__PREVNEXT__", prevnext).replace("__XSCHEMA__", xsch) + body + foot
+        list_desc = ("Practical guides on carry-on packing, Türkiye travel and managing rental property — from the makers of OneBag, Routevia and RentFlow." if n == 1 else f"Travel, packing and landlord guides from Tabserve — page {n}. Practical, in-depth guides from the makers of OneBag, Routevia and RentFlow.")
+        page = head.replace("__T__", title).replace("__DESC__", list_desc).replace("__CANON__", page_url(n)).replace("__PREVNEXT__", prevnext).replace("__XSCHEMA__", xsch) + body + foot
         outdir = BLOG if n == 1 else BLOG / "page" / str(n)
         outdir.mkdir(parents=True, exist_ok=True)
         (outdir / "index.html").write_text(page, encoding="utf-8")
