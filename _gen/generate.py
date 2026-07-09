@@ -484,7 +484,7 @@ def write_post(d, app, posts=()):
     body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + ALL_APPS_STRIP + extras
     page = (PAGE.replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
-        .replace("__APPMETA__", ("\n<meta name=\"apple-itunes-app\" content=\"app-id=" + APPS[app]["ios"] + "\">") if APPS[app].get("ios") else "").replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"][:40]))
+        .replace("__APPMETA__", ("\n<meta name=\"apple-itunes-app\" content=\"app-id=" + APPS[app]["ios"] + "\">") if APPS[app].get("ios") else "").replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"] if len(d["title"]) <= 42 else d["title"][:42].rsplit(" ", 1)[0] + "…"))
         .replace("__TAG__", APPS[app]["tag"]).replace("__READ__", str(read)).replace("__RAIL__", rail)
         .replace("__NICE__", "Published: " + today.strftime("%b %d, %Y") + " · Updated: " + today.strftime("%b %d, %Y")).replace("__BODY__", body))
     (BLOG / slug).mkdir(parents=True, exist_ok=True)
@@ -517,6 +517,13 @@ q.addEventListener('input',function(){var v=q.value.trim().toLowerCase();
 var qp=new URLSearchParams(location.search).get("q");
 if(qp){q.value=qp;q.dispatchEvent(new Event("input"));}});</script>
 """
+
+def guide_label(t):
+    """Popular Guides çipleri için temiz, tam okunur etiket — kelime ortasından kesmez."""
+    main = t.split(":")[0].strip()          # ':' öncesi ana başlık
+    if len(main) <= 58:
+        return main
+    return main[:58].rsplit(" ", 1)[0] + "…"  # kelime sınırında kes
 
 def rebuild_index(posts):
     def card(p):
@@ -617,7 +624,7 @@ def rebuild_index(posts):
                     seen.add(t); picks.append(p)
             picks += [p for p in posts if p not in picks]
             picks = picks[:6]
-            chips = "".join(f'<a href="/blog/{p["slug"]}/">{p["title"][:40]}</a>' for p in picks)
+            chips = "".join(f'<a href="/blog/{p["slug"]}/">{html.escape(guide_label(p["title"]))}</a>' for p in picks)
             poptips = ('<div class="chipwrap" style="margin-top:30px"><span class="chiplbl">'
                        '🔥 Popular Guides</span><nav class="chips" aria-label="Popular guides">'
                        + chips + '</nav></div>')
