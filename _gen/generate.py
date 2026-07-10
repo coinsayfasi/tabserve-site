@@ -107,8 +107,8 @@ The article should be genuinely helpful on its own and subtly fit a brand that m
 STRICT RULES — follow every one:
 0. START the body with: <div class="tldr"><b>⚡ 30-second summary</b><p>3-4 sentences: the core answer/value of this article.</p></div>
 1. The target keyword "{kw}" must appear in the TITLE and be the clear topic. The title doubles as the page H1 — do NOT output an <h1>.
-2. Length: 900-1300 words of real body text (count WORDS, not characters). Do not pad with fluff.
-3. Heading hierarchy: use 4-6 <h2> headings (natural keyword variations), <h3> subheadings under H2s, and at least one deeper <h4> (use <h5> only where it genuinely helps). Logical nesting H2 > H3 > H4.
+2. Length: 2500-3000 words of real body text (count WORDS, not characters). Do NOT pad with fluff — every section must add concrete, original value (numbers, ranges, steps, examples, comparisons). Fill the length naturally with 8-11 rich H2 sections.
+3. Heading hierarchy: use 8-11 <h2> headings (natural keyword variations), <h3> subheadings under H2s, and at least one deeper <h4> (use <h5> only where it genuinely helps). Logical nesting H2 > H3 > H4.
 3a. Include ONE comparison <table> where it genuinely helps (places/options/products: columns like Name | Time needed | Cost level | Best for). Never invent exact prices — use categories (free/paid/budget/mid/premium).
 3a2. IF this is a DESTINATION/travel guide: also include <h2>Sample itineraries</h2> (1-day and 2-day, hour-by-hour) and <h2>Best photo & sunset spots</h2> (3-5 spots with timing).
 3b. Include a <h2>Common Mistakes to Avoid</h2> section (4-6 real mistakes travelers/landlords make on this topic, with the fix; <ul>).
@@ -183,7 +183,7 @@ def validate(d, kw):
     wc = words(b.replace("{{APP_CTA}}",""))
     h2,h3,h4 = len(re.findall(r"<h2",b)),len(re.findall(r"<h3",b)),len(re.findall(r"<h4",b))
     errs=[]
-    if wc < 750: errs.append(f"kelime {wc}<750")
+    if wc < 2000: errs.append(f"kelime {wc}<2000")
     if h2 < 3: errs.append(f"H2 {h2}<3")
     if h3 < 2: errs.append(f"H3 {h3}<2")
     if h4 < 1: errs.append(f"H4 {h4}<1")
