@@ -23,8 +23,7 @@ def ascii_fold(s):
 
 def content_end(h):
     end = len(h)
-    for mk in ('<section class="related', 'class="sources', 'class="allapps"',
-               'class="appcta"', 'class="related reveal'):
+    for mk in ('<section class="related', 'class="sources"', 'class="allapps"'):
         i = h.find(mk)
         if i != -1:
             end = min(end, i)
