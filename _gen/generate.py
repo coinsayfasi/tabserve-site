@@ -83,12 +83,12 @@ APPS = {
 # Her yazının sonunda 3 app'i de tanıtan temiz şerit (.related stiliyle, iç+dış link).
 ALL_APPS_STRIP = (
     '<section class="related allapps" style="margin-top:22px">'
-    '<h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg> Apps by Tabserve</h2><ul>'
-    '<li><a href="https://coinsayfasi.github.io/onebag/"><b><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2"/><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"/><path d="M10 20h4"/><circle cx="16" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></svg> OneBag</b> — '
+    '<h2><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg> Apps by Tabserve</h2><ul>'
+    '<li><a href="https://coinsayfasi.github.io/onebag/"><b><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2"/><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"/><path d="M10 20h4"/><circle cx="16" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></svg> OneBag</b> — '
     'AI Snap &amp; Check bag scanner + smart carry-on lists &amp; airline weight tracker →</a></li>'
-    '<li><a href="https://coinsayfasi.github.io/routevia-app/"><b><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg> Routevia</b> — '
+    '<li><a href="https://coinsayfasi.github.io/routevia-app/"><b><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg> Routevia</b> — '
     'discover places across Türkiye &amp; plan AI trip routes in seconds →</a></li>'
-    '<li><a href="https://coinsayfasi.github.io/rentflow/"><b><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> RentFlow</b> — '
+    '<li><a href="https://coinsayfasi.github.io/rentflow/"><b><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> RentFlow</b> — '
     'rental manager for landlords with free yield &amp; cash-flow calculators →</a></li>'
     '</ul></section>'
 )
@@ -630,7 +630,7 @@ def rebuild_index(posts):
             items.append(f'<a href="{page_href(n+1)}" aria-label="Next">›</a>' if n < total else '<span class="dis">›</span>')
             pagenav = '<nav class="pagenav" aria-label="Pages">' + "".join(items) + '</nav>'
         title = "Blog — Travel, trips &amp; landlord tips" if n == 1 else f"Blog — Page {n}"
-        # <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg> Popular Guides (yalnız s.1): app çeşitliliğiyle curated iç-link bloğu
+        # <svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg> Popular Guides (yalnız s.1): app çeşitliliğiyle curated iç-link bloğu
         poptips = ""
         if n == 1 and posts:
             seen, picks = set(), []
@@ -642,7 +642,7 @@ def rebuild_index(posts):
             picks = picks[:6]
             chips = "".join(f'<a href="/blog/{p["slug"]}/">{html.escape(guide_label(p["title"]))}</a>' for p in picks)
             poptips = ('<div class="chipwrap" style="margin-top:30px"><span class="chiplbl">'
-                       '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg> Popular Guides</span><nav class="chips" aria-label="Popular guides">'
+                       '<svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg> Popular Guides</span><nav class="chips" aria-label="Popular guides">'
                        + chips + '</nav></div>')
         body = f"""
 <main class="wrap page">
@@ -711,7 +711,7 @@ def rebuild_index(posts):
                         m = m[len(pre):]; break
                 return m if len(m) <= 30 else m[:30].rsplit(" ", 1)[0] + "…"
             chips = "".join(f'<a href="/blog/{p["slug"]}/">{html.escape(_clabel(p["title"]))}</a>' for p in picks)
-            blk = CA + '<section class="wrap reveal" style="padding:6px 22px 2px"><div class="chipwrap" style="margin-top:6px"><span class="chiplbl"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg> Popular Guides</span><nav class="chips" aria-label="Popular guides">' + chips + '</nav></div></section>' + CB
+            blk = CA + '<section class="wrap reveal" style="padding:6px 22px 2px"><div class="chipwrap" style="margin-top:6px"><span class="chiplbl"><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg> Popular Guides</span><nav class="chips" aria-label="Popular guides">' + chips + '</nav></div></section>' + CB
             lc = _re.sub(_re.escape(CA) + r"[\s\S]*?" + _re.escape(CB), blk, lc, count=1)
         lp.write_text(lc, encoding="utf-8")
 
