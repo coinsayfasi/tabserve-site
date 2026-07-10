@@ -673,6 +673,7 @@ def rebuild_index(posts):
     lp = ROOT / "index.html"
     if lp.exists():
         lc = lp.read_text(encoding="utf-8")
+        import re as _re
         A, B = "<!--BLOG_TEASER_START-->", "<!--BLOG_TEASER_END-->"
         if A in lc and B in lc:
             t3 = posts[:9]
@@ -681,9 +682,22 @@ def rebuild_index(posts):
                 f'<p>{html.escape(pp["desc"][:130])}…</p>'
                 f'<a class="more" href="/blog/{pp["slug"]}/">Read the guide →</a></article>' for pp in t3
             ) + '</div><p style="text-align:center;margin:6px 0 26px"><a class="more" href="/blog/" style="font-size:15px">All guides →</a></p></section>\n' + B
-            import re as _re
             lc = _re.sub(_re.escape(A) + r"[\s\S]*?" + _re.escape(B), teaser, lc, count=1)
-            lp.write_text(lc, encoding="utf-8")
+        # ── Popular Guides çipleri: her gün 12 rehber DÖNER (35 arasında rotasyon) ──
+        CA, CB = "<!--POPGUIDES_START-->", "<!--POPGUIDES_END-->"
+        if CA in lc and CB in lc and posts:
+            off = datetime.date.today().toordinal() % len(posts)
+            picks = (posts + posts)[off:off + 12]
+            def _clabel(t):
+                m = t.split(":")[0].strip()
+                for pre in ("The Ultimate ", "The ", "A "):
+                    if m.startswith(pre):
+                        m = m[len(pre):]; break
+                return m if len(m) <= 30 else m[:30].rsplit(" ", 1)[0] + "…"
+            chips = "".join(f'<a href="/blog/{p["slug"]}/">{html.escape(_clabel(p["title"]))}</a>' for p in picks)
+            blk = CA + '<section class="wrap reveal" style="padding:6px 22px 2px"><div class="chipwrap" style="margin-top:6px"><span class="chiplbl">🔥 Popular Guides</span><nav class="chips" aria-label="Popular guides">' + chips + '</nav></div></section>' + CB
+            lc = _re.sub(_re.escape(CA) + r"[\s\S]*?" + _re.escape(CB), blk, lc, count=1)
+        lp.write_text(lc, encoding="utf-8")
 
     # sitemap
     static = [("/","1.0","weekly"),("/blog/","0.8","weekly"),("/privacy.html","0.3","yearly")]
