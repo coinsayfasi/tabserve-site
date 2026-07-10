@@ -47,7 +47,16 @@ def main():
         topic = ascii_fold(re.split(r"[:—|]", title)[0].strip())
         end = content_end(h)
         pos = [m.start() for m in re.finditer(r"<h2", h) if m.start() < end]
-        target_spots = [i for i in (5, 7, 9, 11, 6, 8) if i < len(pos)]
+        used = set()
+        for k, p2 in enumerate(pos):
+            seg = h[p2:(pos[k + 1] if k + 1 < len(pos) else end)]
+            if 'figure class="inpost"' in seg:
+                used.add(k)
+        free = [k for k in range(1, len(pos)) if k not in used]
+        if len(free) > need:
+            step = max(1, len(free) // need)
+            free = free[::step]
+        target_spots = free[:need]
         added, inserts = 0, []
         for j, spot in enumerate(target_spots):
             if added >= need:
