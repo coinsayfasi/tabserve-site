@@ -208,7 +208,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="__OGIMG__">
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#2f6bff">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
@@ -440,9 +440,24 @@ def related_block(posts, current_slug, tag=None, n=4):
     return ('<section class="related"><h2>Related Guides</h2><ul>'
             + lis + '</ul></section>')
 
+def insert_toc(body, label="Contents"):
+    """Builds a jump-link Table of Contents from H2 sections (long articles; .toc CSS ready)."""
+    n = [0]; ids = []
+    def _add(m):
+        n[0] += 1; aid = f"s{n[0]}"
+        t = re.sub(r"<[^>]+>", "", m.group(1)).strip()
+        ids.append((aid, t)); return f'<h2 id="{aid}">{m.group(1)}</h2>'
+    body = re.sub(r"<h2\b[^>]*>(.*?)</h2>", _add, body, flags=re.S)
+    if len(ids) < 3:
+        return body
+    toc = '<details class="toc" open><summary>' + label + '</summary><ol>' + "".join(
+        f'<li><a href="#{a}">{html.escape(t)}</a></li>' for a, t in ids) + '</ol></details>'
+    i = body.find('<h2 id="s1">')
+    return body if i < 0 else body[:i] + toc + body[i:]
+
 def write_post(d, app, posts=()):
     slug = d["slug"]; url = f"{SITE}/blog/{slug}/"
-    body = insert_cta(d["body"], APPS[app]["cta"])
+    body = insert_cta(insert_toc(d["body"], "Contents"), APPS[app]["cta"])
     try:
         la, lo = float(d.get("lat") or 0), float(d.get("lon") or 0)
         if 25 < la < 60 and 20 < lo < 50:
@@ -549,7 +564,7 @@ def rebuild_index(posts):
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/assets/tabserve-og.png">
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebSite","name":"Tabserve Blog","url":"{SITE}/","inLanguage":"en","potentialAction":{{"@type":"SearchAction","target":"{SITE}/blog/?q={{search_term_string}}","query-input":"required name=search_term_string"}}}}</script>__XSCHEMA__
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#2f6bff">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
