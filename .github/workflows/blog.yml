@@ -42,6 +42,12 @@ jobs:
           BLUESKY_IDENTIFIER: ${{ secrets.BLUESKY_IDENTIFIER }}
           BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
         run: python -u _gen/social_post.py
+      - name: Drip evergreen apps guides to Bluesky (traffic + backlink)
+        env:
+          BLUESKY_IDENTIFIER: ${{ secrets.BLUESKY_IDENTIFIER }}
+          BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+          DRIP_PER_RUN: "2"
+        run: python -u _gen/social_apps_drip.py
       - name: Commit & push
         run: |
           [ -n "$(git status --porcelain)" ] || { echo "değişiklik yok"; exit 0; }
