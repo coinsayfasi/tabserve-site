@@ -121,7 +121,7 @@ article.post .appcta a:hover,.appcta a:hover{transform:translateY(-2px);box-shad
 .related li:first-child{border-top:0}
 .related a{display:flex;align-items:center;gap:10px;padding:12px 2px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15.5px;line-height:1.45;transition:color .2s,transform .2s}
 .related a::before{content:"→";color:var(--accent);font-weight:700;flex-shrink:0}
-.related a:hover{color:var(--accent);transform:translateX(3px)}
+.related a:hover{color:var(--accent);transform:translateX(3px)}.allapps h2{text-align:center}.allapps a{justify-content:center;text-align:center}.allapps a::before{display:none}
 
 /* paylaş çubuğu ince ayar */
 .share{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:26px 0 6px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
