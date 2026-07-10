@@ -124,7 +124,7 @@ STRICT RULES — follow every one:
 7. Include 1-2 outbound links to GENUINELY AUTHORITATIVE, relevant external sources to back up the content (e.g. an official tourism board, a government/regulator page, or a relevant Wikipedia article). Only use well-known, stable URLs you are confident exist — prefer https://en.wikipedia.org/wiki/<Topic> or an official site's homepage; NEVER invent specific deep URLs. Place them naturally inside sentences, not in headings.
 
 Output ONLY valid minified JSON (no code fences, no commentary), exactly these keys:
-{{"title":"...","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","lat":"destination guides only: city latitude (else empty)","lon":"longitude or empty","img_queries":["3 separate stock photo searches, 2-4 English words each, matching DIFFERENT sections of the article: 1) cover scene 2) detail/action 3) context (e.g. [\"packing cubes suitcase\",\"folding clothes travel\",\"airport departure board\"])"],"body":"the article HTML"}}"""
+{{"title":"...","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","lat":"destination guides only: city latitude (else empty)","lon":"longitude or empty","img_queries":["5 separate stock photo searches, 2-4 English words each, each matching a DIFFERENT section of the article (spread across the whole piece): 1) cover scene 2) detail/action 3) context 4) place/scene 5) another concrete scene (e.g. [\"packing cubes suitcase\",\"folding clothes travel\",\"airport departure board\"])"],"body":"the article HTML"}}"""
 
 def _post(url, body, headers):
     req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method="POST")
@@ -351,9 +351,9 @@ def fetch_inpost(query, slug, idx):
         print(f"  (in-content skipped: {type(e).__name__})"); return None
 
 def insert_inpost_images(body, slug, queries, alt_base):
-    """Insert in-content figures before the 2nd and 4th H2 (when present)."""
+    """Insert in-content figures spread across the article (before 2nd,4th,6th,8th H2)."""
     pos = [m.start() for m in re.finditer(r"<h2", body)]
-    spots = [i for i in (1, 3) if i < len(pos)][:len(queries)]
+    spots = [i for i in (1, 3, 5, 7) if i < len(pos)][:len(queries)]
     for k in reversed(range(len(spots))):
         rel = fetch_inpost(queries[k], slug, k + 1)
         if not rel: continue
@@ -753,7 +753,7 @@ def main():
         iqs = d.get("img_queries") or ([d["img_query"]] if d.get("img_query") else [])
         fetch_hero((iqs[0] if iqs else kw), d["slug"])
         if len(iqs) > 1:
-            d["body"] = insert_inpost_images(d["body"], d["slug"], iqs[1:3], d["title"])
+            d["body"] = insert_inpost_images(d["body"], d["slug"], iqs[1:5], d["title"])
         write_post(d, app, posts)
         posts.insert(0, {"slug":d["slug"],"title":d["title"],"desc":d["meta_description"],
                          "tag":APPS[app]["tag"],"date":datetime.date.today().isoformat()})
