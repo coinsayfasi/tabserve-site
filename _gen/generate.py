@@ -675,7 +675,7 @@ def rebuild_index(posts):
         lc = lp.read_text(encoding="utf-8")
         A, B = "<!--BLOG_TEASER_START-->", "<!--BLOG_TEASER_END-->"
         if A in lc and B in lc:
-            t3 = posts[:3]
+            t3 = posts[:9]
             teaser = A + '\n<section class="wrap" id="blogteaser" style="padding:26px 22px 8px"><h3 style="font-family:\'Sora\',sans-serif;font-size:26px;text-align:center;margin-bottom:20px">Fresh from the blog</h3><div class="grid" style="padding:0 0 8px">' + "".join(
                 f'<article class="card in" style="opacity:1;transform:none"><h2 style="font-size:18px">{html.escape(pp["title"])}</h2>'
                 f'<p>{html.escape(pp["desc"][:130])}…</p>'
