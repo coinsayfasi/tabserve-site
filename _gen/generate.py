@@ -350,15 +350,18 @@ def fetch_inpost(query, slug, idx):
     except Exception as e:
         print(f"  (in-content skipped: {type(e).__name__})"); return None
 
-def insert_inpost_images(body, slug, queries, alt_base):
+def insert_inpost_images(body, slug, queries, alt_base, keywords=""):
     """Insert in-content figures spread across the article (before 2nd,4th,6th,8th H2)."""
     pos = [m.start() for m in re.finditer(r"<h2", body)]
+    _kws = [k.strip() for k in keywords.split(",") if k.strip()] or [alt_base]
     spots = [i for i in (1, 3, 5, 7) if i < len(pos)][:len(queries)]
     for k in reversed(range(len(spots))):
         rel = fetch_inpost(queries[k], slug, k + 1)
         if not rel: continue
-        fig = (f'<figure class="inpost"><img src="{rel}" alt="{html.escape(alt_base)}" '
-               f'loading="lazy" decoding="async" width="1000" height="560"></figure>')
+        _kw = _kws[(k + 1) % len(_kws)]
+        _alt = html.escape(_kw[:1].upper() + _kw[1:])
+        fig = (f'<figure class="inpost"><img src="{rel}" alt="{_alt}" '
+               f'loading="lazy" decoding="async" width="1000" height="560"><figcaption>{_alt}</figcaption></figure>')
         i = pos[spots[k]]
         body = body[:i] + fig + body[i:]
     return body
@@ -753,7 +756,7 @@ def main():
         iqs = d.get("img_queries") or ([d["img_query"]] if d.get("img_query") else [])
         fetch_hero((iqs[0] if iqs else kw), d["slug"])
         if len(iqs) > 1:
-            d["body"] = insert_inpost_images(d["body"], d["slug"], iqs[1:5], d["title"])
+            d["body"] = insert_inpost_images(d["body"], d["slug"], iqs[1:5], d["title"], d.get("keywords", ""))
         write_post(d, app, posts)
         posts.insert(0, {"slug":d["slug"],"title":d["title"],"desc":d["meta_description"],
                          "tag":APPS[app]["tag"],"date":datetime.date.today().isoformat()})
