@@ -55,10 +55,14 @@ def main():
                 break
             n = have + added + 1
             if IS_TR:
-                query = f"{topic} {ctx_tr[j % len(ctx_tr)]}".strip()
+                cands = [f"{topic} Turkey", topic, f"Turkey {ctx_tr[j % len(ctx_tr)]}", "Turkey travel scenery"]
             else:
-                query = kws[j % len(kws)] if kws else topic
-            rel = G.fetch_inpost(query, slug, n)
+                cands = [kws[j % len(kws)] if kws else topic, topic, "travel guide"]
+            rel = None
+            for q in cands:
+                rel = G.fetch_inpost(q, slug, n)
+                if rel:
+                    break
             if not rel:
                 continue
             akw = kws[n % len(kws)] if kws else topic
