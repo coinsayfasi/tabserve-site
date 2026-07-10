@@ -223,7 +223,7 @@ PAGE = """<!DOCTYPE html>
 <body>
 <div class="aurora"></div>
 <nav><div class="nwrap">
-  <a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve">Tabserve</a>
+  <a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve" width="28" height="28">Tabserve</a>
   <div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div>
 </div></nav>
 <main class="wrap page">
@@ -538,6 +538,7 @@ def rebuild_index(posts):
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="blogarama-site-verification" content="blogarama-a9ce490b-b35d-4df8-be42-dde71c7e9a94">
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7579691213276550" crossorigin="anonymous"></script>
 <title>__T__ | Tabserve</title>
 <meta name="description" content="__DESC__">
@@ -559,7 +560,7 @@ def rebuild_index(posts):
 </head>
 <body>
 <div class="aurora"></div>
-<nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve">Tabserve</a>
+<nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve" width="28" height="28">Tabserve</a>
 <div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div></div></nav>"""
     foot = """<footer class="site-footer">
   <div class="wrap foot-grid">
