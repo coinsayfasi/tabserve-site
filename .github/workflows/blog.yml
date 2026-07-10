@@ -33,10 +33,6 @@ jobs:
           BLOG_COUNT: ${{ github.event.inputs.count || '2' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: python -u _gen/generate.py
-      - name: Dedupe + content-match images (Wikimedia/Pexels)
-        env:
-          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-        run: python -u _gen/retrofit_dedupe.py
       - name: Ping Google Indexing + IndexNow
         env:
           GOOGLE_INDEXING_SA: ${{ secrets.GOOGLE_INDEXING_SA }}

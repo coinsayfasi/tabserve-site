@@ -16,20 +16,16 @@ jobs:
           python-version: "3.12"
       - name: Install deps
         run: pip install -r _gen/requirements.txt
-      - name: Retrofit images (Pexels)
+      - name: Limit images to 2/article (revert Wikimedia)
         env:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-        run: python -u _gen/retrofit_images.py
-      - name: Dedupe + content-match images (Wikimedia/Pexels)
-        env:
-          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-        run: python -u _gen/retrofit_dedupe.py
+        run: python -u _gen/reduce_images.py
       - name: Commit & push
         run: |
           [ -n "$(git status --porcelain)" ] || { echo "değişiklik yok"; exit 0; }
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "content: retrofit images to 5/article (Pexels) [skip ci]"
+          git commit -m "content: limit to 2 images/article [skip ci]"
           for i in 1 2 3 4 5; do git pull --rebase && git push && exit 0; sleep 5; done
           exit 1

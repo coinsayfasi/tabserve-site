@@ -756,7 +756,7 @@ def main():
         iqs = d.get("img_queries") or ([d["img_query"]] if d.get("img_query") else [])
         fetch_hero((iqs[0] if iqs else kw), d["slug"])
         if len(iqs) > 1:
-            d["body"] = insert_inpost_images(d["body"], d["slug"], iqs[1:5], d["title"], d.get("keywords", ""))
+            d["body"] = insert_inpost_images(d["body"], d["slug"], iqs[1:3], d["title"], d.get("keywords", ""))
         write_post(d, app, posts)
         posts.insert(0, {"slug":d["slug"],"title":d["title"],"desc":d["meta_description"],
                          "tag":APPS[app]["tag"],"date":datetime.date.today().isoformat()})
