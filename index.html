@@ -11,7 +11,7 @@ addEventListener('load',function(){setTimeout(load,3000);});})();
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="blogarama-site-verification" content="blogarama-a9ce490b-b35d-4df8-be42-dde71c7e9a94">
 <title>Tabserve — Travel &amp; Rental Apps: OneBag, Routevia, RentFlow</title>
-<meta name="description" content="Tabserve builds simple, focused mobile apps: OneBag (travel packing), Routevia (Türkiye trips) and RentFlow (rental manager).">
+<meta name="description" content="Tabserve builds simple, focused mobile apps: OneBag for smart carry-on packing, Routevia for planning Türkiye trips, and RentFlow for easy rental management.">
 <link rel="canonical" href="https://apps.tabserve.com.tr/">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="website">
@@ -31,9 +31,8 @@ addEventListener('load',function(){setTimeout(load,3000);});})();
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600&display=swap"></noscript>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/sora.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter.woff2" crossorigin>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"Tabserve","url":"https://apps.tabserve.com.tr/","logo":"https://apps.tabserve.com.tr/assets/tabserve-og.png","description":"Tabserve builds simple, focused mobile apps.","foundingDate":"2025","founder":{"@type":"Person","name":"Yunus Güneş"},"email":"teknopattv@gmail.com","sameAs":["https://mastodon.social/@tabserve","https://bsky.app/profile/tabserve.bsky.social","https://www.youtube.com/@tabserve","https://github.com/coinsayfasi","https://indiepa.ge/tabserve","https://coinsayfasi.github.io/onebag/","https://coinsayfasi.github.io/routevia-app/","https://coinsayfasi.github.io/rentflow/"]}
 </script>
@@ -46,8 +45,10 @@ addEventListener('load',function(){setTimeout(load,3000);});})();
 {"@type":"Question","name":"What platforms are the apps on?","acceptedAnswer":{"@type":"Answer","text":"OneBag and Routevia are on iOS and Android. RentFlow is on iOS, with Android coming soon."}}]}
 </script>
 <style>
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--accent);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;font-weight:600}.skip:focus{left:0}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;src:url(/assets/fonts/inter.woff2) format('woff2')}@font-face{font-family:'Sora';font-style:normal;font-weight:600 800;font-display:swap;src:url(/assets/fonts/sora.woff2) format('woff2')}
 :root{
-  --bg:#fbfaf7;--card:#ffffff;--ink:#1f2733;--muted:#5b6470;
+  --bg:#fbfaf7;--card:#ffffff;--ink:#1f2733;--muted:#4b5563;
   --accent:#2f6bff;--accent2:#8b5cf6;--accent3:#2563eb;--line:#ece8e1;
   --shadow:0 6px 24px rgba(31,39,51,.07);--shadow-h:0 16px 44px rgba(47,107,255,.16);
 }
@@ -159,6 +160,7 @@ footer a:hover{color:var(--ink)}
 <script src="/assets/analytics.js?v=3" defer></script>
 </head>
 <body>
+<a class="skip" href="#content">Skip to content</a>
 <div id="bar"></div>
 <div class="aurora"></div>
 <div class="grid-tex"></div>
@@ -175,7 +177,7 @@ footer a:hover{color:var(--ink)}
   </div>
 </nav>
 
-<header>
+<header id="content">
   <div class="wrap">
     <span class="brand">Independent app studio</span>
     <h1>Simple, useful<br><span class="grad">travel &amp; rental apps</span></h1>
