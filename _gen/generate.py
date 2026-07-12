@@ -209,6 +209,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="twitter:image" content="__OGIMG__">
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#2f6bff">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
@@ -556,8 +557,12 @@ def rebuild_index(posts):
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="blogarama-site-verification" content="blogarama-a9ce490b-b35d-4df8-be42-dde71c7e9a94">
-<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7579691213276550" crossorigin="anonymous"></script>
+<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+<script>
+(function(){{var d=0;function load(){{if(d)return;d=1;var s=document.createElement('script');s.async=1;s.crossOrigin='anonymous';s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7579691213276550';document.head.appendChild(s);}}
+['scroll','touchstart','mousedown','keydown'].forEach(function(e){{addEventListener(e,load,{{once:true,passive:true}});}});
+addEventListener('load',function(){{setTimeout(load,3000);}});}})();
+</script>
 <title>__T__ | Tabserve</title>
 <meta name="description" content="__DESC__">
 <link rel="canonical" href="__CANON__">__PREVNEXT__
@@ -568,6 +573,7 @@ def rebuild_index(posts):
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebSite","name":"Tabserve Blog","url":"{SITE}/","inLanguage":"en","potentialAction":{{"@type":"SearchAction","target":"{SITE}/blog/?q={{search_term_string}}","query-input":"required name=search_term_string"}}}}</script>__XSCHEMA__
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#2f6bff">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
