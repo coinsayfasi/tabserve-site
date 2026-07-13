@@ -206,8 +206,14 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:description" content="__DESC__">
 <meta property="og:url" content="__URL__">
 <meta property="og:image" content="__OGIMG__">
+<meta property="og:image:alt" content="__TITLE__">
+<meta property="og:site_name" content="Tabserve">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="__TITLE__">
+<meta name="twitter:description" content="__DESC__">
 <meta name="twitter:image" content="__OGIMG__">
+<meta name="twitter:image:alt" content="__TITLE__">
 <link rel="alternate" type="application/rss+xml" title="Tabserve Blog RSS" href="/feed.xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#2f6bff">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
