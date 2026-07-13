@@ -11,7 +11,7 @@ import os, re, sys, json, html, time, datetime, urllib.request, urllib.error, ur
 from pathlib import Path
 
 SOCIAL = [("YouTube","https://youtube.com/@tabserve"),("Instagram","https://instagram.com/tabservee"),
-          ("TikTok","https://tiktok.com/@tabserve"),("Bluesky","https://bsky.app/profile/tabserve.bsky.social"),("Pinterest","https://pinterest.com/nedir_nasil")]
+          ("TikTok","https://tiktok.com/@tabserve"),("Bluesky"),("Pinterest","https://pinterest.com/nedir_nasil")]
 
 def _svg(d): return f'<svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true"><path d="{d}"/></svg>'
 ICON = {
