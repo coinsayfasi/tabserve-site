@@ -120,7 +120,8 @@ STRICT RULES — follow every one:
 (3-5 bullets, each a concrete, actionable point from the article.)
 5. ORIGINAL and specific — real, useful guidance. Do NOT fabricate statistics, studies, prices or quotes. No repetition, no "spun"/generic filler.
 5b. BANNED phrases: "unforgettable experience", "breathtaking", "hidden gem", "must-see", "look no further", "in today's world". Replace hype with concrete utility: which entrance, morning vs afternoon, how long it takes, walking distances, whether it suits kids, parking/transit notes.
-6. Allowed body tags ONLY: h2, h3, h4, h5, p, ul, li, strong, a, table, thead, tbody, tr, th, td, and the single leading <div class="tldr">. No markdown, no <h1>, no <html>/<head>/<style>.
+6. Allowed body tags ONLY: h2, h3, h4, h5, p, ul, li, strong, a, table, thead, tbody, tr, th, td, and the single leading <div class="tldr">. No markdown, no <h1>, no <html>/<head>
+<meta name="google-adsense-account" content="ca-pub-7579691213276550">/<style>.
 7. Include 1-2 outbound links to GENUINELY AUTHORITATIVE, relevant external sources to back up the content (e.g. an official tourism board, a government/regulator page, or a relevant Wikipedia article). Only use well-known, stable URLs you are confident exist — prefer https://en.wikipedia.org/wiki/<Topic> or an official site's homepage; NEVER invent specific deep URLs. Place them naturally inside sentences, not in headings.
 
 Output ONLY valid minified JSON (no code fences, no commentary), exactly these keys:
