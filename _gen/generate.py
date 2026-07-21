@@ -135,6 +135,11 @@ def _post(url, body, headers):
         except urllib.error.HTTPError as e:
             if e.code in (429,529,500,503) and attempt < 3:
                 time.sleep(8*(attempt+1)); continue
+            try:
+                detail = e.read().decode("utf-8", "replace")[:800]
+            except Exception:
+                detail = "(gövde okunamadı)"
+            print(f"  ⚠️ API hata detayı ({e.code}): {detail}")
             raise
     raise RuntimeError("API başarısız")
 
@@ -155,7 +160,8 @@ def call_gemini(prompt, key):
             print(f"  (model: {m})")
             return cands_out[0]["content"]["parts"][0]["text"]
         except urllib.error.HTTPError as e:
-            if e.code == 404:  # model deprecate/erişilemez → sıradakini dene
+            if e.code in (404, 400):  # model deprecate/erişilemez veya bu modelin
+                # desteklemediği bir istek alanı (thinkingConfig vb.) → sıradakini dene
                 last = e; continue
             raise
     raise last or RuntimeError("hiçbir Gemini modeli çalışmadı")
