@@ -64,13 +64,21 @@
   "https://apps.tabserve.com.tr/blog/page/4/": "2026-07-20",
   "https://apps.tabserve.com.tr/blog/page/5/": "2026-07-20",
   "https://apps.tabserve.com.tr/blog/page/6/": "2026-07-20",
-  "https://apps.tabserve.com.tr/blog/page/7/": "2026-07-20"
+  "https://apps.tabserve.com.tr/blog/page/7/": "2026-07-20",
+  "https://apps.tabserve.com.tr/blog/how-to-pack-shoes-for-travel/": "2026-07-22"
  },
  "history": [
   {
    "date": "2026-07-20",
    "mode": "yeni",
    "ok": 65,
+   "quota_hit": false,
+   "errors": 0
+  },
+  {
+   "date": "2026-07-22",
+   "mode": "yeni",
+   "ok": 1,
    "quota_hit": false,
    "errors": 0
   }
