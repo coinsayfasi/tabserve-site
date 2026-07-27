@@ -47,10 +47,11 @@ def post_extras(url, title):
     share = '<div class="share"><span>Share this post:</span>' + ''.join(
         f'<a class="ico" href="{h}" target="_blank" rel="noopener" aria-label="{lbl[n]}">{ICON[n]}</a>' for n,h in S) + '</div>'
     follow = ''.join(f'<a class="ico" href="{lu}" target="_blank" rel="noopener" aria-label="{ln}">{ICON.get(ln,ln)}</a>' for ln,lu in SOCIAL)
-    author = ('<div class="author-box"><img class="ab-logo" src="/assets/logo.svg" alt="Tabserve" width="56" height="56">'
-              '<div class="ab-body"><b>Written by Tabserve</b><p>We\'re an independent app studio building simple, useful '
-              'mobile apps for travel, trips and rentals — OneBag, Routevia and RentFlow. We share practical guides to help you '
-              f'pack smarter, travel better and manage rentals with less hassle.</p><div class="follow"><span>Follow us:</span>{follow}</div></div></div>')
+    author = ('<div class="author-box"><img class="ab-logo" src="/assets/logo.svg" alt="Aycan Merve Güneş — Tabserve" width="56" height="56">'
+              '<div class="ab-body"><b>Written by <a href="/author.html">Aycan Merve Güneş</a></b>'
+              '<p style="color:var(--muted);font-size:13px;margin:2px 0 8px">Independent Full Stack Developer · Founder of Tabserve</p>'
+              '<p>Aycan builds and maintains Tabserve\'s apps — OneBag, Routevia and RentFlow — and writes practical, '
+              f'tested guides to help you pack smarter, travel better and manage rentals with less hassle.</p><div class="follow"><span>Follow us:</span>{follow}</div></div></div>')
     rail = '<div class="share-rail" aria-label="Share this post">' + ''.join(
         f'<a href="{h}" target="_blank" rel="noopener" aria-label="{lbl[n]}">{ICON[n]}</a>' for n,h in S) + '</div>'
     return share + author, rail
@@ -61,7 +62,7 @@ BLOG = ROOT / "blog"
 TOPICS = json.loads((GEN / "topics.json").read_text(encoding="utf-8"))
 POSTS_F = GEN / "posts.json"
 STATE_F = GEN / "state.json"
-SITE = "https://apps.tabserve.com.tr"
+SITE = "https://www.tabserve.com.tr"
 # Sağlayıcı: GEMINI (ücretsiz) öncelikli; yoksa Claude.
 # Fallback zinciri — bir model deprecate olursa sıradakini dener (routevia prod gemini-flash-latest kullanıyor).
 GEMINI_CANDIDATES = [m for m in [
@@ -245,7 +246,7 @@ __RAIL__
   <div class="crumb"><a href="/">Home</a> › <a href="/blog/">Blog</a> › __CRUMB__</div>
   <article class="post">
     <h1 class="title">__TITLE__</h1>
-    <p class="meta">__TAG__ · __READ__ min read · Updated __NICE__</p>
+    <p class="meta">__TAG__ · __READ__ min read · __NICE__</p>
 __BODY__
   </article>
 </main>
@@ -264,6 +265,7 @@ __BODY__
     <div class="foot-col">
       <p class="fh">Company</p>
       <a href="/about.html">About</a>
+      <a href="/author.html">Author</a>
       <a href="/blog/">Blog</a>
       <a href="mailto:teknopattv@gmail.com">Contact</a>
     </div>
@@ -275,7 +277,7 @@ __BODY__
     </div>
   </div>
   <div class="foot-bottom"><div class="wrap">
-    <span>© 2026 Tabserve · Built by Yunus Güneş</span>
+    <span>© 2026 Tabserve · Built by Aycan Merve Güneş</span>
     <span>Made with ♥ in Türkiye · <a rel="me" href="https://mastodon.social/@tabserve">Mastodon</a></span>
   </div></div>
 </footer>
@@ -501,7 +503,8 @@ def write_post(d, app, posts=()):
             break
     today = datetime.date.today()
     schemas = [{"@context":"https://schema.org","@type":"Article","headline":d["title"],
-        "description":d["meta_description"],"image":ogimg,"author":{"@type":"Organization","name":"Tabserve"},
+        "description":d["meta_description"],"image":ogimg,
+        "author":{"@type":"Person","name":"Aycan Merve Güneş","jobTitle":"Independent Full Stack Developer","url":f"{SITE}/author.html"},
         "publisher":{"@type":"Organization","name":"Tabserve","logo":{"@type":"ImageObject","url":f"{SITE}/assets/tabserve-og.png"}},
         "datePublished":today.isoformat(),"dateModified":today.isoformat(),"mainEntityOfPage":url}]
     faq = faq_schema(body)
@@ -518,7 +521,7 @@ def write_post(d, app, posts=()):
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
         .replace("__APPMETA__", ("\n<meta name=\"apple-itunes-app\" content=\"app-id=" + APPS[app]["ios"] + "\">") if APPS[app].get("ios") else "").replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"] if len(d["title"]) <= 42 else d["title"][:42].rsplit(" ", 1)[0] + "…"))
         .replace("__TAG__", APPS[app]["tag"]).replace("__READ__", str(read)).replace("__RAIL__", rail)
-        .replace("__NICE__", "Published: " + today.strftime("%b %d, %Y") + " · Updated: " + today.strftime("%b %d, %Y")).replace("__BODY__", body))
+        .replace("__NICE__", f'Published: <time datetime="{today.isoformat()}">' + today.strftime("%b %d, %Y") + f'</time> · Updated: <time datetime="{today.isoformat()}">' + today.strftime("%b %d, %Y") + '</time>').replace("__BODY__", body))
     (BLOG / slug).mkdir(parents=True, exist_ok=True)
     (BLOG / slug / "index.html").write_text(page, encoding="utf-8")
 
@@ -570,12 +573,7 @@ def rebuild_index(posts):
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="blogarama-site-verification" content="blogarama-a9ce490b-b35d-4df8-be42-dde71c7e9a94">
-<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
-<script>
-(function(){{var d=0;function load(){{if(d)return;d=1;var s=document.createElement('script');s.async=1;s.crossOrigin='anonymous';s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7579691213276550';document.head.appendChild(s);}}
-['scroll','touchstart','mousedown','keydown'].forEach(function(e){{addEventListener(e,load,{{once:true,passive:true}});}});
-addEventListener('load',function(){{setTimeout(load,4000);}});}})();
-</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7579691213276550" crossorigin="anonymous"></script>
 <title>__T__ | Tabserve</title>
 <meta name="description" content="__DESC__">
 <link rel="canonical" href="__CANON__">__PREVNEXT__
@@ -626,7 +624,7 @@ addEventListener('load',function(){{setTimeout(load,4000);}});}})();
     </div>
   </div>
   <div class="foot-bottom"><div class="wrap">
-    <span>© 2026 Tabserve · Built by Yunus Güneş</span>
+    <span>© 2026 Tabserve · Built by Aycan Merve Güneş</span>
     <span>Made with ♥ in Türkiye · <a rel="me" href="https://mastodon.social/@tabserve">Mastodon</a></span>
   </div></div>
 </footer>
