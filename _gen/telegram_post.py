@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""apps.tabserve.com.tr YENİ blog yazılarını Telegram kanalına postlar.
+"""www.tabserve.com.tr YENİ blog yazılarını Telegram kanalına postlar.
 Her yazı app'ine göre (OneBag/RentFlow/Routevia) KENDİ store linki + hashtag +
 dil alır — linkler karışmaz. Mail/şifre YOK, sadece bot token.
 Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID. Token yoksa güvenli atlar."""

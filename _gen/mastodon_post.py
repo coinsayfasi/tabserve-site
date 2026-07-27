@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""apps.tabserve.com.tr YENİ blog yazılarını Mastodon'a postlar. Her yazı
+"""www.tabserve.com.tr YENİ blog yazılarını Mastodon'a postlar. Her yazı
 app'ine göre (OneBag/RentFlow/Routevia) KENDİ store linki + hashtag + dil alır.
 Mail/şifre YOK, sadece access token. Mastodon linkten og önizleme kartı üretir.
 Env: MASTODON_INSTANCE, MASTODON_TOKEN. Yoksa güvenli atlar."""

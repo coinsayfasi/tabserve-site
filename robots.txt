@@ -43,4 +43,4 @@ Allow: /
 User-agent: Timpibot
 Allow: /
 
-Sitemap: https://apps.tabserve.com.tr/sitemap.xml
+Sitemap: https://www.tabserve.com.tr/sitemap.xml

@@ -8,7 +8,7 @@ from pathlib import Path
 
 GEN = Path(__file__).resolve().parent
 NEW = GEN / "new_urls.txt"
-HOST = "apps.tabserve.com.tr"
+HOST = "www.tabserve.com.tr"
 INDEXNOW_KEY = "6b2c33a8ee47462a9c217f29a99ada33"
 
 def read_urls():

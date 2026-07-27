@@ -11,7 +11,7 @@ from pathlib import Path
 GEN = Path(__file__).resolve().parent
 ROOT = GEN.parent
 STATE = GEN / "social_apps_state.json"
-BASE = "https://apps.tabserve.com.tr"
+BASE = "https://www.tabserve.com.tr"
 PDS = "https://bsky.social"
 PER_RUN = int(os.environ.get("DRIP_PER_RUN", "2"))
 esc = html.unescape
