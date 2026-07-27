@@ -59,7 +59,7 @@ def main():
             print(f"  [{i}/{len(urls)}] {verdict:10s} {state:35s} {u}")
         except Exception as e:
             errors.append((u, str(e)))
-            print(f"  [{i}/{len(urls)}] HATA {type(e).__name__}: {u}")
+            print(f"  [{i}/{len(urls)}] HATA {type(e).__name__}: {u} :: {e}")
         time.sleep(1.2)  # kota koruması
 
     print(f"\n✓ index'li: {len(indexed)}  ✗ index-dışı: {len(not_indexed)}  hata: {len(errors)}")
