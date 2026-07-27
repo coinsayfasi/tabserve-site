@@ -17,4 +17,4 @@ jobs:
         env:
           GOOGLE_INDEXING_SA: ${{ secrets.GOOGLE_INDEXING_SA }}
         run: |
-          python _automation/google_indexing/check_index_status.py --site https://www.tabserve.com.tr --sitemap https://www.tabserve.com.tr/sitemap.xml
+          python _automation/google_indexing/check_index_status.py --site https://apps.tabserve.com.tr --sitemap https://apps.tabserve.com.tr/sitemap.xml
