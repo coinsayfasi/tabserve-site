@@ -37,7 +37,7 @@ COOKIE_BANNER = '''<div id="cookie-banner" style="transform:translateY(120%);tra
 function cookieOK(v){try{localStorage.setItem("cookie_consent",v?"accepted":"rejected");}catch(e){}if(window.__grantConsent)__grantConsent(!!v);document.getElementById("cookie-banner").style.display="none";}</script>'''
 
 
-def post_extras(url, title):
+def post_extras(url, title, app=None):
     """Alt paylaş çubuğu + yazar kutusu + sol kayan çubuk (SVG ikonlu)."""
     u = urllib.parse.quote(url, safe=''); t = urllib.parse.quote(title, safe='')
     S = [("X",f"https://twitter.com/intent/tweet?url={u}&amp;text={t}"),("f",f"https://www.facebook.com/sharer/sharer.php?u={u}"),
@@ -47,11 +47,18 @@ def post_extras(url, title):
     share = '<div class="share"><span>Share this post:</span>' + ''.join(
         f'<a class="ico" href="{h}" target="_blank" rel="noopener" aria-label="{lbl[n]}">{ICON[n]}</a>' for n,h in S) + '</div>'
     follow = ''.join(f'<a class="ico" href="{lu}" target="_blank" rel="noopener" aria-label="{ln}">{ICON.get(ln,ln)}</a>' for ln,lu in SOCIAL)
-    author = ('<div class="author-box"><img class="ab-logo" src="/assets/logo.svg" alt="Aycan Merve Güneş — Tabserve" width="56" height="56">'
-              '<div class="ab-body"><b>Written by <a href="/author.html">Aycan Merve Güneş</a></b>'
-              '<p style="color:var(--muted);font-size:13px;margin:2px 0 8px">Independent Full Stack Developer · Founder of Tabserve</p>'
-              '<p>Aycan builds and maintains Tabserve\'s apps — OneBag, Routevia and RentFlow — and writes practical, '
-              f'tested guides to help you pack smarter, travel better and manage rentals with less hassle.</p><div class="follow"><span>Follow us:</span>{follow}</div></div></div>')
+    if app == "rentflow":
+        author = ('<div class="author-box"><img class="ab-logo" src="/assets/logo.svg" alt="Selçuk Güneş — Tabserve" width="56" height="56">'
+                  '<div class="ab-body"><b>Written by <a href="/author-selcuk.html">Selçuk Güneş</a></b>'
+                  '<p style="color:var(--muted);font-size:13px;margin:2px 0 8px">Landlord &amp; Rental Guides Writer, Tabserve</p>'
+                  '<p>Selçuk writes RentFlow\'s landlord and rental-property guides — leases, tenant screening, rent '
+                  f'increases and the numbers behind rental yield.</p><div class="follow"><span>Follow us:</span>{follow}</div></div></div>')
+    else:
+        author = ('<div class="author-box"><img class="ab-logo" src="/assets/logo.svg" alt="Aycan Merve Güneş — Tabserve" width="56" height="56">'
+                  '<div class="ab-body"><b>Written by <a href="/author.html">Aycan Merve Güneş</a></b>'
+                  '<p style="color:var(--muted);font-size:13px;margin:2px 0 8px">Independent Full Stack Developer · Founder of Tabserve</p>'
+                  '<p>Aycan builds and maintains Tabserve\'s apps — OneBag, Routevia and RentFlow — and writes practical, '
+                  f'tested guides to help you pack smarter and travel better.</p><div class="follow"><span>Follow us:</span>{follow}</div></div></div>')
     rail = '<div class="share-rail" aria-label="Share this post">' + ''.join(
         f'<a href="{h}" target="_blank" rel="noopener" aria-label="{lbl[n]}">{ICON[n]}</a>' for n,h in S) + '</div>'
     return share + author, rail
@@ -504,9 +511,13 @@ def write_post(d, app, posts=()):
             ogimg = SITE + rel
             break
     today = datetime.date.today()
+    if app == "rentflow":
+        author_schema = {"@type":"Person","name":"Selçuk Güneş","jobTitle":"Landlord & Rental Guides Writer","url":f"{SITE}/author-selcuk.html"}
+    else:
+        author_schema = {"@type":"Person","name":"Aycan Merve Güneş","jobTitle":"Independent Full Stack Developer","url":f"{SITE}/author.html"}
     schemas = [{"@context":"https://schema.org","@type":"Article","headline":d["title"],
         "description":d["meta_description"],"image":ogimg,
-        "author":{"@type":"Person","name":"Aycan Merve Güneş","jobTitle":"Independent Full Stack Developer","url":f"{SITE}/author.html"},
+        "author":author_schema,
         "publisher":{"@type":"Organization","name":"Tabserve","logo":{"@type":"ImageObject","url":f"{SITE}/assets/tabserve-og.png"}},
         "datePublished":today.isoformat(),"dateModified":today.isoformat(),"mainEntityOfPage":url}]
     faq = faq_schema(body)
@@ -517,7 +528,7 @@ def write_post(d, app, posts=()):
         {"@type":"ListItem","position":3,"name":d["title"]}]})
     schema = json.dumps(schemas, ensure_ascii=False)
     read = max(4, round(words(body)/180))
-    extras, rail = post_extras(url, d["title"])
+    extras, rail = post_extras(url, d["title"], app=app)
     body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + extras
     _ttl=d["title"]; _sfx=" | Tabserve"; _ttag=(_ttl+_sfx) if len(_ttl+_sfx)<=60 else (_ttl if len(_ttl)<=60 else (_ttl[:60].rsplit(" ",1)[0].rstrip(",:;-") or _ttl[:57]+"...")); page = (PAGE.replace("__TITLETAG__", html.escape(_ttag)).replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
