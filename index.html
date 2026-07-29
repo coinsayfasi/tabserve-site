@@ -23,12 +23,12 @@
 <meta name="twitter:description" content="Free travel apps, a rental management app, and the travel guides &amp; packing lists behind them — by Tabserve.">
 <meta name="twitter:image" content="https://www.tabserve.com.tr/assets/tabserve-og.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#222222">
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#234386">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
-<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/sora.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/oswald-700.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter.woff2" crossorigin>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"Tabserve","url":"https://www.tabserve.com.tr/","logo":"https://www.tabserve.com.tr/assets/tabserve-og.png","description":"Tabserve builds simple, focused mobile apps.","foundingDate":"2025","founder":{"@type":"Person","name":"Aycan Merve Güneş","jobTitle":"Independent Full Stack Developer","url":"https://www.tabserve.com.tr/author.html"},"email":"teknopattv@gmail.com","sameAs":["https://mastodon.social/@tabserve","https://www.youtube.com/@tabserve","https://github.com/coinsayfasi","https://indiepa.ge/tabserve","https://coinsayfasi.github.io/onebag/","https://coinsayfasi.github.io/routevia-app/","https://coinsayfasi.github.io/rentflow/"]}
@@ -50,20 +50,20 @@
 </script>
 <style>
 .skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--accent);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;font-weight:600}.skip:focus{left:0}
-@font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;src:url(/assets/fonts/inter.woff2) format('woff2')}@font-face{font-family:'Sora';font-style:normal;font-weight:600 800;font-display:swap;src:url(/assets/fonts/sora.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;src:url(/assets/fonts/inter.woff2) format('woff2')}@font-face{font-family:'Oswald';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/oswald-500.woff2) format('woff2')}@font-face{font-family:'Oswald';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/oswald-700.woff2) format('woff2')}@font-face{font-family:'Caveat';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/caveat.woff2) format('woff2')}
 :root{
-  --bg:#ffffff;--band:#f7f7f7;--card:#ffffff;--ink:#222222;--muted:#6a6a6a;
-  --accent:#222222;--accent2:#222222;--accent3:#222222;--line:#ebebeb;
-  --shadow:none;--shadow-h:none;
+  --bg:#fbf9f6;--band:#f7f2ea;--card:#ffffff;--ink:#1a1a1a;--muted:#5b5b5b;
+  --brand:#234386;--accent:#234386;--accent2:#ed7328;--accent3:#ffc400;--sage:#a2d3a6;--line:rgba(0,0,0,.12);
+  --shadow:0 8px 24px rgba(0,0,0,.07);--shadow-h:-10px 10px 34px rgba(0,0,0,.14);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
-h1,h2,h3,.brand,.logo,.stat b{font-family:'Sora',sans-serif}
+h1,h2,h3,.brand,.logo{font-family:'Oswald',sans-serif;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.02em}.tagline-script{font-family:'Caveat',cursive;font-weight:600;color:var(--brand);text-transform:none;letter-spacing:normal}
 
 /* scroll progress */
-#bar{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;will-change:transform;z-index:50;background:var(--ink)}
+#bar{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;will-change:transform;z-index:50;background:var(--brand)}
 
 /* aurora bg — açık, yumuşak */
 .aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg)}
@@ -76,7 +76,7 @@ h1,h2,h3,.brand,.logo,.stat b{font-family:'Sora',sans-serif}
 @media(max-width:600px){.aurora::before,.aurora::after{animation:none;filter:blur(46px);opacity:.1}.grid-tex{display:none}}
 
 /* nav */
-nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);background:rgba(251,250,247,.82);border-bottom:1px solid var(--line)}
+nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);background:rgba(251,249,246,.85);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
 .logo img{width:28px;height:28px;border-radius:8px}
@@ -86,14 +86,14 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 
 /* hero */
 header{padding:90px 0 36px;text-align:center}
-.brand{display:inline-block;font-size:13px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:var(--ink);padding:7px 16px;border:1px solid var(--line);border-radius:8px;background:var(--band,#f7f7f7);opacity:0;animation:rise .7s .05s both}
+.brand{display:inline-block;font-size:13px;letter-spacing:.05em;font-weight:700;color:var(--accent2)!important;padding:6px 16px;border:0;border-radius:999px;background:rgba(237,115,40,.12);opacity:0;animation:rise .7s .05s both}
 h1{font-size:clamp(36px,6.5vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1.04;margin:22px 0 16px;opacity:0;animation:rise .7s .15s both}
-.grad{color:var(--ink)}
+.grad{color:inherit}
 @keyframes shine{to{background-position:200% center}}
 .sub{font-size:clamp(16px,2.4vw,20px);color:var(--muted);max-width:600px;margin:0 auto 30px;opacity:0;animation:rise .7s .25s both}
 .cta{display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;opacity:0;animation:rise .7s .35s both}
-.cta a{text-decoration:none;font-weight:500;font-size:16px;padding:14px 24px;border-radius:8px;transition:none}
-.cta .p{background:var(--ink);color:#fff}
+.cta a{text-decoration:none;font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:.08em;font-size:13px;padding:16px 32px;border-radius:32px;transition:transform .15s}
+.cta .p{background:var(--brand);color:#fff}
 .cta .p:hover{transform:none}
 .cta .s{color:var(--ink);border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
 .cta .s:hover{transform:translateY(-3px);border-color:var(--accent)}
@@ -107,12 +107,12 @@ h1{font-size:clamp(36px,6.5vw,64px);font-weight:800;letter-spacing:-.03em;line-h
 
 /* app cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;padding:42px 0 10px;perspective:1200px}
-.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(30px);transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:26px;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(30px);transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s;box-shadow:var(--shadow-h)}
 .card.in{opacity:1;transform:none}
 .card::after{display:none}
 .card:hover{box-shadow:var(--shadow-h)}
 .card:hover::after{opacity:1}
-.ic{width:78px;height:78px;border-radius:12px;margin-bottom:18px;transition:none}
+.ic{width:78px;height:78px;border-radius:12px;margin-bottom:18px;transition:transform .3s}
 .card:hover .ic{transform:translateZ(55px) scale(1.06) rotate(-3deg)}
 .card h3{font-size:22px;font-weight:700;margin-bottom:8px}
 .card p{color:var(--muted);font-size:15px;flex:1;margin-bottom:18px}
@@ -120,8 +120,9 @@ h1{font-size:clamp(36px,6.5vw,64px);font-weight:800;letter-spacing:-.03em;line-h
 .badge{font-size:13px;font-weight:600;padding:9px 14px;border-radius:11px;background:#111827;color:#fff;text-decoration:none;transition:transform .15s,box-shadow .2s}
 .badge:hover{transform:none}
 .badge.soon{background:rgba(31,39,51,.08);color:#454e5a}
-.more{font-size:14px;color:#1d4ed8;text-decoration:none;font-weight:600}
+.more{font-size:14px;color:var(--accent2);text-decoration:none;font-weight:700}
 .more:hover{text-decoration:underline}
+.topiclist{list-style:none;margin:0;padding:0}.topiclist li{border-top:1px solid var(--line)}.topiclist li:first-child{border-top:0}.topiclist a{display:flex;align-items:baseline;gap:8px;padding:11px 2px;color:var(--ink);text-decoration:none;font-size:15px;line-height:1.4;transition:color .15s}.topiclist a::before{content:"→";color:var(--accent2);flex-shrink:0}.topiclist a:hover{color:var(--accent2)}
 
 /* about */
 section.about{padding:60px 0;margin-top:40px;text-align:center}
@@ -133,9 +134,9 @@ section.about a{color:var(--accent3)}
 
 /* FAQ */
 .faq{padding:20px 0 40px}
-.faq h2{font-family:'Sora',sans-serif;font-size:27px;text-align:center;margin-bottom:26px}
-.faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 20px;margin:0 auto 12px;max-width:760px;transition:border-color .2s}
-.faq details[open]{border-color:var(--ink)}
+.faq h2{font-family:'Oswald',sans-serif;font-size:27px;text-align:center;margin-bottom:26px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:0 20px;margin:0 auto 12px;max-width:760px;box-shadow:var(--shadow);transition:border-color .2s}
+.faq details[open]{border-color:var(--accent2)}
 .faq summary{cursor:pointer;list-style:none;padding:17px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:700;transition:transform .25s}
@@ -150,16 +151,16 @@ footer a:hover{color:var(--ink)}
 
 .site-footer{margin-top:64px;border-top:1px solid var(--line);background:#fff}
 .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px;padding:46px 22px 32px;max-width:1080px;margin:0 auto}
-.foot-brand .logo{display:inline-flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:var(--ink);text-decoration:none}
+.foot-brand .logo{display:inline-flex;align-items:center;gap:10px;font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;color:var(--ink);text-decoration:none}
 .foot-brand .logo img{width:30px;height:30px;border-radius:8px}
 .foot-brand p{color:var(--muted);font-size:14px;margin-top:12px;max-width:280px;line-height:1.6}
-.foot-col h4{font-family:'Sora',sans-serif;font-size:12.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);margin-bottom:14px}
+.foot-col h4{font-family:'Oswald',sans-serif;font-size:12.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);margin-bottom:14px}
 .foot-col a{display:block;color:var(--muted);text-decoration:none;font-size:14px;margin-bottom:11px;transition:color .2s}
 .foot-col a:hover{color:var(--ink)}
 .foot-bottom{border-top:1px solid var(--line)}
 .foot-bottom .wrap{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;font-size:13px;color:var(--muted);max-width:1080px;margin:0 auto}
 @media(max-width:640px){.foot-grid{grid-template-columns:1fr 1fr;gap:26px}.foot-brand{grid-column:1/-1}.foot-bottom .wrap{flex-direction:column;gap:8px;text-align:center}}
-.chipwrap{text-align:center}.chiplbl{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:12px}.chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}.chips a{font-size:13.5px;font-weight:500;padding:8px 15px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;transition:border-color .2s}.chips a:hover{border-color:var(--ink)}
+.chipwrap{text-align:center}.chiplbl{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:12px}.chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}.chips a{font-size:13.5px;font-weight:600;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:transform .15s}.chips a:hover{transform:translateY(-1px);border-color:var(--accent)}
 .ico{width:1.1em;height:1.1em;vertical-align:-.16em;display:inline-block;flex-shrink:0;stroke-width:2}h2 .ico,h3 .ico{margin-right:2px}</style>
 <script src="/assets/analytics.js?v=3" defer></script>
 </head>
@@ -197,7 +198,7 @@ footer a:hover{color:var(--ink)}
 <!--TOPICCARDS_START-->
     <h2 style="font-family:'Sora',sans-serif;font-size:30px;text-align:center;margin-bottom:6px">Browse Guides by Topic</h2>
     <p style="text-align:center;color:var(--muted);margin-bottom:26px">Practical, in-depth guides — grouped by what you need</p>
-    <div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding:0"><div class="card" style="opacity:1;transform:none"><h3 style="font-family:'Sora',sans-serif;font-size:20px;margin-bottom:12px"><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg> Packing &amp; Travel Tips</h3><ul style="list-style:none;margin:0;padding:0;line-height:1.5"><li style="margin-bottom:9px"><a class="more" href="/blog/how-to-pack-a-suit-in-a-suitcase/" title="How to Pack a Suit in a Suitcase: The Ultimate Wrinkle-Free Travel Guide">How to Pack a Suit in a Suitcase</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/how-to-pack-shoes-for-travel/" title="How to Pack Shoes for Travel: Save Space and Protect Your Footwear">How to Pack Shoes for Travel</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/best-travel-accessories-carry-on-travel/" title="The Best Travel Accessories for Carry-On Only Travel: The Ultimate Minimalist Packing Guide">The Best Travel Accessories for Carry-On Only Travel</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/ultimate-winter-sports-packing-list/" title="The Ultimate Winter Sports Packing List: Ski &amp; Snowboard Essentials">The Ultimate Winter Sports Packing List</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/travelling-with-kids-packing-tips/" title="Travelling with Kids Packing Tips: How to Master the Art of One Carry-On per Person">Travelling with Kids Packing Tips</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/road-trip-packing-list/" title="The Ultimate Road Trip Packing List: Essentials for a Self-Drive Adventure">The Ultimate Road Trip Packing List</a></li></ul></div><div class="card" style="opacity:1;transform:none"><h3 style="font-family:'Sora',sans-serif;font-size:20px;margin-bottom:12px"><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></svg> Türkiye Travel Guides</h3><ul style="list-style:none;margin:0;padding:0;line-height:1.5"><li style="margin-bottom:9px"><a class="more" href="/blog/fethiye-travel-guide/" title="The Ultimate Fethiye Travel Guide: Paragliding, Oludeniz, and Coastal Route Planning">The Ultimate Fethiye Travel Guide</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/bodrum-travel-guide/" title="The Ultimate Bodrum Travel Guide: Beaches, Nightlife, and Day Trips">The Ultimate Bodrum Travel Guide</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/best-places-to-visit-on-the-turkish-coast/" title="Best Places to Visit on the Turkish Coast: The Ultimate Road Trip Guide">Best Places to Visit on the Turkish Coast</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/turkish-food-guide-for-travellers-regional-culinary-journey/" title="The Ultimate Turkish Food Guide for Travellers: A Regional Culinary Journey">The Ultimate Turkish Food Guide for Travellers</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/turkiye-travel-tips-for-first-timers/" title="Türkiye Travel Tips for First-Timers: A Practical Survival Guide">Türkiye Travel Tips for First-Timers</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/renting-a-car-in-turkiye-guide/" title="Renting a Car in Türkiye: The Ultimate Guide to a Self-Drive Adventure">Renting a Car in Türkiye</a></li></ul></div><div class="card" style="opacity:1;transform:none"><h3 style="font-family:'Sora',sans-serif;font-size:20px;margin-bottom:12px"><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Landlord &amp; Rental</h3><ul style="list-style:none;margin:0;padding:0;line-height:1.5"><li style="margin-bottom:9px"><a class="more" href="/blog/how-to-find-good-tenants/" title="How to Find Good Tenants: The Ultimate Landlord Guide to Screening and Selection">How to Find Good Tenants</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/should-you-allow-pets-as-a-landlord/" title="Should You Allow Pets as a Landlord? Pros, Cons, and Pet Policies for Rentals">Should You Allow Pets as a Landlord? Pros, Cons, and Pet Policies for Rentals</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/landlord-insurance-explained/" title="Landlord Insurance Explained: What It Covers and Why It Matters">Landlord Insurance Explained</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/how-to-write-a-lease-agreement-key-clauses/" title="How to Write a Lease Agreement: Key Clauses Every Landlord Needs">How to Write a Lease Agreement</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/buy-to-let-for-beginners/" title="Buy to Let for Beginners: The Ultimate Guide to Your First Rental Property">Buy to Let for Beginners</a></li><li style="margin-bottom:9px"><a class="more" href="/blog/how-to-set-the-right-rent-price/" title="How to Set the Right Rent Price: A Landlord&#x27;s Guide to Rental Comps">How to Set the Right Rent Price</a></li></ul></div></div>
+    <div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding:0"><div style="opacity:1;transform:none"><h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:8px"><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg> Packing &amp; Travel Tips</h3><ul class="topiclist"><li><a href="/blog/how-to-pack-a-suit-in-a-suitcase/" title="How to Pack a Suit in a Suitcase: The Ultimate Wrinkle-Free Travel Guide">How to Pack a Suit in a Suitcase</a></li><li><a href="/blog/how-to-pack-shoes-for-travel/" title="How to Pack Shoes for Travel: Save Space and Protect Your Footwear">How to Pack Shoes for Travel</a></li><li><a href="/blog/best-travel-accessories-carry-on-travel/" title="The Best Travel Accessories for Carry-On Only Travel: The Ultimate Minimalist Packing Guide">The Best Travel Accessories for Carry-On Only Travel</a></li><li><a href="/blog/ultimate-winter-sports-packing-list/" title="The Ultimate Winter Sports Packing List: Ski &amp; Snowboard Essentials">The Ultimate Winter Sports Packing List</a></li><li><a href="/blog/travelling-with-kids-packing-tips/" title="Travelling with Kids Packing Tips: How to Master the Art of One Carry-On per Person">Travelling with Kids Packing Tips</a></li><li><a href="/blog/road-trip-packing-list/" title="The Ultimate Road Trip Packing List: Essentials for a Self-Drive Adventure">The Ultimate Road Trip Packing List</a></li></ul></div><div style="opacity:1;transform:none"><h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:8px"><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></svg> Türkiye Travel Guides</h3><ul class="topiclist"><li><a href="/blog/fethiye-travel-guide/" title="The Ultimate Fethiye Travel Guide: Paragliding, Oludeniz, and Coastal Route Planning">The Ultimate Fethiye Travel Guide</a></li><li><a href="/blog/bodrum-travel-guide/" title="The Ultimate Bodrum Travel Guide: Beaches, Nightlife, and Day Trips">The Ultimate Bodrum Travel Guide</a></li><li><a href="/blog/best-places-to-visit-on-the-turkish-coast/" title="Best Places to Visit on the Turkish Coast: The Ultimate Road Trip Guide">Best Places to Visit on the Turkish Coast</a></li><li><a href="/blog/turkish-food-guide-for-travellers-regional-culinary-journey/" title="The Ultimate Turkish Food Guide for Travellers: A Regional Culinary Journey">The Ultimate Turkish Food Guide for Travellers</a></li><li><a href="/blog/turkiye-travel-tips-for-first-timers/" title="Türkiye Travel Tips for First-Timers: A Practical Survival Guide">Türkiye Travel Tips for First-Timers</a></li><li><a href="/blog/renting-a-car-in-turkiye-guide/" title="Renting a Car in Türkiye: The Ultimate Guide to a Self-Drive Adventure">Renting a Car in Türkiye</a></li></ul></div><div style="opacity:1;transform:none"><h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:8px"><svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Landlord &amp; Rental</h3><ul class="topiclist"><li><a href="/blog/how-to-find-good-tenants/" title="How to Find Good Tenants: The Ultimate Landlord Guide to Screening and Selection">How to Find Good Tenants</a></li><li><a href="/blog/should-you-allow-pets-as-a-landlord/" title="Should You Allow Pets as a Landlord? Pros, Cons, and Pet Policies for Rentals">Should You Allow Pets as a Landlord? Pros, Cons, and Pet Policies for Rentals</a></li><li><a href="/blog/landlord-insurance-explained/" title="Landlord Insurance Explained: What It Covers and Why It Matters">Landlord Insurance Explained</a></li><li><a href="/blog/how-to-write-a-lease-agreement-key-clauses/" title="How to Write a Lease Agreement: Key Clauses Every Landlord Needs">How to Write a Lease Agreement</a></li><li><a href="/blog/buy-to-let-for-beginners/" title="Buy to Let for Beginners: The Ultimate Guide to Your First Rental Property">Buy to Let for Beginners</a></li><li><a href="/blog/how-to-set-the-right-rent-price/" title="How to Set the Right Rent Price: A Landlord&#x27;s Guide to Rental Comps">How to Set the Right Rent Price</a></li></ul></div></div>
     <p style="text-align:center;margin:24px 0 6px"><a class="more" href="/blog/" style="font-size:15px;font-weight:600" title="Browse all 58 guides →">Browse all 58 guides →</a></p>
     <!--TOPICCARDS_END-->
   </section>
@@ -209,7 +210,7 @@ footer a:hover{color:var(--ink)}
 <!--BLOG_TEASER_END-->
 
 <main class="wrap" id="apps">
-<h2 style="font-family:'Sora',sans-serif;font-size:30px;text-align:center;margin-bottom:26px">Our Travel &amp; Rental Management Apps</h2>
+<h2 style="font-family:'Oswald',sans-serif;font-size:30px;text-align:center;margin-bottom:26px">Our Travel &amp; Rental Management Apps</h2>
 <div class="grid">
 
     <article class="card">
@@ -249,16 +250,16 @@ footer a:hover{color:var(--ink)}
 </main>
 
 <section class="wrap reveal" style="max-width:840px;margin:8px auto 0;color:var(--muted);font-size:16.5px;line-height:1.85">
-  <h2 style="font-family:'Sora',sans-serif;font-size:30px;color:var(--ink);text-align:center;margin-bottom:8px">Travel lighter, explore smarter, manage better</h2>
+  <h2 style="font-family:'Oswald',sans-serif;font-size:30px;color:var(--ink);text-align:center;margin-bottom:8px">Travel lighter, explore smarter, manage better</h2>
   <p style="text-align:center;margin-bottom:22px">Tabserve is built around one idea: a good guide is far more useful when it connects to a tool that gets the job done. We write in-depth, honest guides on the things we care about — packing &amp; travel, exploring Türkiye, and managing rental property — and pair each with a free app that turns the advice into action.</p>
 
-  <h3 style="font-family:'Sora',sans-serif;font-size:21px;color:var(--ink);margin:24px 0 8px">✈️ Packing &amp; travel</h3>
+  <h3 style="font-family:'Oswald',sans-serif;font-size:21px;color:var(--ink);margin:24px 0 8px">✈️ Packing &amp; travel</h3>
   <p>Overpacking is the most common travel mistake. Our guides cover <a href="/blog/how-to-pack-a-backpack-for-travel/" title="how to pack a backpack">how to pack a backpack</a> with the zone method, a <a href="/blog/international-travel-packing-checklist/" title="complete packing checklist">complete packing checklist</a>, <a href="/blog/how-much-does-a-carry-on-weigh/" title="carry-on weight limits">carry-on weight limits</a> and the <a href="/blog/carry-on-packing-mistakes/" title="mistakes most people make">mistakes most people make</a>. When it's time to pack, <strong>OneBag</strong> builds a personalized list by destination and weighs your bag against 80+ airlines.</p>
 
-  <h3 style="font-family:'Sora',sans-serif;font-size:21px;color:var(--ink);margin:24px 0 8px">🇹🇷 Exploring Türkiye</h3>
+  <h3 style="font-family:'Oswald',sans-serif;font-size:21px;color:var(--ink);margin:24px 0 8px">🇹🇷 Exploring Türkiye</h3>
   <p>From a ready-made <a href="/blog/turkiye-itinerary-7-days/" title="7-day Türkiye itinerary">7-day Türkiye itinerary</a> to deep guides on <a href="/blog/cappadocia-travel-guide/" title="Cappadocia">Cappadocia</a>, <a href="/blog/antalya-travel-guide-beaches-old-town-day-trips/" title="Antalya">Antalya</a>, <a href="/blog/ephesus-visiting-guide/" title="Ephesus">Ephesus</a>, the <a href="/blog/best-beaches-in-turkiye/" title="best beaches">best beaches</a> and <a href="/blog/best-time-to-visit-turkiye/" title="when to visit">when to visit</a>, we help you plan a real trip — not just a bucket list. <strong>Routevia</strong> then turns your picks into an AI-optimized, day-by-day route across all 81 provinces.</p>
 
-  <h3 style="font-family:'Sora',sans-serif;font-size:21px;color:var(--ink);margin:24px 0 8px">🏠 Landlord &amp; rental</h3>
+  <h3 style="font-family:'Oswald',sans-serif;font-size:21px;color:var(--ink);margin:24px 0 8px">🏠 Landlord &amp; rental</h3>
   <p>Being a landlord is a business. Learn how to <a href="/blog/how-to-set-the-right-rent-price/" title="price rent correctly">price rent correctly</a>, <a href="/blog/how-to-calculate-rental-yield/" title="calculate rental yield">calculate rental yield</a>, <a href="/blog/how-to-screen-a-tenant/" title="screen tenants">screen tenants</a> and handle <a href="/blog/security-deposit-rules-for-landlords/" title="security deposits">security deposits</a> and <a href="/blog/landlord-tax-deductions-guide/" title="tax deductions">tax deductions</a>. <strong>RentFlow</strong> keeps rent, tenants, leases and expenses in one place, with free yield and cash-flow calculators built in.</p>
 
   <p style="margin-top:18px">Every guide is free and regularly updated. Browse the <a href="/blog/" title="full library of 35+ guides"><strong>full library of 35+ guides</strong></a>, or pick a topic below.</p>
