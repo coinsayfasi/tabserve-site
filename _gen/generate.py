@@ -124,6 +124,8 @@ STRICT RULES — follow every one:
 6. Allowed body tags ONLY: h2, h3, h4, h5, p, ul, li, strong, a, table, thead, tbody, tr, th, td, and the single leading <div class="tldr">. No markdown, no <h1>, no <html>/<head>
 <meta name="google-adsense-account" content="ca-pub-7579691213276550">/<style>.
 7. Include 1-2 outbound links to GENUINELY AUTHORITATIVE, relevant external sources to back up the content (e.g. an official tourism board, a government/regulator page, or a relevant Wikipedia article). Only use well-known, stable URLs you are confident exist — prefer https://en.wikipedia.org/wiki/<Topic> or an official site's homepage; NEVER invent specific deep URLs. Place them naturally inside sentences, not in headings.
+8. WRITE FOR A HUMAN READER FIRST, not for search engines. Vary sentence rhythm and structure between articles — do not reuse the same phrasing patterns, transition words, or section framing across different articles. This site publishes many articles; each one must read as independently written, not as a variation of a template.
+9. Where genuinely relevant, include first-hand-sounding practical detail that shows real experience with the topic (a specific scenario, a mistake to avoid and why it happens, a nuance that only comes from actually doing the thing) rather than generic textbook statements. Do not fabricate specific personal anecdotes, named trips, or claimed testing — instead ground advice in concrete, verifiable specifics (exact numbers, named tools/regulations, cause-and-effect reasoning) so it reads as expertise, not filler.
 
 Output ONLY valid minified JSON (no code fences, no commentary), exactly these keys:
 {{"title":"a complete, natural title, STRICTLY 40-58 characters, never truncated mid-sentence","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","lat":"destination guides only: city latitude (else empty)","lon":"longitude or empty","img_queries":["5 separate stock photo searches, 2-4 English words each, each matching a DIFFERENT section of the article (spread across the whole piece): 1) cover scene 2) detail/action 3) context 4) place/scene 5) another concrete scene (e.g. [\"packing cubes suitcase\",\"folding clothes travel\",\"airport departure board\"])"],"body":"the article HTML"}}"""
@@ -516,7 +518,7 @@ def write_post(d, app, posts=()):
     schema = json.dumps(schemas, ensure_ascii=False)
     read = max(4, round(words(body)/180))
     extras, rail = post_extras(url, d["title"])
-    body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + ALL_APPS_STRIP + extras
+    body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + extras
     _ttl=d["title"]; _sfx=" | Tabserve"; _ttag=(_ttl+_sfx) if len(_ttl+_sfx)<=60 else (_ttl if len(_ttl)<=60 else (_ttl[:60].rsplit(" ",1)[0].rstrip(",:;-") or _ttl[:57]+"...")); page = (PAGE.replace("__TITLETAG__", html.escape(_ttag)).replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
         .replace("__APPMETA__", ("\n<meta name=\"apple-itunes-app\" content=\"app-id=" + APPS[app]["ios"] + "\">") if APPS[app].get("ios") else "").replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"] if len(d["title"]) <= 42 else d["title"][:42].rsplit(" ", 1)[0] + "…"))
