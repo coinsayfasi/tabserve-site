@@ -1,0 +1,39 @@
+name: TEMP sitemap status check
+on:
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install google-auth requests
+      - name: Check sitemap status
+        env:
+          GOOGLE_INDEXING_SA: ${{ secrets.GOOGLE_INDEXING_SA }}
+        run: |
+          python3 - <<'EOF'
+          import os, json
+          from google.oauth2 import service_account
+          from google.auth.transport.requests import AuthorizedSession
+          sa = os.environ["GOOGLE_INDEXING_SA"]
+          creds = service_account.Credentials.from_service_account_info(
+              json.loads(sa), scopes=["https://www.googleapis.com/auth/webmasters.readonly"])
+          s = AuthorizedSession(creds)
+
+          site = "https://coinsayfasi.github.io/"
+          feed = "https://coinsayfasi.github.io/sitemap.xml"
+          import urllib.parse
+          url = f"https://www.googleapis.com/webmasters/v3/sites/{urllib.parse.quote(site, safe='')}/sitemaps/{urllib.parse.quote(feed, safe='')}"
+          r = s.get(url, timeout=30)
+          print("status:", r.status_code)
+          print(json.dumps(r.json(), indent=2, ensure_ascii=False))
+
+          # also list all sitemaps for this site
+          url2 = f"https://www.googleapis.com/webmasters/v3/sites/{urllib.parse.quote(site, safe='')}/sitemaps"
+          r2 = s.get(url2, timeout=30)
+          print("=== list ===")
+          print(r2.status_code)
+          print(json.dumps(r2.json(), indent=2, ensure_ascii=False))
+          EOF
