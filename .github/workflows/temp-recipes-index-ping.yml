@@ -1,0 +1,36 @@
+name: TEMP recipes index ping
+on:
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install google-auth
+      - name: Ping Google Indexing for recipes.tabserve.com.tr
+        env:
+          GOOGLE_INDEXING_SA: ${{ secrets.GOOGLE_INDEXING_SA }}
+        run: |
+          python3 - <<'EOF'
+          import os, json
+          from google.oauth2 import service_account
+          from google.auth.transport.requests import AuthorizedSession
+          urls = [
+            "https://recipes.tabserve.com.tr/",
+            "https://recipes.tabserve.com.tr/blog/",
+            "https://recipes.tabserve.com.tr/blog/crispy-oven-baked-chicken-cutlets/",
+            "https://recipes.tabserve.com.tr/blog/high-protein-mac-and-cheese-cottage-cheese/",
+            "https://recipes.tabserve.com.tr/blog/easy-baked-chicken-thighs/",
+            "https://recipes.tabserve.com.tr/blog/one-pan-sausage-and-peppers/",
+          ]
+          sa = os.environ["GOOGLE_INDEXING_SA"]
+          creds = service_account.Credentials.from_service_account_info(
+              json.loads(sa), scopes=["https://www.googleapis.com/auth/indexing"])
+          s = AuthorizedSession(creds)
+          for u in urls:
+              r = s.post("https://indexing.googleapis.com/v3/urlNotifications:publish",
+                         json={"url": u, "type": "URL_UPDATED"}, timeout=30)
+              print(u, "->", r.status_code, r.text[:200])
+          EOF
