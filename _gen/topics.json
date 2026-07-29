@@ -238,5 +238,80 @@
   "app": "rentflow",
   "keyword": "pet friendly rentals near me",
   "angle": "Guidance for landlords on pet policies, deposits, and screening pet-owning tenants"
+ },
+ {
+  "app": "onebag",
+  "keyword": "packing list for a 10 day trip",
+  "angle": "A realistic 10-day packing list that still fits carry-on, with laundry-mid-trip strategy"
+ },
+ {
+  "app": "onebag",
+  "keyword": "how to pack a garment bag for travel",
+  "angle": "Folding and loading technique for a garment bag to keep suits/dresses wrinkle-free"
+ },
+ {
+  "app": "onebag",
+  "keyword": "best carry-on backpack for digital nomads",
+  "angle": "What to look for in a carry-on backpack for long-term remote work travel"
+ },
+ {
+  "app": "onebag",
+  "keyword": "packing list for a beach honeymoon",
+  "angle": "A beach honeymoon packing list balancing resort wear, sun protection and carry-on limits"
+ },
+ {
+  "app": "onebag",
+  "keyword": "how to pack electronics for travel safely",
+  "angle": "Protecting laptops, cameras and chargers in a carry-on without damage or confiscation"
+ },
+ {
+  "app": "routevia",
+  "keyword": "best day trips from Istanbul",
+  "angle": "Realistic day-trip options from Istanbul by train/bus, timing and what's worth it"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Turkey itinerary for solo travelers",
+  "angle": "A solo-friendly Turkey itinerary balancing safety, cost and social opportunities"
+ },
+ {
+  "app": "routevia",
+  "keyword": "hidden gems in Turkey off the beaten path",
+  "angle": "Lesser-known Turkey destinations worth the detour, with realistic access info"
+ },
+ {
+  "app": "routevia",
+  "keyword": "Turkey travel budget breakdown",
+  "angle": "Real daily cost breakdown for budget/mid/comfort travel in Turkey"
+ },
+ {
+  "app": "routevia",
+  "keyword": "best time to visit Cappadocia for hot air balloons",
+  "angle": "Season-by-season guide to balloon flight odds, weather and crowd levels in Cappadocia"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to write a notice to vacate letter",
+  "angle": "Templates and legal notice-period requirements for landlords ending a tenancy"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "landlord responsibilities for repairs",
+  "angle": "What repairs landlords are legally required to handle vs tenant responsibility"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to calculate cap rate for rental property",
+  "angle": "Step-by-step cap rate calculation with a worked example"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "short term vs long term rental pros and cons",
+  "angle": "Comparing short-term (Airbnb-style) vs long-term rental strategy for landlords"
+ },
+ {
+  "app": "rentflow",
+  "keyword": "how to handle a security deposit dispute",
+  "angle": "Practical steps for landlords to document and resolve deposit disputes fairly"
  }
 ]
