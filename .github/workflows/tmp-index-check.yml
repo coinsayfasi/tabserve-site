@@ -1,0 +1,49 @@
+name: TMP Index Check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install google-auth requests
+      - name: Check index status (domain property)
+        env:
+          GOOGLE_INDEXING_SA: ${{ secrets.GOOGLE_INDEXING_SA }}
+        run: |
+          cat > check.py << 'PYEOF'
+          import json, os, sys
+          def inspect(session, site, url):
+              body = {"inspectionUrl": url, "siteUrl": site}
+              r = session.post("https://searchconsole.googleapis.com/v1/urlInspection/index:inspect", json=body, timeout=30)
+              r.raise_for_status()
+              return r.json()["inspectionResult"]["indexStatusResult"]
+          sa = os.environ.get("GOOGLE_INDEXING_SA", "").strip()
+          from google.oauth2 import service_account
+          from google.auth.transport.requests import AuthorizedSession
+          creds = service_account.Credentials.from_service_account_info(
+              json.loads(sa), scopes=["https://www.googleapis.com/auth/webmasters.readonly"])
+          session = AuthorizedSession(creds)
+          site = "sc-domain:tabserve.com.tr"
+          urls = [
+              "https://www.tabserve.com.tr/",
+              "https://www.tabserve.com.tr/blog/",
+              "https://gezi.tabserve.com.tr/",
+              "https://gezi.tabserve.com.tr/blog/antalya-gezilecek-yerler-gezi-rehberi/",
+              "https://rentflow.tabserve.com.tr/",
+              "https://apps.tabserve.com.tr/",
+          ]
+          for u in urls:
+              try:
+                  res = inspect(session, site, u)
+                  print("OK", u, res.get("verdict"), res.get("coverageState"), res.get("lastCrawlTime",""))
+              except Exception as e:
+                  print("HATA", u, "::", e)
+          PYEOF
+          python check.py
