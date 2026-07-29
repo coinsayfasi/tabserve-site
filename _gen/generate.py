@@ -107,7 +107,7 @@ The article should be genuinely helpful on its own and subtly fit a brand that m
 
 STRICT RULES — follow every one:
 0. START the body with: <div class="tldr"><b>⚡ 30-second summary</b><p>3-4 sentences: the core answer/value of this article.</p></div>
-1. The target keyword "{kw}" must appear in the TITLE and be the clear topic. The title doubles as the page H1 — do NOT output an <h1>.
+1. The target keyword "{kw}" must appear in the TITLE and be the clear topic. The title doubles as the page H1 — do NOT output an <h1>. CRITICAL: the "title" field MUST be a complete, natural sentence/phrase between 40 and 58 characters total (count characters). NEVER write a longer title expecting it to be cut off — write it short and complete from the start.
 2. Length: 2500-3000 words of real body text (count WORDS, not characters). Do NOT pad with fluff — every section must add concrete, original value (numbers, ranges, steps, examples, comparisons). Fill the length naturally with 8-11 rich H2 sections.
 3. Heading hierarchy: use 8-11 <h2> headings (natural keyword variations), <h3> subheadings under H2s, and at least one deeper <h4> (use <h5> only where it genuinely helps). Logical nesting H2 > H3 > H4.
 3a. Include ONE comparison <table> where it genuinely helps (places/options/products: columns like Name | Time needed | Cost level | Best for). Never invent exact prices — use categories (free/paid/budget/mid/premium).
@@ -126,7 +126,7 @@ STRICT RULES — follow every one:
 7. Include 1-2 outbound links to GENUINELY AUTHORITATIVE, relevant external sources to back up the content (e.g. an official tourism board, a government/regulator page, or a relevant Wikipedia article). Only use well-known, stable URLs you are confident exist — prefer https://en.wikipedia.org/wiki/<Topic> or an official site's homepage; NEVER invent specific deep URLs. Place them naturally inside sentences, not in headings.
 
 Output ONLY valid minified JSON (no code fences, no commentary), exactly these keys:
-{{"title":"...","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","lat":"destination guides only: city latitude (else empty)","lon":"longitude or empty","img_queries":["5 separate stock photo searches, 2-4 English words each, each matching a DIFFERENT section of the article (spread across the whole piece): 1) cover scene 2) detail/action 3) context 4) place/scene 5) another concrete scene (e.g. [\"packing cubes suitcase\",\"folding clothes travel\",\"airport departure board\"])"],"body":"the article HTML"}}"""
+{{"title":"a complete, natural title, STRICTLY 40-58 characters, never truncated mid-sentence","meta_description":"max 155 chars, includes the keyword","keywords":"4-6 comma-separated keywords","slug":"kebab-case-from-title","lat":"destination guides only: city latitude (else empty)","lon":"longitude or empty","img_queries":["5 separate stock photo searches, 2-4 English words each, each matching a DIFFERENT section of the article (spread across the whole piece): 1) cover scene 2) detail/action 3) context 4) place/scene 5) another concrete scene (e.g. [\"packing cubes suitcase\",\"folding clothes travel\",\"airport departure board\"])"],"body":"the article HTML"}}"""
 
 def _post(url, body, headers):
     req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method="POST")
@@ -517,7 +517,7 @@ def write_post(d, app, posts=()):
     read = max(4, round(words(body)/180))
     extras, rail = post_extras(url, d["title"])
     body = body + related_block(posts, slug, tag=APPS[app]["tag"]) + ALL_APPS_STRIP + extras
-    _ttl=d["title"]; _sfx=" | Tabserve"; _ttag=(_ttl+_sfx) if len(_ttl+_sfx)<=60 else (_ttl if len(_ttl)<=60 else _ttl[:60].rsplit(" ",1)[0]); page = (PAGE.replace("__TITLETAG__", html.escape(_ttag)).replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
+    _ttl=d["title"]; _sfx=" | Tabserve"; _ttag=(_ttl+_sfx) if len(_ttl+_sfx)<=60 else (_ttl if len(_ttl)<=60 else (_ttl[:60].rsplit(" ",1)[0].rstrip(",:;-") or _ttl[:57]+"...")); page = (PAGE.replace("__TITLETAG__", html.escape(_ttag)).replace("__TITLE__", html.escape(d["title"])).replace("__DESC__", html.escape(d["meta_description"]))
         .replace("__KW__", html.escape(d["keywords"])).replace("__URL__", url).replace("__OGIMG__", html.escape(ogimg))
         .replace("__APPMETA__", ("\n<meta name=\"apple-itunes-app\" content=\"app-id=" + APPS[app]["ios"] + "\">") if APPS[app].get("ios") else "").replace("__SCHEMA__", schema).replace("__CRUMB__", html.escape(d["title"] if len(d["title"]) <= 42 else d["title"][:42].rsplit(" ", 1)[0] + "…"))
         .replace("__TAG__", APPS[app]["tag"]).replace("__READ__", str(read)).replace("__RAIL__", rail)
