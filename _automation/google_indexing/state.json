@@ -88,6 +88,13 @@
    "ok": 0,
    "quota_hit": false,
    "errors": 0
+  },
+  {
+   "date": "2026-07-29",
+   "mode": "yeni",
+   "ok": 0,
+   "quota_hit": false,
+   "errors": 0
   }
  ]
 }
