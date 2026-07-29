@@ -115,7 +115,7 @@ The article should be genuinely helpful on its own and subtly fit a brand that m
 STRICT RULES — follow every one:
 0. START the body with: <div class="tldr"><b>⚡ 30-second summary</b><p>3-4 sentences: the core answer/value of this article.</p></div>
 1. The target keyword "{kw}" must appear in the TITLE and be the clear topic. The title doubles as the page H1 — do NOT output an <h1>. CRITICAL: the "title" field MUST be a complete, natural sentence/phrase between 40 and 58 characters total (count characters). NEVER write a longer title expecting it to be cut off — write it short and complete from the start.
-2. Length: 2500-3000 words of real body text (count WORDS, not characters). Do NOT pad with fluff — every section must add concrete, original value (numbers, ranges, steps, examples, comparisons). Fill the length naturally with 8-11 rich H2 sections.
+2. Length: MINIMUM 3000 words of real body text, target 3000-3500 (count WORDS, not characters). Never submit fewer than 3000 words. Do NOT pad with fluff — every section must add concrete, original value (numbers, ranges, steps, examples, comparisons). Fill the length naturally with 10-13 rich H2 sections to genuinely reach 3000+ words.
 3. Heading hierarchy: use 8-11 <h2> headings (natural keyword variations), <h3> subheadings under H2s, and at least one deeper <h4> (use <h5> only where it genuinely helps). Logical nesting H2 > H3 > H4.
 3a. Include ONE comparison <table> where it genuinely helps (places/options/products: columns like Name | Time needed | Cost level | Best for). Never invent exact prices — use categories (free/paid/budget/mid/premium).
 3a2. IF this is a DESTINATION/travel guide: also include <h2>Sample itineraries</h2> (1-day and 2-day, hour-by-hour) and <h2>Best photo & sunset spots</h2> (3-5 spots with timing).
@@ -200,7 +200,7 @@ def validate(d, kw):
     wc = words(b.replace("{{APP_CTA}}",""))
     h2,h3,h4 = len(re.findall(r"<h2",b)),len(re.findall(r"<h3",b)),len(re.findall(r"<h4",b))
     errs=[]
-    if wc < 2000: errs.append(f"kelime {wc}<2000")
+    if wc < 3000: errs.append(f"kelime {wc}<3000")
     if h2 < 3: errs.append(f"H2 {h2}<3")
     if h3 < 2: errs.append(f"H3 {h3}<2")
     if h4 < 1: errs.append(f"H4 {h4}<1")
@@ -801,7 +801,7 @@ def main():
         prompt = PROMPT.format(kw=kw, angle=topic["angle"], one=APPS[app]["one"], name=APPS[app]["name"])
         d = None
         for tryi in range(2):
-            txt = call_llm(prompt if tryi==0 else prompt+"\n\nYour previous attempt failed validation. Ensure 600+ WORDS and H2/H3/H4 hierarchy and the {{APP_CTA}} token.")
+            txt = call_llm(prompt if tryi==0 else prompt+"\n\nYour previous attempt failed validation. Ensure MINIMUM 3000 WORDS and H2/H3/H4 hierarchy and the {{APP_CTA}} token.")
             try: cand = parse_json(txt)
             except Exception as e: print(f"  JSON parse hatası: {e}"); continue
             errs, wc, hh = validate(cand, kw)
