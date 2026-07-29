@@ -721,7 +721,34 @@ def rebuild_index(posts):
                 f'<a class="more" href="/blog/{pp["slug"]}/">Read the guide →</a></article>' for pp in t3
             ) + '</div><p style="text-align:center;margin:6px 0 26px"><a class="more" href="/blog/" style="font-size:15px">All guides →</a></p></section>\n' + B
             lc = _re.sub(_re.escape(A) + r"[\s\S]*?" + _re.escape(B), teaser, lc, count=1)
-        # ── Popular Guides çipleri: her gün 12 rehber DÖNER (35 arasında rotasyon) ──
+        # ── "Browse Guides by Topic" kartları + toplam sayı (posts.json'dan CANLI) ─────
+        TA, TB = "<!--TOPICCARDS_START-->", "<!--TOPICCARDS_END-->"
+        if TA in lc and TB in lc:
+            cats = [
+                ("Packing &amp; Travel Tips", "onebag",
+                 '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>'),
+                ("Türkiye Travel Guides", "routevia",
+                 '<circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/>'),
+                ("Landlord &amp; Rental", "rentflow",
+                 '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'),
+            ]
+            cards = ""
+            for label, appkey, svg in cats:
+                tagname = APPS[appkey]["tag"]
+                picks = [pp for pp in posts if pp.get("tag") == tagname][:6]
+                lis = "".join(
+                    f'<li style="margin-bottom:9px"><a class="more" href="/blog/{pp["slug"]}/" title="{html.escape(pp["title"])}">{html.escape(pp["title"].split(":")[0].strip())}</a></li>'
+                    for pp in picks)
+                cards += (f'<div class="card" style="opacity:1;transform:none"><h3 style="font-family:\'Sora\',sans-serif;font-size:20px;margin-bottom:12px">'
+                          f'<svg class="ico" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{svg}</svg> {label}</h3>'
+                          f'<ul style="list-style:none;margin:0;padding:0;line-height:1.5">{lis}</ul></div>')
+            n_total = len(posts)
+            topiccards = (TA + '\n    <h2 style="font-family:\'Sora\',sans-serif;font-size:30px;text-align:center;margin-bottom:6px">Browse Guides by Topic</h2>'
+                          '\n    <p style="text-align:center;color:var(--muted);margin-bottom:26px">Practical, in-depth guides — grouped by what you need</p>'
+                          f'\n    <div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding:0">{cards}</div>'
+                          f'\n    <p style="text-align:center;margin:24px 0 6px"><a class="more" href="/blog/" style="font-size:15px;font-weight:600" title="Browse all {n_total} guides →">Browse all {n_total} guides →</a></p>\n    ' + TB)
+            lc = _re.sub(_re.escape(TA) + r"[\s\S]*?" + _re.escape(TB), topiccards, lc, count=1)
+        # ── Popular Guides çipleri: her gün 12 rehber DÖNER (dinamik toplam üzerinden rotasyon) ──
         CA, CB = "<!--POPGUIDES_START-->", "<!--POPGUIDES_END-->"
         if CA in lc and CB in lc and posts:
             off = datetime.date.today().toordinal() % len(posts)
