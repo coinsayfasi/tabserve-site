@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="Free travel apps, a rental management app, and the travel guides &amp; packing lists behind them — by Tabserve.">
 <meta name="twitter:image" content="https://www.tabserve.com.tr/assets/tabserve-og.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#2f6bff">
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#222222">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -52,9 +52,9 @@
 .skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--accent);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;font-weight:600}.skip:focus{left:0}
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;src:url(/assets/fonts/inter.woff2) format('woff2')}@font-face{font-family:'Sora';font-style:normal;font-weight:600 800;font-display:swap;src:url(/assets/fonts/sora.woff2) format('woff2')}
 :root{
-  --bg:#fbfaf7;--card:#ffffff;--ink:#1f2733;--muted:#4b5563;
-  --accent:#2f6bff;--accent2:#8b5cf6;--accent3:#2563eb;--line:#ece8e1;
-  --shadow:0 6px 24px rgba(31,39,51,.07);--shadow-h:0 16px 44px rgba(47,107,255,.16);
+  --bg:#ffffff;--band:#f7f7f7;--card:#ffffff;--ink:#222222;--muted:#6a6a6a;
+  --accent:#222222;--accent2:#222222;--accent3:#222222;--line:#ebebeb;
+  --shadow:none;--shadow-h:none;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -63,14 +63,14 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 h1,h2,h3,.brand,.logo,.stat b{font-family:'Sora',sans-serif}
 
 /* scroll progress */
-#bar{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;will-change:transform;z-index:50;background:linear-gradient(90deg,var(--accent3),var(--accent),var(--accent2))}
+#bar{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;will-change:transform;z-index:50;background:var(--ink)}
 
 /* aurora bg — açık, yumuşak */
 .aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg)}
 .aurora::before,.aurora::after{content:"";position:absolute;width:60vw;height:60vw;border-radius:50%;filter:blur(80px);opacity:.16;will-change:transform}
 .aurora::before{background:radial-gradient(circle,var(--accent),transparent 60%);top:-15vw;left:-10vw;animation:float1 28s ease-in-out infinite}
 .aurora::after{background:radial-gradient(circle,var(--accent2),transparent 60%);bottom:-20vw;right:-12vw;animation:float2 32s ease-in-out infinite}
-.grid-tex{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(31,39,51,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(31,39,51,.035) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(ellipse at 50% 0%,#000,transparent 72%)}
+.grid-tex{display:none}
 @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(6vw,4vw)}}
 @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-5vw,-4vw)}}
 @media(max-width:600px){.aurora::before,.aurora::after{animation:none;filter:blur(46px);opacity:.1}.grid-tex{display:none}}
@@ -86,39 +86,39 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 
 /* hero */
 header{padding:90px 0 36px;text-align:center}
-.brand{display:inline-block;font-size:13px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:var(--accent3);padding:7px 16px;border:1px solid rgba(47,107,255,.25);border-radius:100px;background:rgba(47,107,255,.06);opacity:0;animation:rise .7s .05s both}
+.brand{display:inline-block;font-size:13px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:var(--ink);padding:7px 16px;border:1px solid var(--line);border-radius:8px;background:var(--band,#f7f7f7);opacity:0;animation:rise .7s .05s both}
 h1{font-size:clamp(36px,6.5vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1.04;margin:22px 0 16px;opacity:0;animation:rise .7s .15s both}
-.grad{background:linear-gradient(110deg,var(--accent3),var(--accent) 45%,var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:shine 6s linear infinite}
+.grad{color:var(--ink)}
 @keyframes shine{to{background-position:200% center}}
 .sub{font-size:clamp(16px,2.4vw,20px);color:var(--muted);max-width:600px;margin:0 auto 30px;opacity:0;animation:rise .7s .25s both}
 .cta{display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;opacity:0;animation:rise .7s .35s both}
-.cta a{text-decoration:none;font-weight:600;font-size:15px;padding:13px 24px;border-radius:13px;transition:transform .15s,box-shadow .2s}
-.cta .p{background:linear-gradient(110deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 10px 30px rgba(47,107,255,.30)}
-.cta .p:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(47,107,255,.42)}
+.cta a{text-decoration:none;font-weight:500;font-size:16px;padding:14px 24px;border-radius:8px;transition:none}
+.cta .p{background:var(--ink);color:#fff}
+.cta .p:hover{transform:none}
 .cta .s{color:var(--ink);border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
 .cta .s:hover{transform:translateY(-3px);border-color:var(--accent)}
 @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
 /* stats */
 .stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;padding:18px 0 8px;opacity:0;animation:rise .7s .45s both}
-.stat{text-align:center;padding:14px 22px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow);min-width:120px}
-.stat b{display:block;font-size:26px;font-weight:800;background:linear-gradient(120deg,var(--accent3),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat{text-align:center;padding:14px 22px;border:1px solid var(--line);border-radius:12px;background:#fff;min-width:120px}
+.stat b{display:block;font-size:26px;font-weight:700;color:var(--ink)}
 .stat span{font-size:12.5px;color:var(--muted);letter-spacing:.04em}
 
 /* app cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;padding:42px 0 10px;perspective:1200px}
-.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;display:flex;flex-direction:column;box-shadow:var(--shadow);overflow:hidden;opacity:0;transform:translateY(30px);transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s,box-shadow .25s;transform-style:preserve-3d}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(30px);transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s}
 .card.in{opacity:1;transform:none}
-.card::after{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;background:linear-gradient(130deg,transparent,rgba(47,107,255,.45),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;pointer-events:none}
+.card::after{display:none}
 .card:hover{box-shadow:var(--shadow-h)}
 .card:hover::after{opacity:1}
-.ic{width:78px;height:78px;border-radius:20px;margin-bottom:18px;box-shadow:0 10px 28px rgba(31,39,51,.16);transition:transform .3s;transform:translateZ(40px)}
+.ic{width:78px;height:78px;border-radius:12px;margin-bottom:18px;transition:none}
 .card:hover .ic{transform:translateZ(55px) scale(1.06) rotate(-3deg)}
 .card h3{font-size:22px;font-weight:700;margin-bottom:8px}
 .card p{color:var(--muted);font-size:15px;flex:1;margin-bottom:18px}
 .badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .badge{font-size:13px;font-weight:600;padding:9px 14px;border-radius:11px;background:#111827;color:#fff;text-decoration:none;transition:transform .15s,box-shadow .2s}
-.badge:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(31,39,51,.25)}
+.badge:hover{transform:none}
 .badge.soon{background:rgba(31,39,51,.08);color:#454e5a}
 .more{font-size:14px;color:#1d4ed8;text-decoration:none;font-weight:600}
 .more:hover{text-decoration:underline}
@@ -134,8 +134,8 @@ section.about a{color:var(--accent3)}
 /* FAQ */
 .faq{padding:20px 0 40px}
 .faq h2{font-family:'Sora',sans-serif;font-size:27px;text-align:center;margin-bottom:26px}
-.faq details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 20px;margin:0 auto 12px;max-width:760px;box-shadow:var(--shadow);transition:border-color .2s}
-.faq details[open]{border-color:rgba(47,107,255,.4)}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 20px;margin:0 auto 12px;max-width:760px;transition:border-color .2s}
+.faq details[open]{border-color:var(--ink)}
 .faq summary{cursor:pointer;list-style:none;padding:17px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:700;transition:transform .25s}
@@ -159,7 +159,7 @@ footer a:hover{color:var(--ink)}
 .foot-bottom{border-top:1px solid var(--line)}
 .foot-bottom .wrap{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;font-size:13px;color:var(--muted);max-width:1080px;margin:0 auto}
 @media(max-width:640px){.foot-grid{grid-template-columns:1fr 1fr;gap:26px}.foot-brand{grid-column:1/-1}.foot-bottom .wrap{flex-direction:column;gap:8px;text-align:center}}
-.chipwrap{text-align:center}.chiplbl{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:12px}.chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}.chips a{font-size:13.5px;font-weight:600;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:transform .15s,border-color .2s}.chips a:hover{transform:translateY(-1px);border-color:var(--accent)}
+.chipwrap{text-align:center}.chiplbl{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:12px}.chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}.chips a{font-size:13.5px;font-weight:500;padding:8px 15px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;transition:border-color .2s}.chips a:hover{border-color:var(--ink)}
 .ico{width:1.1em;height:1.1em;vertical-align:-.16em;display:inline-block;flex-shrink:0;stroke-width:2}h2 .ico,h3 .ico{margin-right:2px}</style>
 <script src="/assets/analytics.js?v=3" defer></script>
 </head>
@@ -336,10 +336,10 @@ if(!reduce&&matchMedia('(pointer:fine)').matches){
   });
 }
 </script>
-<div id="cookie-banner" style="transform:translateY(120%);transition:transform .25s ease;will-change:transform;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#ffffff;border-top:1px solid #ece8e1;box-shadow:0 -6px 24px rgba(31,39,51,.08);padding:14px 18px;font-size:13.5px;color:#384250;line-height:1.5">
+<div id="cookie-banner" style="transform:translateY(120%);transition:transform .25s ease;will-change:transform;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#ffffff;border-top:1px solid #222222;padding:14px 18px;font-size:13.5px;color:#222222;line-height:1.5">
   <div style="max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
     <span>We use cookies for analytics and advertising (incl. Google AdSense). See our <a href="/cookies.html" style="color:#1d4ed8" title="Cookie Policy">Cookie Policy</a>.</span>
-    <span><button onclick="cookieOK(0)" style="background:none;border:1px solid #d5d9e0;color:#384250;padding:7px 14px;border-radius:9px;cursor:pointer;margin-right:8px">Reject</button><button onclick="cookieOK(1)" style="background:linear-gradient(110deg,#2f6bff,#8b5cf6);border:0;color:#fff;padding:7px 16px;border-radius:9px;cursor:pointer;font-weight:600">Accept</button></span>
+    <span><button onclick="cookieOK(0)" style="background:none;border:1px solid #d5d9e0;color:#384250;padding:7px 14px;border-radius:9px;cursor:pointer;margin-right:8px">Reject</button><button onclick="cookieOK(1)" style="background:#222222;border:0;color:#fff;padding:7px 16px;border-radius:8px;cursor:pointer;font-weight:500">Accept</button></span>
   </div>
 </div>
 <script>(function(){try{if(!localStorage.getItem('cookie_consent'))document.getElementById('cookie-banner').style.transform='none';}catch(e){}})();
