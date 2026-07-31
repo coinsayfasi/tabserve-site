@@ -133,7 +133,8 @@
   "https://www.tabserve.com.tr/blog/page/4/": "2026-07-30",
   "https://www.tabserve.com.tr/blog/page/5/": "2026-07-30",
   "https://www.tabserve.com.tr/blog/page/6/": "2026-07-30",
-  "https://www.tabserve.com.tr/blog/page/7/": "2026-07-30"
+  "https://www.tabserve.com.tr/blog/page/7/": "2026-07-30",
+  "https://www.tabserve.com.tr/blog/turkey-itinerary-7-days/": "2026-07-31"
  },
  "history": [
   {
@@ -168,6 +169,13 @@
    "date": "2026-07-30",
    "mode": "yeni",
    "ok": 68,
+   "quota_hit": false,
+   "errors": 0
+  },
+  {
+   "date": "2026-07-31",
+   "mode": "yeni",
+   "ok": 1,
    "quota_hit": false,
    "errors": 0
   }
