@@ -136,7 +136,8 @@
   "https://www.tabserve.com.tr/blog/page/7/": "2026-07-30",
   "https://www.tabserve.com.tr/blog/turkey-itinerary-7-days/": "2026-07-31",
   "https://www.tabserve.com.tr/blog/best-beach-towns-in-turkey/": "2026-08-02",
-  "https://www.tabserve.com.tr/blog/things-to-bring-on-a-road-trip/": "2026-08-02"
+  "https://www.tabserve.com.tr/blog/things-to-bring-on-a-road-trip/": "2026-08-02",
+  "https://www.tabserve.com.tr/blog/ultimate-europe-packing-checklist/": "2026-08-03"
  },
  "history": [
   {
@@ -185,6 +186,13 @@
    "date": "2026-08-02",
    "mode": "yeni",
    "ok": 2,
+   "quota_hit": false,
+   "errors": 0
+  },
+  {
+   "date": "2026-08-03",
+   "mode": "yeni",
+   "ok": 1,
    "quota_hit": false,
    "errors": 0
   }
