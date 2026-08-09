@@ -142,7 +142,8 @@
   "https://www.tabserve.com.tr/blog/day-hiking-equipment-packing-guide/": "2026-08-04",
   "https://www.tabserve.com.tr/blog/page/8/": "2026-08-04",
   "https://www.tabserve.com.tr/blog/is-it-ok-to-travel-to-turkey/": "2026-08-05",
-  "https://www.tabserve.com.tr/blog/istanbul-to-ephesus/": "2026-08-05"
+  "https://www.tabserve.com.tr/blog/istanbul-to-ephesus/": "2026-08-05",
+  "https://www.tabserve.com.tr/blog/how-much-is-a-security-deposit/": "2026-08-09"
  },
  "history": [
   {
@@ -212,6 +213,13 @@
    "date": "2026-08-05",
    "mode": "yeni",
    "ok": 2,
+   "quota_hit": false,
+   "errors": 0
+  },
+  {
+   "date": "2026-08-09",
+   "mode": "yeni",
+   "ok": 1,
    "quota_hit": false,
    "errors": 0
   }
