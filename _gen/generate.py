@@ -248,7 +248,7 @@ PAGE = """<!DOCTYPE html>
 <div class="aurora"></div>
 <nav><div class="nwrap">
   <a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve" width="28" height="28">Tabserve</a>
-  <div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div>
+  <div class="nav-links"><a href="/">Products</a><a href="/restoran.html">Restaurant</a><a href="/blog/">Guides</a><a href="mailto:teknopattv@gmail.com">Contact</a></div>
 </div></nav>
 <main class="wrap page">
 __RAIL__
@@ -266,10 +266,12 @@ __BODY__
       <p>Simple, useful mobile apps for travel, trips and rentals — free to start on iOS &amp; Android.</p>
     </div>
     <div class="foot-col">
-      <p class="fh">Apps</p>
+      <p class="fh">Products</p>
+      <a href="/restoran.html">Restaurant system</a>
       <a href="https://coinsayfasi.github.io/onebag/">OneBag</a>
       <a href="https://coinsayfasi.github.io/routevia-app/">Routevia</a>
       <a href="https://coinsayfasi.github.io/rentflow/">RentFlow</a>
+      <a href="https://komiseryardimciligi.tabserve.com.tr">Misyon Koruma</a>
     </div>
     <div class="foot-col">
       <p class="fh">Company</p>
@@ -609,7 +611,7 @@ def rebuild_index(posts):
 <body>
 <div class="aurora"></div>
 <nav><div class="nwrap"><a class="logo" href="/"><img src="/assets/logo.svg" alt="Tabserve" width="28" height="28">Tabserve</a>
-<div class="nav-links"><a href="/">Apps</a><a href="/blog/">Blog</a><a href="mailto:teknopattv@gmail.com">Contact</a></div></div></nav>"""
+<div class="nav-links"><a href="/">Products</a><a href="/restoran.html">Restaurant</a><a href="/blog/">Guides</a><a href="mailto:teknopattv@gmail.com">Contact</a></div></div></nav>"""
     foot = """<footer class="site-footer">
   <div class="wrap foot-grid">
     <div class="foot-brand">
@@ -617,10 +619,12 @@ def rebuild_index(posts):
       <p>Simple, useful mobile apps for travel, trips and rentals — free to start on iOS &amp; Android.</p>
     </div>
     <div class="foot-col">
-      <p class="fh">Apps</p>
+      <p class="fh">Products</p>
+      <a href="/restoran.html">Restaurant system</a>
       <a href="https://coinsayfasi.github.io/onebag/">OneBag</a>
       <a href="https://coinsayfasi.github.io/routevia-app/">Routevia</a>
       <a href="https://coinsayfasi.github.io/rentflow/">RentFlow</a>
+      <a href="https://komiseryardimciligi.tabserve.com.tr">Misyon Koruma</a>
     </div>
     <div class="foot-col">
       <p class="fh">Company</p>
